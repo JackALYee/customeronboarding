@@ -21,7 +21,7 @@ content = r"""
                 <tr><td><strong>AD Max</strong></td><td>6CH</td><td><span class="badge badge-green">Yes</span></td><td>Optional</td><td>Flagship</td><td>Premium fleets, multi-camera enterprise deployments</td></tr>
             </tbody>
         </table>
-        <p style="font-size: 0.85rem; color: var(--text-grey); margin-top: 12px;">CAN decode software license activates OBD-II / J1939 / FMS / Split Wire protocols. Same hardware ships globally; regional decode is software-activated. Need 7+ channels? Use an MDVR instead.</p>
+        <p style="font-size: 0.85rem; color: var(--text-grey); margin-top: 12px;">CAN decode software license activates OBD-II / J1939 / FMS / Split Wire protocols. Same hardware ships globally; regional decode is software-activated. Need 7+ channels? Use an MDVR instead. For commercial details and quotes, please contact your Streamax CSM.</p>
     </div>
 
     <div class="card fade-up">

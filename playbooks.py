@@ -98,7 +98,7 @@ content = r"""
             <li><strong>Exonerating-evidence case studies</strong> — claims you've defended successfully</li>
             <li><strong>SafeGPT methodology paper</strong> — explains the behavioral risk model (request from your CSM)</li>
         </ul>
-        <p style="margin-top: 14px; font-size: 0.88rem; color: var(--text-grey);">Streamax has insurance partnerships with major carriers across Europe, India, Brazil, ANZ, and the US. Ask your CSM to introduce you to the regional contact.</p>
+        <p style="margin-top: 14px; font-size: 0.88rem; color: var(--text-grey);">Streamax has insurance partnerships with major carriers across multiple regions globally. Ask your CSM to introduce you to the right regional contact.</p>
     </div>
 
     <h3 class="section-header fade-up">Industry-specific playbooks</h3>

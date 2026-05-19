@@ -14,6 +14,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from login import render_login
+from staff import render as render_staff
 
 # --- Section modules — each exports `content` (raw HTML) -------------------
 try:
@@ -90,7 +91,7 @@ if "authenticated" not in st.session_state:
 
 # Handle ?logout=1
 if st.query_params.get("logout") == "1":
-    for k in ("authenticated", "customer_email", "customer_company", "audience"):
+    for k in ("authenticated", "user_role", "customer_email", "customer_company", "audience", "staff_identity"):
         st.session_state.pop(k, None)
     st.query_params.clear()
     st.rerun()
@@ -100,7 +101,12 @@ if not st.session_state["authenticated"]:
     render_login()
     st.stop()
 
-# --- Authenticated: build the portal ---------------------------------------
+# --- Role routing: staff get the admin dashboard --------------------------
+if st.session_state.get("user_role") == "staff":
+    render_staff()
+    st.stop()
+
+# --- Authenticated as a customer: build the portal ------------------------
 customer_email = st.session_state.get("customer_email", "Customer")
 customer_company = st.session_state.get("customer_company", "")
 audience = st.session_state.get("audience", "fleet")  # fleet | tsp

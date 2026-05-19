@@ -8,29 +8,29 @@ content = r"""
         <p>FT Cloud is your CMS — every camera, every driver, every event, every report lives here. Same login works in the mobile app. TSP partners: see the dedicated integration section at the bottom.</p>
     </div>
 
-    <h3 class="section-header fade-up">Pick your platform tier</h3>
+    <h3 class="section-header fade-up">Three platform tiers — pick the one that matches your maturity</h3>
     <div class="card fade-up">
         <table class="stmx-table">
-            <thead><tr><th>Tier</th><th>Price /vehicle /mo</th><th>What you get</th><th>Best for</th></tr></thead>
+            <thead><tr><th>Tier</th><th>What you get</th><th>Best for</th></tr></thead>
             <tbody>
                 <tr>
-                    <td><strong>Essential</strong></td><td>$1</td>
+                    <td><strong>Essential</strong></td>
                     <td>Livestream video, GPS location, historical video playback</td>
                     <td>Fleets adopting cameras for the first time. <em>"I need to see what's happening on my trucks."</em></td>
                 </tr>
                 <tr>
-                    <td><strong>Pro</strong></td><td>$3</td>
+                    <td><strong>Pro</strong></td>
                     <td>Essential + AI event upload, driver scorecards, coaching workflows</td>
                     <td>Fleets running a structured safety programme. <em>"I need to coach my drivers and reduce incidents."</em></td>
                 </tr>
                 <tr>
-                    <td><strong>Enterprise</strong></td><td>$6</td>
-                    <td>Pro + SafeGPT behavioral intelligence, risk classification, behavioral tagging, coaching prioritisation, insurance analytics — and all future AI agent capabilities at no extra cost</td>
+                    <td><strong>Enterprise</strong></td>
+                    <td>Pro + SafeGPT behavioral intelligence, risk classification, behavioral tagging, coaching prioritisation, insurance analytics — and all future AI agent capabilities included</td>
                     <td>Fleets demanding maximum intelligence. <em>"I need to predict and prevent incidents before they happen."</em></td>
                 </tr>
             </tbody>
         </table>
-        <p style="margin-top: 14px; font-size: 0.88rem;">Upgrading is a <strong>software activation</strong> — no new hardware, no reinstallation, no data migration. Every Essential subscriber is one conversation away from Pro or Enterprise.</p>
+        <p style="margin-top: 14px; font-size: 0.88rem;">Upgrading between tiers is a <strong>software activation</strong> — no new hardware, no reinstallation, no data migration. Talk to your Streamax CSM for commercial details on each tier and upgrade options.</p>
     </div>
 
     <h3 class="section-header fade-up">CMS walkthrough — the 6 screens you'll live in</h3>
@@ -119,7 +119,7 @@ content = r"""
                 <a href="#" class="cta-btn secondary" style="margin-top: 10px;"><i class="fa-solid fa-handshake"></i> Become a partner</a>
             </div>
         </div>
-        <p style="font-size: 0.85rem; color: var(--text-grey); margin-top: 14px;"><strong>Lead with the threat:</strong> Samsara and Motive sell direct to fleets — they don't need the TSP. Every fleet customer you don't offer video to is one that vertically integrated competitors can take from you permanently. Adding Streamax to your portfolio is your defence — and your double-recurring-revenue cross-sell.</p>
+        <p style="font-size: 0.85rem; color: var(--text-grey); margin-top: 14px;">Streamax partners with TSPs globally rather than competing for their fleet customers. Our role is to make your platform the place fleets buy video telematics from — extending what you already offer your customers, on infrastructure you already control. Talk to your CSM about which integration path fits your roadmap best.</p>
     </div>
 
 </div>
