@@ -1,14 +1,22 @@
-"""Customer-facing email + 6-digit code login.
+"""Login UI for the Streamax Customer Onboarding Portal.
 
-Flow:
-  Step 1 — Customer enters email + company + selects audience (Fleet / TSP)
-           and clicks "Send code". A 6-digit code is generated, saved, and
-           emailed.
-  Step 2 — Customer enters the code. If valid, session_state.authenticated = True
-           and the portal renders.
+Two paths:
 
-In dev / no-SMTP environments, the code is shown directly on screen so the
-flow works without configuring email.
+1. Customer email + 6-digit code (primary)
+   - Customer enters their email.
+   - Email is looked up in `customers` (staff-created in advance).
+   - If found: 6-digit code generated, emailed via SMTP, customer enters
+     code on the next screen. If SMTP isn't configured, the code is
+     shown on screen (DEV mode).
+   - If not found: shows "no account — contact your CSM" message.
+
+2. Username + password (for built-in test accounts)
+   - `test` / `testme`       → log in as the seeded test client
+   - `test_staff` / `testme` → log in to the staff dashboard
+   - Anything else → invalid
+
+All successful logins are written to `login_events` so the staff
+dashboard can show a recent-logins panel.
 """
 import random
 import re
@@ -17,12 +25,29 @@ from datetime import datetime, timedelta
 
 import streamlit as st
 
-from db import init_db, save_code, verify_code, upsert_customer
+from db import (
+    init_db,
+    seed_test_accounts,
+    save_code,
+    verify_code,
+    get_customer,
+    mark_login,
+    log_login,
+    TEST_CLIENT_EMAIL,
+)
 from emailer import smtp_configured, send_login_code
 
 init_db()
+seed_test_accounts()
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+
+# Built-in credentials. Kept here (not in db) so they survive db wipes
+# and are easy to find/rotate.
+TEST_CLIENT_USERNAME = "test"
+TEST_STAFF_USERNAME = "test_staff"
+TEST_PASSWORD = "testme"
+STAFF_EMAIL_LABEL = "test_staff@streamax.com"  # display-only identity for staff
 
 
 def _inject_login_css() -> None:
@@ -67,18 +92,9 @@ def _inject_login_css() -> None:
             -webkit-box-shadow: 0 0 0 1000px rgba(20, 25, 40, 0.95) inset !important;
             transition: background-color 5000s ease-in-out 0s;
         }
-        .stTextInput label, [data-testid="stTextInput"] label,
-        .stRadio label, [data-testid="stRadio"] label,
-        .stSelectbox label, [data-testid="stSelectbox"] label {
+        .stTextInput label, [data-testid="stTextInput"] label {
             color: #A0AEC0 !important;
         }
-        [data-testid="stRadio"] > div {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 12px 16px;
-            border-radius: 12px;
-        }
-        [data-testid="stRadio"] label p { color: #FFFFFF !important; }
         [data-testid="stForm"] {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -106,6 +122,7 @@ def _inject_login_css() -> None:
         .login-hero p { color: #A0AEC0; font-size: 1rem; margin-top: 8px; }
         .gradient-text { background: linear-gradient(135deg, #2AF598 0%, #009EFD 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .dev-code-banner { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.4); color: #fbbf24; padding: 14px 20px; border-radius: 10px; text-align: center; font-family: monospace; margin: 20px 0; }
+        .login-toggle-row { text-align: center; margin-top: 18px; color: #A0AEC0; font-size: 0.85rem; }
         </style>
         """,
         unsafe_allow_html=True,
@@ -115,6 +132,8 @@ def _inject_login_css() -> None:
 def _gen_code() -> str:
     return f"{random.randint(0, 999999):06d}"
 
+
+# --- Step 1a: customer email lookup --------------------------------------
 
 def _step_request_code() -> None:
     st.markdown(
@@ -131,33 +150,27 @@ def _step_request_code() -> None:
     with c2:
         with st.form("request_code_form"):
             email = st.text_input("Your work email", placeholder="you@yourcompany.com")
-            company = st.text_input("Company name", placeholder="e.g. Acme Logistics")
-            audience = st.radio(
-                "I am a...",
-                ["Fleet Operator (we run trucks/buses/taxis)", "TSP / Channel Partner (we resell telematics)"],
-                index=0,
-            )
             submitted = st.form_submit_button("Send my login code")
 
             if submitted:
                 email = (email or "").strip().lower()
-                company = (company or "").strip()
                 if not EMAIL_RE.match(email):
                     st.error("Please enter a valid email address.")
                     return
-                if not company:
-                    st.error("Please enter your company name.")
+
+                customer = get_customer(email)
+                if not customer:
+                    st.error(
+                        "We don't recognise that email. Please contact your Streamax CSM "
+                        "to be onboarded — your account needs to be set up before you can sign in."
+                    )
                     return
 
-                aud_key = "fleet" if audience.startswith("Fleet") else "tsp"
                 code = _gen_code()
                 expires_at = (datetime.utcnow() + timedelta(minutes=15)).isoformat()
                 save_code(email, code, expires_at)
 
-                # Stash pending identity for step 2
                 st.session_state["pending_email"] = email
-                st.session_state["pending_company"] = company
-                st.session_state["pending_audience"] = aud_key
 
                 sent_ok = False
                 send_error = None
@@ -173,7 +186,6 @@ def _step_request_code() -> None:
                     st.session_state["dev_code_to_show"] = None
                     st.success(f"Code sent to {email}. Check your inbox.")
                 else:
-                    # Dev fallback — surface the code so login works without SMTP
                     st.session_state["dev_code_to_show"] = code
                     if send_error:
                         st.warning(f"SMTP send failed ({send_error}). Showing code on screen for dev access.")
@@ -181,9 +193,74 @@ def _step_request_code() -> None:
                         st.info("SMTP not configured — showing code on screen for dev access.")
 
                 st.session_state["login_step"] = "verify"
-                time.sleep(0.5)
+                time.sleep(0.4)
                 st.rerun()
 
+        # Toggle to credential mode
+        st.markdown(
+            "<div class='login-toggle-row'>Have a test or staff credential?</div>",
+            unsafe_allow_html=True,
+        )
+        if st.button("Sign in with username & password", key="toggle_to_cred"):
+            st.session_state["login_step"] = "credential"
+            st.rerun()
+
+
+# --- Step 1b: username + password (test client / staff) -------------------
+
+def _step_credential() -> None:
+    st.markdown(
+        """
+        <div class="login-hero">
+            <h1><span class="gradient-text">Username</span> sign-in</h1>
+            <p>Test and staff accounts only.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    c1, c2, c3 = st.columns([1, 1.3, 1])
+    with c2:
+        with st.form("credential_form"):
+            username = st.text_input("Username", placeholder="test or test_staff")
+            password = st.text_input("Password", type="password", placeholder="••••••••")
+            submitted = st.form_submit_button("Sign in")
+
+            if submitted:
+                u = (username or "").strip().lower()
+                p = password or ""
+
+                if u == TEST_CLIENT_USERNAME and p == TEST_PASSWORD:
+                    # Log in as the seeded test client
+                    customer = get_customer(TEST_CLIENT_EMAIL)
+                    audience = customer["audience"] if customer else "fleet"
+                    company = customer["company"] if customer else "Test Client"
+                    mark_login(TEST_CLIENT_EMAIL)
+                    log_login(TEST_CLIENT_EMAIL, "customer", "test_bypass")
+                    st.session_state["authenticated"] = True
+                    st.session_state["user_role"] = "customer"
+                    st.session_state["customer_email"] = TEST_CLIENT_EMAIL
+                    st.session_state["customer_company"] = company
+                    st.session_state["audience"] = audience
+                    _clear_pending()
+                    st.rerun()
+
+                elif u == TEST_STAFF_USERNAME and p == TEST_PASSWORD:
+                    log_login(STAFF_EMAIL_LABEL, "staff", "staff_credential")
+                    st.session_state["authenticated"] = True
+                    st.session_state["user_role"] = "staff"
+                    st.session_state["staff_identity"] = TEST_STAFF_USERNAME
+                    _clear_pending()
+                    st.rerun()
+
+                else:
+                    st.error("Invalid username or password.")
+
+        if st.button("← Back to email sign-in", key="back_to_email"):
+            st.session_state["login_step"] = "request"
+            st.rerun()
+
+
+# --- Step 2: verify the 6-digit code -------------------------------------
 
 def _step_verify_code() -> None:
     email = st.session_state.get("pending_email", "")
@@ -216,26 +293,32 @@ def _step_verify_code() -> None:
                     st.error("Please enter the 6-digit code.")
                     return
                 if not verify_code(email, code):
-                    st.error("That code is invalid or expired. Request a new one below.")
+                    st.error("That code is invalid or expired. Request a new one.")
                     return
 
-                company = st.session_state.get("pending_company", "")
-                audience = st.session_state.get("pending_audience", "fleet")
-                upsert_customer(email, company, audience)
+                customer = get_customer(email)
+                if not customer:
+                    st.error("Account not found. Contact your CSM.")
+                    return
 
+                mark_login(email)
+                log_login(email, "customer", "email_code")
                 st.session_state["authenticated"] = True
+                st.session_state["user_role"] = "customer"
                 st.session_state["customer_email"] = email
-                st.session_state["customer_company"] = company
-                st.session_state["audience"] = audience
-                # Clean pending keys
-                for k in ("pending_email", "pending_company", "pending_audience", "dev_code_to_show", "login_step"):
-                    st.session_state.pop(k, None)
+                st.session_state["customer_company"] = customer["company"] or ""
+                st.session_state["audience"] = customer["audience"] or "fleet"
+                _clear_pending()
                 st.rerun()
 
         if st.button("← Use a different email", key="back_to_request"):
-            for k in ("pending_email", "pending_company", "pending_audience", "dev_code_to_show", "login_step"):
-                st.session_state.pop(k, None)
+            _clear_pending()
             st.rerun()
+
+
+def _clear_pending() -> None:
+    for k in ("pending_email", "dev_code_to_show", "login_step"):
+        st.session_state.pop(k, None)
 
 
 def render_login() -> None:
@@ -244,5 +327,7 @@ def render_login() -> None:
     step = st.session_state.get("login_step", "request")
     if step == "verify":
         _step_verify_code()
+    elif step == "credential":
+        _step_credential()
     else:
         _step_request_code()
