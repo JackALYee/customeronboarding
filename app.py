@@ -165,6 +165,21 @@ html_head = r"""<!DOCTYPE html>
         .header-meta { margin-top: 10px; font-size: 0.85rem; color: var(--text-grey); opacity: 0.8; }
         .gradient-text { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
+        /* Mascot beside title */
+        .header-title-row { display: flex; align-items: center; justify-content: center; gap: 28px; flex-wrap: wrap; }
+        .header-title-row h1 { margin: 0; text-align: left; }
+        @keyframes mascot-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .header-mascot {
+            width: 120px; height: 120px; object-fit: contain; flex-shrink: 0;
+            animation: mascot-float 4s ease-in-out infinite;
+            filter: drop-shadow(0 12px 18px rgba(42, 245, 152, 0.18));
+        }
+        @media (max-width: 700px) {
+            .header-title-row { gap: 14px; }
+            .header-title-row h1 { text-align: center; font-size: 2rem !important; }
+            .header-mascot { width: 84px; height: 84px; }
+        }
+
         /* --- User identity pill --- */
         .user-pill { position: fixed; top: 18px; right: 24px; z-index: 9999; display: flex; align-items: center; gap: 10px; background: rgba(10,15,30,0.85); border: 1px solid rgba(42,245,152,0.25); padding: 8px 16px; border-radius: 30px; backdrop-filter: blur(10px); }
         .user-pill .user-icon { color: var(--primary-green); font-size: 1.1rem; }
@@ -311,9 +326,14 @@ html_head = r"""<!DOCTYPE html>
     <header>
         <div class="container">
             <div class="header-subtitle fade-up">Streamax Customer Onboarding</div>
-            <h1 class="fade-up" style="font-size: 2.8rem; line-height: 1.15; margin: 0;">
-                Welcome to the <span class="gradient-text">Streamax</span> family
-            </h1>
+            <div class="header-title-row fade-up">
+                <img src="https://drive.google.com/thumbnail?id=1bXf5psHrw4LOk0oMAkTJRL15_mLCabad&sz=w500"
+                     alt="Streamax Mascot" class="header-mascot"
+                     onerror="this.style.display='none';">
+                <h1 style="font-size: 2.8rem; line-height: 1.15;">
+                    Welcome to the <span class="gradient-text">Streamax</span> family
+                </h1>
+            </div>
             <div class="header-meta fade-up">Your guided journey — from unboxing to fleet-wide AI safety</div>
             <div class="header-meta fade-up" style="font-size: 0.75rem; opacity: 0.6;">v1.0 • For fleets &amp; TSP partners • support@streamax.com</div>
         </div>

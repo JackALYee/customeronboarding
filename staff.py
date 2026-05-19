@@ -128,6 +128,12 @@ def _create_client_form() -> None:
         with col1:
             email = st.text_input("Client email", placeholder="contact@theircompany.com")
             company = st.text_input("Company name", placeholder="e.g. Acme Logistics")
+            password = st.text_input(
+                "Initial password",
+                type="password",
+                placeholder="At least 6 characters",
+                help="Share this with the client out-of-band so they can sign in. They can change it later.",
+            )
         with col2:
             audience = st.selectbox(
                 "Audience type",
@@ -140,15 +146,22 @@ def _create_client_form() -> None:
         if submitted:
             email = (email or "").strip().lower()
             company = (company or "").strip()
+            pw = password or ""
             if not EMAIL_RE.match(email):
                 st.error("Please enter a valid email.")
                 return
             if not company:
                 st.error("Please enter the company name.")
                 return
+            if len(pw) < 6:
+                st.error("Password must be at least 6 characters.")
+                return
             created_by = st.session_state.get("staff_identity", "staff")
-            if db.create_customer(email, company, audience, created_by):
-                st.success(f"Client account created for {email} ({company}, {audience}).")
+            if db.create_customer(email, company, audience, pw, created_by):
+                st.success(
+                    f"Client account created for {email} ({company}, {audience}). "
+                    "Share the password with them out-of-band."
+                )
                 st.rerun()
             else:
                 st.warning(f"An account for {email} already exists.")
