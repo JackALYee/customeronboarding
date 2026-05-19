@@ -99,7 +99,7 @@ content = r"""
             <div class="video-thumb"><i class="fa-solid fa-sparkles"></i></div>
             <div class="video-meta">
                 <div class="video-title">CAN decode now supports 2,500+ EU vehicle models</div>
-                <div class="video-sub">March 2026 · Inventure partnership live. Non-intrusive CAN/FMS inductive reading — no diagnostic port required.</div>
+                <div class="video-sub">March 2026 · Non-intrusive CAN / FMS inductive reading — no diagnostic port required.</div>
             </div>
         </div>
         <div class="video-card">

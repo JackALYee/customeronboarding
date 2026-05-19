@@ -14,6 +14,27 @@ content = r"""
         </div>
     </div>
 
+    <h3 class="section-header fade-up">Watch your welcome video</h3>
+    <div class="card fade-up" style="padding: 0; overflow: hidden;">
+        <div class="welcome-video-wrap">
+            <div class="welcome-video-placeholder">
+                <i class="fa-brands fa-youtube"></i>
+                <div class="welcome-video-title">Welcome to Streamax</div>
+                <div class="welcome-video-sub">Video coming soon &mdash; replace this placeholder with your YouTube embed.</div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .welcome-video-wrap { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; border-radius: 14px; overflow: hidden; }
+        .welcome-video-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: radial-gradient(circle at 50% 40%, rgba(0,158,253,0.10), rgba(0,0,0,0.85) 70%);
+            color: #FFFFFF; text-align: center; padding: 24px; transition: background 0.3s ease; cursor: pointer; }
+        .welcome-video-placeholder:hover { background: radial-gradient(circle at 50% 40%, rgba(42,245,152,0.18), rgba(0,0,0,0.85) 70%); }
+        .welcome-video-placeholder .fa-youtube { font-size: 4rem; color: #ff0000; margin-bottom: 14px; filter: drop-shadow(0 4px 14px rgba(255,0,0,0.45)); }
+        .welcome-video-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 4px; color: #FFFFFF; }
+        .welcome-video-sub { font-size: 0.9rem; color: #94a3b8; max-width: 480px; }
+    </style>
+
     <h3 class="section-header fade-up">Your 30-day onboarding roadmap</h3>
     <div class="card fade-up">
         <div class="pipeline-container">
@@ -48,7 +69,7 @@ content = r"""
             <ul class="checklist">
                 <li><strong>CMS login</strong> — your Customer Success Manager (CSM) sent your platform URL + admin credentials separately.</li>
                 <li><strong>Mobile app</strong> — install <em>FT Cloud</em> (iOS / Google Play). Sign in with the same credentials.</li>
-                <li><strong>SIM / data plan</strong> — confirm each camera's cellular plan is active. If your cameras shipped with embedded connectivity (Webbing), no action needed.</li>
+                <li><strong>SIM / data plan</strong> — confirm each camera's cellular plan is active. If your cameras shipped with embedded connectivity, no action needed.</li>
                 <li><strong>Add fleet managers</strong> — invite your team in <em>CMS → Users</em>. Assign role: Admin, Manager, Safety, or Viewer.</li>
             </ul>
         </div>
@@ -68,19 +89,19 @@ content = r"""
     <h3 class="section-header fade-up">What "onboarding success" looks like</h3>
     <div class="grid-3 fade-up">
         <div class="glass-panel">
-            <div style="color: var(--primary-green); font-size: 2rem; font-weight: 800;">90%</div>
-            <h4>Fewer false alerts</h4>
-            <p style="font-size: 0.88rem;">With SafeGPT tuned, your safety manager sees 10–20 critical events/day instead of 500 noise alerts.</p>
+            <div style="color: var(--primary-green); font-size: 2rem; font-weight: 800;">Day 1</div>
+            <h4>Up &amp; running</h4>
+            <p style="font-size: 0.88rem;">Your first vehicles are installed, online, and streaming data and AI insight into your CMS the same day the hardware arrives.</p>
         </div>
         <div class="glass-panel">
-            <div style="color: var(--secondary-blue); font-size: 2rem; font-weight: 800;">15 min</div>
-            <h4>Per-vehicle install</h4>
-            <p style="font-size: 0.88rem;">One cable. One camera. One cellular plan. 3–4 vehicles per hour per installer.</p>
+            <div style="color: var(--secondary-blue); font-size: 2rem; font-weight: 800;">Week 1</div>
+            <h4>Team fluent</h4>
+            <p style="font-size: 0.88rem;">Your fleet managers, safety officers, and dispatchers understand the platform's mechanics and key features &mdash; and use it smoothly in their daily routine.</p>
         </div>
         <div class="glass-panel">
-            <div style="color: var(--primary-green); font-size: 2rem; font-weight: 800;">5–15 min</div>
-            <h4>Fatigue lead-time</h4>
-            <p style="font-size: 0.88rem;">SafeGPT detects fatigue 5–15 minutes <em>before</em> the driver's eyes close — intervention while still safe.</p>
+            <div style="color: var(--primary-green); font-size: 2rem; font-weight: 800;">Month 1</div>
+            <h4>Fully operational at scale</h4>
+            <p style="font-size: 0.88rem;">The full fleet is deployed, your first coaching cycle is live, and your baseline safety scorecard is in hand &mdash; the programme is running.</p>
         </div>
     </div>
 
