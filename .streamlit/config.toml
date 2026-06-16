@@ -1,0 +1,9 @@
+# Dark base theme with a golden/purple accent. Customer-facing pages override
+# their own surfaces via injected CSS / the components.html iframe, so this
+# mainly governs native widget chrome — most visibly on the staff dashboard.
+[theme]
+base = "dark"
+primaryColor = "#A06BFF"
+backgroundColor = "#0c0a14"
+secondaryBackgroundColor = "#161021"
+textColor = "#ECE7F5"

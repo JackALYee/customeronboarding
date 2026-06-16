@@ -6,6 +6,7 @@ Tables:
 """
 import hashlib
 import hmac
+import json
 import os
 import sqlite3
 from contextlib import contextmanager
@@ -13,6 +14,17 @@ from datetime import datetime
 from pathlib import Path
 
 DB_PATH = Path(__file__).parent / "onboarding.db"
+
+# Fallback "Key contacts" shown on a client's Welcome page until staff
+# customise them. Each client can be assigned different personnel, so staff
+# override this per-account from the dashboard.
+DEFAULT_CONTACTS = [
+    {"role": "Customer Success", "contact": "csm@streamax.com"},
+    {"role": "Technical Support", "contact": "support@streamax.com"},
+    {"role": "Hardware RMA", "contact": "rma@streamax.com"},
+    {"role": "Billing", "contact": "billing@streamax.com"},
+    {"role": "Emergency hotline", "contact": "Available 24/7 via your CSM"},
+]
 
 # Built-in test client account — seeded on app start, used by the
 # `test` / `testme` login bypass. Email is synthetic so it can't
@@ -102,6 +114,8 @@ def init_db() -> None:
             con.execute("ALTER TABLE customers ADD COLUMN created_by TEXT")
         if "password_hash" not in cols:
             con.execute("ALTER TABLE customers ADD COLUMN password_hash TEXT")
+        if "contacts_json" not in cols:
+            con.execute("ALTER TABLE customers ADD COLUMN contacts_json TEXT")
 
 
 def seed_test_accounts() -> None:
@@ -217,6 +231,43 @@ def list_customers():
                 "SELECT email, company, audience, created_at, first_login_at, last_login_at "
                 "FROM customers ORDER BY created_at DESC NULLS LAST, email"
             )
+        )
+
+
+# --- Per-client key contacts ---------------------------------------------
+
+def get_contacts(email: str):
+    """Return this client's key contacts as a list of {role, contact}.
+    Falls back to DEFAULT_CONTACTS when none have been set."""
+    row = get_customer(email)
+    if not row:
+        return [dict(c) for c in DEFAULT_CONTACTS]
+    raw = row["contacts_json"] if "contacts_json" in row.keys() else None
+    if not raw:
+        return [dict(c) for c in DEFAULT_CONTACTS]
+    try:
+        data = json.loads(raw)
+        out = [
+            {"role": str(d.get("role", "")).strip(), "contact": str(d.get("contact", "")).strip()}
+            for d in data
+            if str(d.get("role", "")).strip() or str(d.get("contact", "")).strip()
+        ]
+        return out or [dict(c) for c in DEFAULT_CONTACTS]
+    except Exception:
+        return [dict(c) for c in DEFAULT_CONTACTS]
+
+
+def set_contacts(email: str, contacts) -> None:
+    """Persist a client's key contacts. Empty rows are dropped."""
+    clean = [
+        {"role": str(c.get("role", "")).strip(), "contact": str(c.get("contact", "")).strip()}
+        for c in (contacts or [])
+        if str(c.get("role", "")).strip() or str(c.get("contact", "")).strip()
+    ]
+    with _conn() as con:
+        con.execute(
+            "UPDATE customers SET contacts_json = ? WHERE email = ?",
+            (json.dumps(clean), email.lower()),
         )
 
 

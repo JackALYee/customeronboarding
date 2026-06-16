@@ -315,7 +315,7 @@ def _render_product_card(item: dict) -> str:
 def _render_group(g: dict) -> str:
     cards = "".join(_render_product_card(it) for it in g["items"])
     return (
-        f'<h3 class="section-header fade-up"><i class="{g["icon"]}" style="color: var(--primary-green); margin-right: 10px;"></i>{g["group"]}</h3>'
+        f'<h3 class="section-header fade-up"><i class="{g["icon"]}" style="color: var(--gold); margin-right: 10px;"></i>{g["group"]}</h3>'
         f'<div class="card fade-up">'
         f'<p style="margin-top: 0;">{g["blurb"]}</p>'
         f'<div class="product-grid">{cards}</div>'
@@ -328,41 +328,41 @@ _PRODUCT_SECTION_STYLE = r"""
     .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px; }
     @media (max-width: 900px) { .product-grid { grid-template-columns: 1fr; } }
     .product-card { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 18px 20px; transition: var(--transition); }
-    .product-card:hover { border-color: rgba(42,245,152,0.3); background: rgba(255,255,255,0.04); transform: translateY(-2px); }
-    .product-name { color: var(--primary-green); font-weight: 700; font-size: 1.1rem; margin-bottom: 6px; letter-spacing: 0.3px; }
+    .product-card:hover { border-color: rgba(244,201,93,0.3); background: rgba(255,255,255,0.04); transform: translateY(-2px); }
+    .product-name { color: var(--gold); font-weight: 700; font-size: 1.1rem; margin-bottom: 6px; letter-spacing: 0.3px; }
     .product-desc { color: #cbd5e1; font-size: 0.88rem; margin-bottom: 12px; line-height: 1.55; }
     .dl-row { display: flex; flex-wrap: wrap; gap: 8px; }
-    .dl-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; background: rgba(42,245,152,0.08); border: 1px solid rgba(42,245,152,0.3); color: var(--primary-green) !important; font-size: 0.78rem; font-weight: 600; text-decoration: none; transition: var(--transition); }
-    .dl-btn:hover { background: rgba(42,245,152,0.18); color: #ffffff !important; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(42,245,152,0.2); }
+    .dl-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; background: rgba(244,201,93,0.08); border: 1px solid rgba(244,201,93,0.3); color: var(--gold) !important; font-size: 0.78rem; font-weight: 600; text-decoration: none; transition: var(--transition); }
+    .dl-btn:hover { background: rgba(244,201,93,0.18); color: #ffffff !important; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(244,201,93,0.2); }
     .dl-btn .fa-file-pdf { color: #ef4444; }
     .dl-btn:hover .fa-file-pdf { color: #ff6b6b; }
     .dl-note { color: #94a3b8; font-size: 0.82rem; font-style: italic; padding-top: 4px; }
-    .dl-note i { color: var(--secondary-blue); margin-right: 4px; }
+    .dl-note i { color: var(--purple); margin-right: 4px; }
 
     /* Upload placeholder */
     .invoice-uploader {
         position: relative;
-        border: 2px dashed rgba(42,245,152,0.35);
+        border: 2px dashed rgba(244,201,93,0.35);
         border-radius: 14px;
         padding: 32px 24px;
         text-align: center;
-        background: linear-gradient(135deg, rgba(42,245,152,0.04), rgba(0,158,253,0.03));
+        background: linear-gradient(135deg, rgba(244,201,93,0.04), rgba(160,107,255,0.03));
         transition: var(--transition);
         cursor: pointer;
     }
-    .invoice-uploader:hover { border-color: var(--primary-green); background: linear-gradient(135deg, rgba(42,245,152,0.08), rgba(0,158,253,0.05)); }
-    .invoice-uploader.is-dragover { border-color: var(--primary-green); background: rgba(42,245,152,0.10); }
-    .invoice-uploader .uploader-icon { font-size: 2.6rem; color: var(--primary-green); margin-bottom: 12px; }
+    .invoice-uploader:hover { border-color: var(--gold); background: linear-gradient(135deg, rgba(244,201,93,0.08), rgba(160,107,255,0.05)); }
+    .invoice-uploader.is-dragover { border-color: var(--gold); background: rgba(244,201,93,0.10); }
+    .invoice-uploader .uploader-icon { font-size: 2.6rem; color: var(--gold); margin-bottom: 12px; }
     .invoice-uploader .uploader-title { font-size: 1.15rem; font-weight: 700; color: #FFFFFF; margin-bottom: 6px; }
     .invoice-uploader .uploader-sub { color: #94a3b8; font-size: 0.88rem; max-width: 540px; margin: 0 auto 14px; }
     .invoice-uploader .uploader-btn {
         display: inline-flex; align-items: center; gap: 8px;
-        background: linear-gradient(135deg, #2AF598, #009EFD);
-        color: #050810; font-weight: 700; font-size: 0.88rem;
+        background: linear-gradient(135deg, #F4C95D, #A06BFF);
+        color: #0c0a14; font-weight: 700; font-size: 0.88rem;
         padding: 9px 22px; border-radius: 30px; border: none;
         cursor: pointer; transition: var(--transition);
     }
-    .invoice-uploader .uploader-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(42,245,152,0.25); }
+    .invoice-uploader .uploader-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(244,201,93,0.25); }
     .invoice-uploader input[type=file] { display: none; }
     .invoice-uploader .coming-soon-badge {
         position: absolute; top: 12px; right: 14px;
@@ -373,17 +373,17 @@ _PRODUCT_SECTION_STYLE = r"""
     }
     .invoice-result {
         margin-top: 14px; padding: 12px 18px; border-radius: 10px;
-        background: rgba(0,158,253,0.08); border: 1px solid rgba(0,158,253,0.3);
+        background: rgba(160,107,255,0.08); border: 1px solid rgba(160,107,255,0.3);
         color: #cbd5e1; font-size: 0.88rem; text-align: left; display: none;
     }
     .invoice-result.show { display: block; }
-    .invoice-result strong { color: var(--secondary-blue); }
+    .invoice-result strong { color: var(--purple); }
 </style>
 """
 
 
 _INVOICE_PLACEHOLDER = r"""
-    <h3 class="section-header fade-up"><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--primary-green); margin-right: 10px;"></i>Upload your proforma invoice (auto-recognise products)</h3>
+    <h3 class="section-header fade-up"><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--gold); margin-right: 10px;"></i>Upload your proforma invoice (auto-recognise products)</h3>
     <div class="card fade-up" style="padding: 24px;">
         <p style="margin-top: 0;">Drop your Streamax proforma invoice here. The portal will automatically detect the products on your order and surface the matching spec sheets and user manuals below — no scrolling needed.</p>
         <div class="invoice-uploader" id="invoice-uploader-zone" onclick="document.getElementById('invoice-file-input').click()">
@@ -438,13 +438,13 @@ _intro = r"""
 <div id="products" class="content-section hidden">
 
     <div class="card fade-up">
-        <h2><i class="fa-solid fa-box" style="color: var(--primary-green); margin-right: 10px;"></i>Your Streamax product catalogue</h2>
+        <h2><i class="fa-solid fa-box" style="color: var(--gold); margin-right: 10px;"></i>Your Streamax product catalogue</h2>
         <p>Browse every product currently in the Streamax catalogue, with the spec sheet and user manual for each one a single click away. Products still in planning or pre-release are not listed here &mdash; ask your CSM for the roadmap.</p>
     </div>
 """
 
 _outro = r"""
-    <h3 class="section-header fade-up"><i class="fa-solid fa-bolt" style="color: var(--primary-green); margin-right: 10px;"></i>The "one-device" architecture &mdash; why one Streamax camera replaces your tracker</h3>
+    <h3 class="section-header fade-up"><i class="fa-solid fa-bolt" style="color: var(--gold); margin-right: 10px;"></i>The "one-device" architecture &mdash; why one Streamax camera replaces your tracker</h3>
     <div class="card fade-up">
         <p>Traditionally video telematics + GPS tracking required two devices &mdash; a separate tracker plus a separate camera, with two installations, two cellular plans, and two points of failure.</p>
         <p>Streamax cameras read native vehicle data via <strong>CAN bus / OBD-II / J1939 / FMS</strong>. One camera does everything:</p>

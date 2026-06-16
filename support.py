@@ -4,19 +4,19 @@ content = r"""
 <div id="support" class="content-section hidden">
 
     <div class="card fade-up">
-        <h2><i class="fa-solid fa-life-ring" style="color: var(--primary-green); margin-right: 10px;"></i>Support &amp; resources</h2>
+        <h2><i class="fa-solid fa-life-ring" style="color: var(--gold); margin-right: 10px;"></i>Support &amp; resources</h2>
         <p>Everything you need to get help, stay current, and self-serve. Response SLAs by tier: <strong>Essential</strong> 4 business hours · <strong>Pro</strong> 2 hours · <strong>Enterprise</strong> 30 min.</p>
     </div>
 
     <h3 class="section-header fade-up">Get help</h3>
     <div class="grid-3 fade-up">
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-envelope" style="color: var(--primary-green);"></i> Email a ticket</h4>
+            <h4><i class="fa-solid fa-envelope" style="color: var(--gold);"></i> Email a ticket</h4>
             <p style="font-size: 0.9rem;">Quickest written record. Include vehicle ID, device serial, and a screenshot if applicable.</p>
             <a href="mailto:support@streamax.com" class="cta-btn secondary" style="margin-top: 8px;">support@streamax.com</a>
         </div>
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-comments" style="color: var(--secondary-blue);"></i> Live chat</h4>
+            <h4><i class="fa-solid fa-comments" style="color: var(--purple);"></i> Live chat</h4>
             <p style="font-size: 0.9rem;">Bottom-right corner of the CMS. Agents online during your regional business hours.</p>
             <a href="#" class="cta-btn secondary" style="margin-top: 8px;">Open in CMS</a>
         </div>
@@ -62,13 +62,13 @@ content = r"""
     <h3 class="section-header fade-up">Downloads</h3>
     <div class="grid-3 fade-up">
         <div class="glass-panel">
-            <h4><i class="fa-brands fa-apple" style="color: var(--text-white);"></i> / <i class="fa-brands fa-android" style="color: var(--primary-green);"></i> FT Cloud mobile app</h4>
+            <h4><i class="fa-brands fa-apple" style="color: var(--text-white);"></i> / <i class="fa-brands fa-android" style="color: var(--gold);"></i> FT Cloud mobile app</h4>
             <p style="font-size: 0.88rem;">Live video, alerts, two-way audio on the go.</p>
             <a href="#" class="cta-btn secondary" style="margin-top: 8px;">App Store</a>
             <a href="#" class="cta-btn secondary" style="margin-top: 8px; margin-left: 8px;">Google Play</a>
         </div>
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-microchip" style="color: var(--secondary-blue);"></i> Firmware</h4>
+            <h4><i class="fa-solid fa-microchip" style="color: var(--purple);"></i> Firmware</h4>
             <p style="font-size: 0.88rem;">Latest firmware bundles for all device models. OTA pushed automatically; manual download available for offline updates.</p>
             <a href="#" class="cta-btn secondary" style="margin-top: 8px;">Browse firmware</a>
         </div>
@@ -112,7 +112,7 @@ content = r"""
     </div>
 
     <h3 class="section-header fade-up">Community &amp; feedback</h3>
-    <div class="card fade-up" style="background: linear-gradient(135deg, rgba(0,158,253,0.06), rgba(42,245,152,0.03));">
+    <div class="card fade-up" style="background: linear-gradient(135deg, rgba(160,107,255,0.06), rgba(244,201,93,0.03));">
         <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
             <div style="flex: 1; min-width: 250px;">
                 <h4>Help shape what we build next</h4>

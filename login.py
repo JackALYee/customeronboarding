@@ -18,6 +18,7 @@ from db import (
     log_login,
     TEST_CLIENT_EMAIL,
 )
+from assets import MASCOT_DATA_URI
 
 init_db()
 seed_test_accounts()
@@ -34,7 +35,7 @@ def _inject_login_css() -> None:
     st.markdown(
         """
         <style>
-        .stApp { background-color: #050810; background-image: radial-gradient(circle at 50% -20%, #0B1221, #050810); }
+        .stApp { background-color: #0c0a14; background-image: radial-gradient(circle at 50% -20%, #1c1330, #0c0a14); }
         [data-testid="stTextInput"],
         [data-testid="stTextInput"] > div,
         [data-testid="stTextInput"] > div > div,
@@ -53,14 +54,14 @@ def _inject_login_css() -> None:
         }
         [data-testid="stTextInput"] input {
             background: transparent !important;
-            color: #2AF598 !important;
-            -webkit-text-fill-color: #2AF598 !important;
-            caret-color: #2AF598 !important;
+            color: #F4C95D !important;
+            -webkit-text-fill-color: #F4C95D !important;
+            caret-color: #F4C95D !important;
         }
         [data-testid="stTextInput"] input:focus,
         [data-testid="stTextInput"] [data-baseweb="input"]:focus-within {
-            border-color: #2AF598 !important;
-            box-shadow: 0 0 0 1px #2AF598 !important;
+            border-color: #F4C95D !important;
+            box-shadow: 0 0 0 1px #F4C95D !important;
             outline: none !important;
         }
         [data-testid="stTextInput"] input::placeholder {
@@ -68,12 +69,12 @@ def _inject_login_css() -> None:
             -webkit-text-fill-color: rgba(160, 174, 192, 0.55) !important;
         }
         [data-testid="stTextInput"] input:-webkit-autofill {
-            -webkit-text-fill-color: #2AF598 !important;
+            -webkit-text-fill-color: #F4C95D !important;
             -webkit-box-shadow: 0 0 0 1000px rgba(20, 25, 40, 0.95) inset !important;
             transition: background-color 5000s ease-in-out 0s;
         }
         .stTextInput label, [data-testid="stTextInput"] label {
-            color: #A0AEC0 !important;
+            color: #A89FB8 !important;
         }
         [data-testid="stForm"] {
             background: rgba(255, 255, 255, 0.03);
@@ -84,8 +85,8 @@ def _inject_login_css() -> None:
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         .stButton>button {
-            background: linear-gradient(135deg, #2AF598 0%, #009EFD 100%) !important;
-            color: #050810 !important;
+            background: linear-gradient(135deg, #F4C95D 0%, #A06BFF 100%) !important;
+            color: #0c0a14 !important;
             font-weight: 700 !important;
             border: none;
             border-radius: 8px;
@@ -94,17 +95,17 @@ def _inject_login_css() -> None:
             transition: all 0.3s ease;
         }
         .stButton>button:hover {
-            box-shadow: 0 4px 15px rgba(42, 245, 152, 0.4);
+            box-shadow: 0 4px 15px rgba(244, 201, 93, 0.4);
             transform: translateY(-2px);
         }
         .login-hero { text-align: center; margin-bottom: 24px; }
         @keyframes mascot-float-login { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         .login-mascot { width: 130px; height: 130px; object-fit: contain; margin: 0 auto 16px; display: block;
             animation: mascot-float-login 4s ease-in-out infinite;
-            filter: drop-shadow(0 12px 18px rgba(42, 245, 152, 0.18)); }
+            filter: drop-shadow(0 12px 18px rgba(244, 201, 93, 0.18)); }
         .login-hero h1 { color: white; font-size: 2.6rem; margin: 0; line-height: 1.15; }
-        .login-hero p { color: #A0AEC0; font-size: 1rem; margin-top: 8px; }
-        .gradient-text { background: linear-gradient(135deg, #2AF598 0%, #009EFD 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .login-hero p { color: #A89FB8; font-size: 1rem; margin-top: 8px; }
+        .gradient-text { background: linear-gradient(135deg, #F4C95D 0%, #A06BFF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .login-helptext { color: #64748b; font-size: 0.8rem; text-align: center; margin-top: 18px; }
         </style>
         """,
@@ -117,9 +118,9 @@ def render_login() -> None:
     st.write("<br>", unsafe_allow_html=True)
 
     st.markdown(
-        """
+        f"""
         <div class="login-hero">
-            <img src="https://drive.google.com/thumbnail?id=1bXf5psHrw4LOk0oMAkTJRL15_mLCabad&sz=w500"
+            <img src="{MASCOT_DATA_URI}"
                  alt="Streamax Mascot" class="login-mascot"
                  onerror="this.style.display='none';">
             <h1>Welcome to <span class="gradient-text">Streamax</span></h1>

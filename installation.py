@@ -4,8 +4,8 @@ content = r"""
 <div id="installation" class="content-section hidden">
 
     <div class="card fade-up">
-        <h2><i class="fa-solid fa-screwdriver-wrench" style="color: var(--primary-green); margin-right: 10px;"></i>15-minute plug-and-play installation</h2>
-        <p>One installer can equip <strong style="color:#2AF598;">3–4 vehicles per hour</strong>. A 200-truck fleet deploys in a week; a 1,000-truck fleet in a month.</p>
+        <h2><i class="fa-solid fa-screwdriver-wrench" style="color: var(--gold); margin-right: 10px;"></i>15-minute plug-and-play installation</h2>
+        <p>One installer can equip <strong style="color:#F4C95D;">3–4 vehicles per hour</strong>. A 200-truck fleet deploys in a week; a 1,000-truck fleet in a month.</p>
     </div>
 
     <h3 class="section-header fade-up">The 5-step universal install</h3>
@@ -43,7 +43,7 @@ content = r"""
     <h3 class="section-header fade-up">Vehicle-type install playbooks</h3>
     <div class="grid-2 fade-up">
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-truck" style="color: var(--primary-green);"></i> Long-haul tractor</h4>
+            <h4><i class="fa-solid fa-truck" style="color: var(--gold);"></i> Long-haul tractor</h4>
             <ul class="checklist">
                 <li><strong>Front-facing</strong> — windshield, centred</li>
                 <li><strong>Driver DMS</strong> — C29N on A-pillar at eye level for sunglasses + low-light coverage</li>
@@ -53,7 +53,7 @@ content = r"""
             </ul>
         </div>
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-bus" style="color: var(--secondary-blue);"></i> City bus / transit</h4>
+            <h4><i class="fa-solid fa-bus" style="color: var(--purple);"></i> City bus / transit</h4>
             <ul class="checklist">
                 <li><strong>Forward</strong> — above driver, behind windshield</li>
                 <li><strong>Driver DMS</strong> — dashboard or A-pillar mount</li>
@@ -63,7 +63,7 @@ content = r"""
             </ul>
         </div>
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-taxi" style="color: var(--primary-green);"></i> Taxi / rideshare</h4>
+            <h4><i class="fa-solid fa-taxi" style="color: var(--gold);"></i> Taxi / rideshare</h4>
             <ul class="checklist">
                 <li><strong>Forward + interior dual</strong> — combined unit, dash-mounted</li>
                 <li><strong>Passenger panic button</strong> — accessible in rear seat</li>
@@ -71,7 +71,7 @@ content = r"""
             </ul>
         </div>
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-mountain" style="color: var(--secondary-blue);"></i> Mining haul truck</h4>
+            <h4><i class="fa-solid fa-mountain" style="color: var(--purple);"></i> Mining haul truck</h4>
             <ul class="checklist">
                 <li><strong>Mining MDVR (M10)</strong> — hardened for vibration, dust, -40 to +85 °C, 4TB storage</li>
                 <li><strong>AVM 360°</strong> — 6 HD cameras, surround view</li>

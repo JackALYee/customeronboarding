@@ -3,8 +3,8 @@
 content = r"""
 <div id="ai-features" class="content-section hidden">
 
-    <div class="card fade-up" style="background: linear-gradient(135deg, rgba(42,245,152,0.06), rgba(0,158,253,0.04));">
-        <h2><i class="fa-solid fa-robot" style="color: var(--primary-green); margin-right: 10px;"></i>SafeGPT — cloud behavioral intelligence</h2>
+    <div class="card fade-up" style="background: linear-gradient(135deg, rgba(244,201,93,0.06), rgba(160,107,255,0.04));">
+        <h2><i class="fa-solid fa-robot" style="color: var(--gold); margin-right: 10px;"></i>SafeGPT — cloud behavioral intelligence</h2>
         <p style="font-size: 1.05rem; color: #e2e8f0;">
             Most cameras <em>detect events</em>. SafeGPT <em>understands behavior</em>. The difference is whether the fatigued driver gets pulled over before the crash, or whether the crash gets recorded for the insurance claim.
         </p>
@@ -67,7 +67,7 @@ content = r"""
     <h3 class="section-header fade-up">ADAS &amp; DMS event types — what your cameras detect</h3>
     <div class="grid-2 fade-up">
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-road" style="color: var(--secondary-blue);"></i> ADAS — forward-facing</h4>
+            <h4><i class="fa-solid fa-road" style="color: var(--purple);"></i> ADAS — forward-facing</h4>
             <ul class="checklist">
                 <li><strong>FCW</strong> — Forward Collision Warning</li>
                 <li><strong>LDW</strong> — Lane Departure Warning</li>
@@ -78,7 +78,7 @@ content = r"""
             </ul>
         </div>
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-user" style="color: var(--primary-green);"></i> DMS — driver-facing</h4>
+            <h4><i class="fa-solid fa-user" style="color: var(--gold);"></i> DMS — driver-facing</h4>
             <ul class="checklist">
                 <li><strong>Drowsiness</strong> — eyes-closed, microsleep, yawn</li>
                 <li><strong>Distraction</strong> — gaze off-road, head turn</li>

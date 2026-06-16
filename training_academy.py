@@ -4,19 +4,19 @@ content = r"""
 <div id="training" class="content-section hidden">
 
     <div class="card fade-up">
-        <h2><i class="fa-solid fa-graduation-cap" style="color: var(--primary-green); margin-right: 10px;"></i>Streamax Training Academy</h2>
+        <h2><i class="fa-solid fa-graduation-cap" style="color: var(--gold); margin-right: 10px;"></i>Streamax Training Academy</h2>
         <p>Role-based learning paths. Pick the track that matches your job — each video module is 3–8 minutes, with a quiz and a downloadable completion certificate at the end of each track.</p>
     </div>
 
     <h3 class="section-header fade-up">Choose your learning path</h3>
     <div class="grid-3 fade-up">
-        <div class="glass-panel" style="border-top: 3px solid var(--primary-green);">
-            <h4><i class="fa-solid fa-user-tie" style="color: var(--primary-green);"></i> Fleet Manager</h4>
+        <div class="glass-panel" style="border-top: 3px solid var(--gold);">
+            <h4><i class="fa-solid fa-user-tie" style="color: var(--gold);"></i> Fleet Manager</h4>
             <p style="font-size: 0.88rem;">Strategic view of your safety programme. KPIs, reports, ROI tracking.</p>
             <p style="font-size: 0.8rem; color: var(--text-grey); margin-top: 8px;"><strong>~45 min</strong> · 7 lessons</p>
         </div>
-        <div class="glass-panel" style="border-top: 3px solid var(--secondary-blue);">
-            <h4><i class="fa-solid fa-helmet-safety" style="color: var(--secondary-blue);"></i> Safety Officer</h4>
+        <div class="glass-panel" style="border-top: 3px solid var(--purple);">
+            <h4><i class="fa-solid fa-helmet-safety" style="color: var(--purple);"></i> Safety Officer</h4>
             <p style="font-size: 0.88rem;">Daily event review, coaching workflows, incident investigation.</p>
             <p style="font-size: 0.8rem; color: var(--text-grey); margin-top: 8px;"><strong>~60 min</strong> · 9 lessons</p>
         </div>
@@ -35,8 +35,8 @@ content = r"""
             <p style="font-size: 0.88rem;">What the camera does, what it doesn't do, how the alerts work, how it protects you.</p>
             <p style="font-size: 0.8rem; color: var(--text-grey); margin-top: 8px;"><strong>~15 min</strong> · 4 lessons</p>
         </div>
-        <div class="glass-panel" style="border-top: 3px solid #2AF598;">
-            <h4><i class="fa-solid fa-code" style="color: #2AF598;"></i> Integration / TSP</h4>
+        <div class="glass-panel" style="border-top: 3px solid #F4C95D;">
+            <h4><i class="fa-solid fa-code" style="color: #F4C95D;"></i> Integration / TSP</h4>
             <p style="font-size: 0.88rem;">API, white-label platform, SSO, data partnership addendum, OEM patterns.</p>
             <p style="font-size: 0.8rem; color: var(--text-grey); margin-top: 8px;"><strong>~75 min</strong> · 10 lessons</p>
         </div>
@@ -109,7 +109,7 @@ content = r"""
     <h3 class="section-header fade-up">Live webinars + community</h3>
     <div class="grid-2 fade-up">
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-calendar" style="color: var(--secondary-blue);"></i> Upcoming webinars</h4>
+            <h4><i class="fa-solid fa-calendar" style="color: var(--purple);"></i> Upcoming webinars</h4>
             <ul class="checklist">
                 <li><strong>SafeGPT deep-dive</strong> — 1st Tuesday of each month, 10am ET / 4pm CET</li>
                 <li><strong>"What's new" release briefing</strong> — quarterly, with the product team</li>
@@ -119,7 +119,7 @@ content = r"""
             <a href="#" class="cta-btn secondary" style="margin-top: 10px;"><i class="fa-solid fa-calendar-plus"></i> Register</a>
         </div>
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-certificate" style="color: var(--primary-green);"></i> Certifications</h4>
+            <h4><i class="fa-solid fa-certificate" style="color: var(--gold);"></i> Certifications</h4>
             <p style="font-size: 0.9rem;">Complete a learning track and pass the end-of-track quiz (80% to pass) to earn a downloadable Streamax-issued certificate. Re-certification every 12 months.</p>
             <ul class="checklist">
                 <li><strong>Streamax Certified Fleet Manager</strong></li>
