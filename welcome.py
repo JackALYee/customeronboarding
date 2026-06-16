@@ -17,22 +17,17 @@ content = r"""
     <h3 class="section-header fade-up">Watch your welcome video</h3>
     <div class="card fade-up" style="padding: 0; overflow: hidden;">
         <div class="welcome-video-wrap">
-            <div class="welcome-video-placeholder">
-                <i class="fa-brands fa-youtube"></i>
-                <div class="welcome-video-title">Welcome to Streamax</div>
-                <div class="welcome-video-sub">Video coming soon &mdash; replace this placeholder with your YouTube embed.</div>
-            </div>
+            <iframe class="welcome-video-frame"
+                src="https://www.youtube.com/embed/sp60sNpDXPo?list=PLygpi767M5jr25RDxtO-y_IsChoAC1Mvd&amp;rel=0"
+                title="Welcome to Streamax"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
         </div>
     </div>
     <style>
         .welcome-video-wrap { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; border-radius: 14px; overflow: hidden; }
-        .welcome-video-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: radial-gradient(circle at 50% 40%, rgba(160,107,255,0.10), rgba(0,0,0,0.85) 70%);
-            color: #FFFFFF; text-align: center; padding: 24px; transition: background 0.3s ease; cursor: pointer; }
-        .welcome-video-placeholder:hover { background: radial-gradient(circle at 50% 40%, rgba(244,201,93,0.18), rgba(0,0,0,0.85) 70%); }
-        .welcome-video-placeholder .fa-youtube { font-size: 4rem; color: #ff0000; margin-bottom: 14px; filter: drop-shadow(0 4px 14px rgba(255,0,0,0.45)); }
-        .welcome-video-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 4px; color: #FFFFFF; }
-        .welcome-video-sub { font-size: 0.9rem; color: #94a3b8; max-width: 480px; }
+        .welcome-video-frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
     </style>
 
     <h3 class="section-header fade-up">Your 30-day onboarding roadmap</h3>
