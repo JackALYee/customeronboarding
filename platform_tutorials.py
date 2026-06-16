@@ -865,6 +865,8 @@ content = r"""
 
         /* overlays (panels + menus) */
         .fm-overlay { position:absolute; z-index:60; }
+        .fm-overlay[hidden] { display:none !important; }  /* class display must not override the hidden toggle */
+        .fm-btn:active, .fm-pill:active, .fm-topicon:active, .fm-nav:active, .fm-tab:active, .fm-subtab:active, .fm-ag-sug:active, .fm-veh:active { transform:scale(0.98); }
         .fm-agent, .fm-notifs { top:54px; right:0; bottom:0; width:360px; background:#fff; border-left:1px solid #e2e3ea; box-shadow:-12px 0 40px rgba(0,0,0,0.10); display:flex; flex-direction:column; }
         .fm-ov-head { display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-bottom:1px solid #eef0f4; }
         .fm-agent .fm-ov-head { background:#1b1726; color:#fff; }
