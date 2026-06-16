@@ -84,7 +84,7 @@ button[data-baseweb="tab"][aria-selected="true"] { color:var(--txt) !important; 
 .badge-tsp { color:var(--purple); background:rgba(160,107,255,0.14); border:1px solid rgba(160,107,255,0.30); }
 .badge-grey { color:var(--muted); background:rgba(168,159,184,0.10); border:1px solid rgba(168,159,184,0.22); }
 .preview-label { color:var(--faint); font-size:0.75rem; text-transform:uppercase; letter-spacing:0.9px; margin:18px 0 8px; }
-.preview-card { background:rgba(255,255,255,0.03); border:1px solid var(--glass-brd); border-radius:14px; padding:22px 24px; backdrop-filter:blur(12px); max-width:560px; }
+.preview-card { background:rgba(255,255,255,0.03); border:1px solid var(--glass-brd); border-radius:14px; padding:22px 24px; backdrop-filter:blur(12px); }
 .preview-card h4 { font-size:1.05rem; font-weight:700; color:var(--txt); margin:0 0 12px; }
 .preview-card .sla { font-size:0.8rem; margin-top:12px; color:var(--muted); }
 .topbar { position:fixed; top:0; left:0; right:0; height:56px; z-index:1000; background:rgba(12,10,20,0.85); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(255,255,255,0.08); }
@@ -251,43 +251,51 @@ def _contacts_editor() -> None:
     nonce = st.session_state.get(nonce_key, 0)
 
     current = db.get_contacts(email)
-    text = st.text_area(
-        "Contacts",
-        value=_contacts_to_text(current),
-        height=200,
-        key=f"contacts_text::{email}::{nonce}",
-        label_visibility="collapsed",
-    )
+
+    edit_col, preview_col = st.columns(2, gap="large")
+
+    with edit_col:
+        st.markdown("<div class='preview-label'>Edit — one per line, Role | contact</div>", unsafe_allow_html=True)
+        text = st.text_area(
+            "Contacts",
+            value=_contacts_to_text(current),
+            height=300,
+            key=f"contacts_text::{email}::{nonce}",
+            label_visibility="collapsed",
+        )
+        b1, b2 = st.columns(2)
+        with b1:
+            save = st.button("Save contacts", key=f"save_contacts::{email}", type="primary", use_container_width=True)
+        with b2:
+            reset = st.button("Reset to default", key=f"reset_contacts::{email}", use_container_width=True)
 
     # Live preview — a faithful replica of the "Key contacts" card the client
     # sees on their Welcome page. Values are HTML-escaped (the client page
     # escapes too), so role/contact text can never break the markup.
     parsed = _parse_contacts_text(text)
-    prev_rows = "".join(
-        f"<tr><td style='width:40%;'><strong style='color:var(--txt);'>{_html.escape(p['role']) or '—'}</strong></td>"
-        f"<td style='color:#cabfe0;'>{_html.escape(p['contact']) or '—'}</td></tr>"
-        for p in parsed
-    ) or "<tr><td style='color:var(--faint);'>No contacts yet — add one above.</td></tr>"
-    st.markdown(
-        "<div class='preview-label'>Preview — exactly what the client sees on their Welcome page</div>"
-        "<div class='preview-card'>"
-        "<h4><i class='fa-solid fa-headset' style='color:var(--purple); margin-right:6px;'></i> Key contacts</h4>"
-        f"<table class='stmx-table'><tbody>{prev_rows}</tbody></table>"
-        "<p class='sla'>Response SLA: 4 business hours for Essential, 2 hours for Pro, 30 min for Enterprise.</p>"
-        "</div>",
-        unsafe_allow_html=True,
-    )
+    with preview_col:
+        prev_rows = "".join(
+            f"<tr><td style='width:40%;'><strong style='color:var(--txt);'>{_html.escape(p['role']) or '—'}</strong></td>"
+            f"<td style='color:#cabfe0;'>{_html.escape(p['contact']) or '—'}</td></tr>"
+            for p in parsed
+        ) or "<tr><td style='color:var(--faint);'>No contacts yet — add one on the left.</td></tr>"
+        st.markdown(
+            "<div class='preview-label'>Preview — what the client sees</div>"
+            "<div class='preview-card'>"
+            "<h4><i class='fa-solid fa-headset' style='color:var(--purple); margin-right:6px;'></i> Key contacts</h4>"
+            f"<table class='stmx-table'><tbody>{prev_rows}</tbody></table>"
+            "<p class='sla'>Response SLA: 4 business hours for Essential, 2 hours for Pro, 30 min for Enterprise.</p>"
+            "</div>",
+            unsafe_allow_html=True,
+        )
 
-    c1, c2, _ = st.columns([1, 1, 4])
-    with c1:
-        if st.button("Save contacts", key=f"save_contacts::{email}", type="primary"):
-            db.set_contacts(email, parsed)
-            st.success(f"Saved {len(parsed)} contact(s).")
-    with c2:
-        if st.button("Reset to default", key=f"reset_contacts::{email}"):
-            db.set_contacts(email, db.DEFAULT_CONTACTS)
-            st.session_state[nonce_key] = nonce + 1  # re-seed the textarea
-            st.rerun()
+    if save:
+        db.set_contacts(email, parsed)
+        st.success(f"Saved {len(parsed)} contact(s).")
+    if reset:
+        db.set_contacts(email, db.DEFAULT_CONTACTS)
+        st.session_state[nonce_key] = nonce + 1  # re-seed the textarea
+        st.rerun()
 
 
 # --- Tab: Activity --------------------------------------------------------
