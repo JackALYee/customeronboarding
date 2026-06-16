@@ -52,8 +52,8 @@ hr.rule { border:none; border-top:1px solid rgba(255,255,255,0.08); margin:18px 
 .whoami .tag { display:inline-block; margin-left:8px; padding:2px 9px; border-radius:7px; font-size:0.64rem; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:#1a1024; background:var(--grad); }
 .stButton > button, [data-testid="stFormSubmitButton"] > button { background:var(--glass) !important; color:var(--txt) !important; border:1px solid var(--glass-brd) !important; border-radius:10px !important; font-weight:600 !important; padding:0.5rem 1.15rem !important; backdrop-filter:blur(8px); box-shadow:none !important; transition:all .2s ease !important; }
 .stButton > button:hover, [data-testid="stFormSubmitButton"] > button:hover { background:rgba(255,255,255,0.08) !important; border-color:rgba(244,201,93,0.45) !important; transform:translateY(-1px); }
-.stButton > button[kind="primary"], [data-testid="stFormSubmitButton"] > button[kind="primary"] { background:var(--grad) !important; color:#1a1024 !important; border:none !important; font-weight:700 !important; }
-.stButton > button[kind="primary"]:hover, [data-testid="stFormSubmitButton"] > button[kind="primary"]:hover { box-shadow:0 8px 22px rgba(160,107,255,0.30) !important; transform:translateY(-1px); }
+.stButton > button[kind="primary"], [data-testid="stFormSubmitButton"] > button[kind="primary"] { background:rgba(160,107,255,0.16) !important; color:var(--txt) !important; border:1px solid rgba(160,107,255,0.45) !important; font-weight:600 !important; }
+.stButton > button[kind="primary"]:hover, [data-testid="stFormSubmitButton"] > button[kind="primary"]:hover { background:rgba(160,107,255,0.26) !important; border-color:rgba(160,107,255,0.70) !important; }
 [data-testid="stTextInput"] [data-baseweb="input"], [data-testid="stTextInput"] [data-baseweb="base-input"], [data-testid="stSelectbox"] [data-baseweb="select"] > div, .stTextArea textarea { background:rgba(255,255,255,0.04) !important; border:1px solid var(--glass-brd) !important; border-radius:10px !important; color:var(--txt) !important; }
 [data-testid="stTextInput"] input { color:var(--txt) !important; -webkit-text-fill-color:var(--txt) !important; }
 [data-testid="stTextInput"] [data-baseweb="input"]:focus-within, .stTextArea textarea:focus { border-color:rgba(244,201,93,0.55) !important; box-shadow:0 0 0 1px rgba(244,201,93,0.35) !important; }
@@ -106,7 +106,7 @@ button[data-baseweb="tab"][aria-selected="true"] { color:var(--txt) !important; 
 .um-langs { display:flex; gap:6px; margin-bottom:10px; }
 .um-langs .lang-pill { flex:1; text-align:center; padding:7px 0; border-radius:8px; border:1px solid var(--glass-brd); color:var(--muted); text-decoration:none; font-size:0.78rem; font-weight:700; }
 .um-langs .lang-pill:hover { color:var(--txt); border-color:rgba(244,201,93,0.45); }
-.um-langs .lang-pill.active { background:var(--grad); color:#1a1024; border:none; }
+.um-langs .lang-pill.active { background:rgba(160,107,255,0.22); color:var(--txt); border:1px solid rgba(160,107,255,0.55); }
 .um-divider { height:1px; background:rgba(255,255,255,0.08); margin:6px 0; }
 .um-item { display:flex; align-items:center; gap:10px; padding:10px 8px; border-radius:9px; color:var(--muted); text-decoration:none; font-size:0.88rem; font-weight:500; }
 .um-item:hover { background:rgba(255,255,255,0.06); color:var(--txt); }
