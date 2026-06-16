@@ -35,11 +35,6 @@ except ImportError as e:
     products_content = f"<div id='products' class='content-section hidden'><h2 style='color:#ff4757;padding:40px;text-align:center;'>products.py: {e}</h2></div>"
 
 try:
-    from installation import content as installation_content
-except ImportError as e:
-    installation_content = f"<div id='installation' class='content-section hidden'><h2 style='color:#ff4757;padding:40px;text-align:center;'>installation.py: {e}</h2></div>"
-
-try:
     from training_academy import content as training_content
 except ImportError as e:
     training_content = f"<div id='training' class='content-section hidden'><h2 style='color:#ff4757;padding:40px;text-align:center;'>training_academy.py: {e}</h2></div>"
@@ -63,6 +58,11 @@ try:
     from support import content as support_content
 except ImportError as e:
     support_content = f"<div id='support' class='content-section hidden'><h2 style='color:#ff4757;padding:40px;text-align:center;'>support.py: {e}</h2></div>"
+
+try:
+    from documentations import content as documentations_content
+except ImportError as e:
+    documentations_content = f"<div id='documentations' class='content-section hidden'><h2 style='color:#ff4757;padding:40px;text-align:center;'>documentations.py: {e}</h2></div>"
 
 
 # --- Streamlit page config -------------------------------------------------
@@ -476,14 +476,14 @@ html_head = r"""<!DOCTYPE html>
     <nav class="nav-tabs">
         <div class="nav-inner">
             <div class="nav-links">
-                <button class="nav-btn active" onclick="switchTab('welcome', this)">Welcome</button>
-                <button class="nav-btn" onclick="switchTab('products', this)">My Products</button>
-                <button class="nav-btn" onclick="switchTab('installation', this)">Installation</button>
-                <button class="nav-btn" onclick="switchTab('training', this)">Training Academy</button>
-                <button class="nav-btn" onclick="switchTab('ai-features', this)">AI Features</button>
-                <button class="nav-btn" onclick="switchTab('platform', this)">Platform Tutorials</button>
-                <button class="nav-btn" onclick="switchTab('playbooks', this)">Playbooks</button>
-                <button class="nav-btn" onclick="switchTab('support', this)">Support</button>
+                <button class="nav-btn active" data-tab="welcome" onclick="switchTab('welcome', this)">Welcome</button>
+                <button class="nav-btn" data-tab="products" onclick="switchTab('products', this)">My Products</button>
+                <button class="nav-btn" data-tab="platform" onclick="switchTab('platform', this)">Platform Tutorials</button>
+                <button class="nav-btn" data-tab="ai-features" onclick="switchTab('ai-features', this)">AI Features</button>
+                <button class="nav-btn" data-tab="training" onclick="switchTab('training', this)">Training Academy</button>
+                <button class="nav-btn" data-tab="documentations" onclick="switchTab('documentations', this)">Documentations</button>
+                <button class="nav-btn" data-tab="playbooks" onclick="switchTab('playbooks', this)">Playbooks</button>
+                <button class="nav-btn" data-tab="support" onclick="switchTab('support', this)">Support</button>
             </div>
 
             <div class="nav-user" id="nav-user">
@@ -583,7 +583,8 @@ html_tail = r"""
     <script>
         function switchTab(tabId, btnElement) {
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            if (btnElement) btnElement.classList.add('active');
+            var navBtn = btnElement || document.querySelector('.nav-btn[data-tab="' + tabId + '"]');
+            if (navBtn) navBtn.classList.add('active');
 
             document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
             const target = document.getElementById(tabId);
@@ -704,10 +705,10 @@ full_html = (
     html_head_filled
     + welcome_content
     + products_content
-    + installation_content
-    + training_content
-    + ai_features_content
     + platform_content
+    + ai_features_content
+    + training_content
+    + documentations_content
     + playbooks_content
     + support_content
     + html_tail

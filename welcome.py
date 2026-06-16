@@ -9,8 +9,8 @@ content = r"""
             Streamax has been ranked <strong style="color:#F4C95D;">#1 by Berg Insight for 6 consecutive years</strong> — 5 million+ vehicles, 100+ countries, 500+ partners. This portal walks you from your very first power-on to running a structured AI-powered safety programme across your whole fleet.
         </p>
         <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-            <a href="javascript:void(0)" onclick="switchTab('products', document.querySelectorAll('.nav-btn')[1])" class="cta-btn"><i class="fa-solid fa-rocket"></i> Start with My Products</a>
-            <a href="javascript:void(0)" onclick="switchTab('training', document.querySelectorAll('.nav-btn')[3])" class="cta-btn secondary"><i class="fa-solid fa-graduation-cap"></i> Jump to Training</a>
+            <a href="javascript:void(0)" onclick="switchTab('products')" class="cta-btn"><i class="fa-solid fa-rocket"></i> Start with My Products</a>
+            <a href="javascript:void(0)" onclick="switchTab('training')" class="cta-btn secondary"><i class="fa-solid fa-graduation-cap"></i> Jump to Training</a>
         </div>
     </div>
 
