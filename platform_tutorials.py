@@ -391,22 +391,79 @@ def _v_sub_orgs():
 
 # ───────────────────────── SETTINGS views ─────────────────────────
 
+def _toggle_row(label, sub="", on=False, tip=""):
+    s = f'<span>{sub}</span>' if sub else ""
+    return (f'<div class="fm-trow"{_tip(tip)}><div><b>{label}</b>{s}</div>'
+            f'<span class="fm-toggle{" on" if on else ""}"></span></div>')
+
+
+def _radio_row(label, opts):
+    items = "".join(f'<label class="fm-radio{" on" if sel else ""}"><span></span> {o}</label>' for o, sel in opts)
+    return f'<div class="fm-field"><label>{label}</label><div class="fm-radios">{items}</div></div>'
+
+
 def _v_set_general():
     subtabs = ('<div class="fm-subtabs">'
-               '<span class="fm-subtab active">Company</span><span class="fm-subtab">Branding</span>'
-               '<span class="fm-subtab">Units</span><span class="fm-subtab">Preferences</span></div>')
-    form = ('<div class="fm-panel" data-tip="Company Information|Your account basics — used across reports, invoices and the platform UI.">'
-            '<div class="fm-panel-head" style="border-left:3px solid #7c5cff;padding-left:10px;">Company Information</div>'
-            '<div class="fm-form-grid">'
-            '<div class="fm-field"><label>Company Name</label><span class="fm-input">Acme Logistics GmbH</span></div>'
-            '<div class="fm-field"><label>Industry</label><span class="fm-select">Transport &amp; Logistics <i class="fa-solid fa-chevron-down"></i></span></div>'
-            '<div class="fm-field"><label>Timezone</label><span class="fm-select">Europe/Berlin <i class="fa-solid fa-chevron-down"></i></span></div>'
-            '<div class="fm-field"><label>Date Format</label><span class="fm-select">DD/MM/YYYY <i class="fa-solid fa-chevron-down"></i></span></div>'
-            '</div></div>')
+               '<span class="fm-subtab active" data-stab="company"><i class="fa-solid fa-building"></i> Company</span>'
+               '<span class="fm-subtab" data-stab="branding"><i class="fa-solid fa-palette"></i> Branding</span>'
+               '<span class="fm-subtab" data-stab="units"><i class="fa-solid fa-ruler"></i> Units</span>'
+               '<span class="fm-subtab" data-stab="prefs"><i class="fa-solid fa-sliders"></i> Preferences</span></div>')
+
+    company = ('<div class="fm-stab-panel" data-stab="company"><div class="fm-panel" data-tip="Company Information|Your account basics — used across reports, invoices and the platform UI.">'
+               '<div class="fm-secttl">Company Information</div>'
+               '<div class="fm-form-grid">'
+               '<div class="fm-field"><label>Company Name</label><span class="fm-input">Acme Logistics GmbH</span></div>'
+               '<div class="fm-field"><label>Industry</label><span class="fm-select">Transport &amp; Logistics <i class="fa-solid fa-chevron-down"></i></span></div>'
+               '<div class="fm-field"><label>Timezone</label><span class="fm-select">Europe/Berlin <i class="fa-solid fa-chevron-down"></i></span></div>'
+               '<div class="fm-field"><label>Date Format</label><span class="fm-select">DD/MM/YYYY <i class="fa-solid fa-chevron-down"></i></span></div>'
+               '</div></div></div>')
+
+    swatches = "".join(f'<span class="fm-swatch" style="background:{c}"></span>' for c in
+                       ["#2563eb", "#7c5cff", "#a855f7", "#06b6d4", "#16a34a", "#f59e0b", "#dc2626", "#ec4899"])
+    branding = ('<div class="fm-stab-panel" data-stab="branding" hidden>'
+                '<div class="fm-panel" data-tip="Brand Color|Pick the accent applied to buttons, links and highlights across your white-label platform.">'
+                '<div class="fm-secttl">Brand Color</div><p class="fm-subtle2">Choose your brand color. Applied to buttons, links, and highlights across the platform.</p>'
+                '<div class="fm-color-row"><span class="fm-color-chip" style="background:#7c3aed"></span><span class="fm-input" style="min-width:120px;">#7C3AED</span><span class="fm-reset">Reset</span></div>'
+                f'<div class="fm-swatches">{swatches}</div>'
+                '<div class="fm-color-preview"><span class="fm-btn fm-btn-primary" style="background:#7c3aed;border-color:#7c3aed;">Button</span> <span class="fm-link">Link text</span> <span class="fm-bdg fm-bdg-muted" style="color:#7c3aed;background:#f0eaff;">Badge</span></div></div>'
+                '<div class="fm-panel" data-tip="Platform Name|The name shown in the header, login page and browser tab — your brand, not Streamax.">'
+                '<div class="fm-secttl">Platform Name</div><p class="fm-subtle2">Displayed in the header, login page, and browser tab.</p>'
+                '<div class="fm-color-row"><span class="fm-input">FleetMind</span><span class="fm-reset">Reset</span></div></div>'
+                '<div class="fm-panel" data-tip="Logo|Upload your own logo (light + dark variants). Recommended SVG, 200×40px.">'
+                '<div class="fm-secttl">Logo</div><p class="fm-subtle2">Recommended SVG, 200×40px, max 2MB.</p>'
+                '<div class="fm-form-grid"><div class="fm-field"><label>Default</label><div class="fm-dropzone"><i class="fa-solid fa-arrow-up-from-bracket"></i> Click or drag to upload</div></div>'
+                '<div class="fm-field"><label>Dark Background (optional)</label><div class="fm-dropzone"><i class="fa-solid fa-arrow-up-from-bracket"></i> Click or drag to upload</div></div></div></div></div>')
+
+    units = ('<div class="fm-stab-panel" data-stab="units" hidden><div class="fm-panel" data-tip="Units|Set the measurement units used everywhere — distance, temperature, fuel, pressure.">'
+             '<div class="fm-secttl">Units</div><p class="fm-subtle2">Choose your preferred measurement units.</p>'
+             '<div class="fm-form-grid">'
+             + _radio_row("Distance &amp; Speed", [("Metric (km, km/h)", True), ("Imperial (mi, mph)", False)])
+             + _radio_row("Temperature", [("Celsius", True), ("Fahrenheit", False)])
+             + '<div class="fm-field"><label>Energy Consumption</label><span class="fm-select">kWh/100km <i class="fa-solid fa-chevron-down"></i></span></div>'
+             + '<div class="fm-field"><label>Fuel Consumption</label><span class="fm-select">L/100km <i class="fa-solid fa-chevron-down"></i></span></div>'
+             + _radio_row("Pressure", [("Bar", True), ("PSI", False)])
+             + '</div></div></div>')
+
+    prefs = ('<div class="fm-stab-panel" data-stab="prefs" hidden>'
+             '<div class="fm-panel" data-tip="Help Improve FleetMind|Optional, anonymous usage data that helps improve the product.">'
+             '<div class="fm-secttl">Help Improve FleetMind</div><p class="fm-subtle2">Help us improve the product by sharing usage data.</p>'
+             + _toggle_row("Anonymous usage analytics", on=True)
+             + _toggle_row("Include my user ID in analytics", on=True) + '</div>'
+             '<div class="fm-panel" data-tip="Notification Preferences|Control sound and desktop alerts for in-app notifications and text messages.">'
+             '<div class="fm-secttl">Notification Preferences</div><p class="fm-subtle2">Control how you receive notifications.</p>'
+             '<div class="fm-form-grid"><div><div class="fm-sublbl">New Notifications</div>'
+             + _toggle_row("Sound", on=True) + _toggle_row("Desktop notification", on=False) + '</div>'
+             '<div><div class="fm-sublbl">New Text Messages</div>'
+             + _toggle_row("Sound", on=False) + _toggle_row("Desktop notification", on=False) + '</div></div></div>'
+             '<div class="fm-panel" data-tip="FleetAdvisor AI|Manage the built-in AI assistant — including whether it stores your chat history.">'
+             '<div class="fm-secttl">FleetAdvisor AI</div><p class="fm-subtle2">Manage your interaction with FleetAdvisor.</p>'
+             + _toggle_row("Store chat history", "Allow FleetAdvisor to store conversation history for better responses", on=True) + '</div></div>')
+
     return ('<section class="fm-view" data-view="set-general" hidden>'
             + _pagehead("General Settings", _btn("Save Changes", primary=True, icon="fa-floppy-disk"))
             + '<p class="fm-subtle">Manage your account and preferences</p>'
-            + '<div class="fm-settings-wrap"><div class="fm-settings-aside">' + subtabs + '</div><div class="fm-settings-main">' + form + '</div></div></section>')
+            + '<div class="fm-settings-wrap"><div class="fm-settings-aside">' + subtabs + '</div>'
+            + '<div class="fm-settings-main">' + company + branding + units + prefs + '</div></div></section>')
 
 
 def _v_set_users():
@@ -514,9 +571,49 @@ _TOPBAR = (
     '<span class="fm-topnav-item" data-top="subscription">Subscription</span>'
     '<span class="fm-topnav-item" data-top="settings">Settings</span></div>'
     '<div class="fm-topicons">'
-    '<i class="fa-solid fa-bell" data-tip="Notifications|Real-time pushes for critical events — accidents, panic button, unauthorised driver."></i>'
-    '<i class="fa-solid fa-circle-question" data-tip="Help|In-app guides and support."></i>'
-    '<span class="fm-avatar">AD</span></div></div>'
+    '<span class="fm-topicon" data-panel="agent" data-tip="AI Agent (FleetAdvisor)|Ask the built-in AI to analyse your fleet, surface insights from the current page, and take action — all in chat."><i class="fa-solid fa-shield-halved"></i></span>'
+    '<span class="fm-topicon" data-panel="notifs" data-tip="Notifications|Real-time pushes for critical events — accidents, panic button, unauthorised driver."><i class="fa-solid fa-bell"></i><span class="fm-icon-dot"></span></span>'
+    '<span class="fm-topicon" data-panel="help" data-tip="Help|Docs, keyboard shortcuts, support and what\'s new."><i class="fa-solid fa-circle-question"></i></span>'
+    '<span class="fm-avatar fm-topicon" data-panel="account" data-tip="Account|Your profile, password, language, and sign-out.">AD</span></div></div>'
+)
+
+_OVERLAYS = (
+    # ---- AI Agent (FleetAdvisor) slide-over ----
+    '<div class="fm-overlay fm-agent" data-panel="agent" hidden>'
+    '<div class="fm-ov-head"><div class="fm-ov-title"><i class="fa-solid fa-shield-halved"></i> AI Agent <span class="fm-ov-on">Online</span></div>'
+    '<span class="fm-ov-x" data-close><i class="fa-solid fa-xmark"></i></span></div>'
+    '<div class="fm-ag-ctx">Context: <span class="fm-ctx active">Current page</span><span class="fm-ctx">Fleet data</span><span class="fm-ctx">History</span></div>'
+    '<div class="fm-ag-body"><div class="fm-ag-greet"><b>How can I help you today? 👋</b><p>I can analyse your fleet data, surface insights from the current page, and help you take action — all in one conversation.</p></div>'
+    '<div class="fm-ag-sug"><i class="fa-solid fa-triangle-exclamation" style="color:#dc2626"></i><div><b>Active alarms overview</b><span>Show me vehicles with speeding or fatigue alerts right now</span></div></div>'
+    '<div class="fm-ag-sug"><i class="fa-solid fa-file-invoice" style="color:#7c5cff"></i><div><b>Invoice &amp; payment summary</b><span>Summarise this month\'s invoices and flag overdue payments</span></div></div>'
+    '<div class="fm-ag-sug"><i class="fa-solid fa-shield-halved" style="color:#16a34a"></i><div><b>Driver safety insights</b><span>Which drivers have the lowest safety scores this week?</span></div></div>'
+    '<div class="fm-ag-sug"><i class="fa-solid fa-chart-line" style="color:#d97706"></i><div><b>Generate a report</b><span>Build a weekly fleet-safety report I can export</span></div></div></div>'
+    '<div class="fm-ag-input"><span class="fm-ag-field">Ask AI Agent anything…</span><span class="fm-ag-send"><i class="fa-solid fa-paper-plane"></i></span></div></div>'
+    # ---- Notifications panel ----
+    '<div class="fm-overlay fm-notifs" data-panel="notifs" hidden>'
+    '<div class="fm-ov-head"><div class="fm-ov-title">Notifications <span class="fm-ov-count">3</span></div><span class="fm-ov-x" data-close><i class="fa-solid fa-xmark"></i></span></div>'
+    '<div class="fm-nt-tabs"><span class="active">All</span><span>Unread (3)</span><span class="fm-nt-mark">Mark all read</span></div>'
+    '<div class="fm-nt-list">'
+    '<div class="fm-nt"><span class="fm-nt-ic" style="color:#dc2626;background:#fde8e8"><i class="fa-solid fa-triangle-exclamation"></i></span><div><b>Fatigue Alert <span class="fm-nt-dot"></span></b><p>Vehicle TRK-4471 — driver showing signs of drowsiness on I-95</p><small>2 min ago</small></div></div>'
+    '<div class="fm-nt"><span class="fm-nt-ic" style="color:#d97706;background:#fef3e2"><i class="fa-solid fa-gauge-high"></i></span><div><b>Speeding Violation <span class="fm-nt-dot"></span></b><p>Vehicle TRK-3390 — 120 km/h in 80 km/h zone near Exit 42</p><small>8 min ago</small></div></div>'
+    '<div class="fm-nt"><span class="fm-nt-ic" style="color:#6b7280;background:#eef0f4"><i class="fa-solid fa-wifi"></i></span><div><b>Device Offline <span class="fm-nt-dot"></span></b><p>Vehicle VAN-0143 has been offline for over 30 minutes</p><small>15 min ago</small></div></div>'
+    '<div class="fm-nt"><span class="fm-nt-ic" style="color:#2563eb;background:#e8f0fe"><i class="fa-solid fa-file-lines"></i></span><div><b>Report Ready</b><p>Weekly safety report for Fleet A has been generated</p><small>1 hr ago</small></div></div>'
+    '<div class="fm-nt"><span class="fm-nt-ic" style="color:#7c5cff;background:#f0ecff"><i class="fa-solid fa-eye"></i></span><div><b>Distracted Driving</b><p>Vehicle TRK-2210 — phone usage detected</p><small>2 hr ago</small></div></div>'
+    '</div><div class="fm-nt-foot"><i class="fa-solid fa-gear"></i> Notification settings</div></div>'
+    # ---- Help dropdown ----
+    '<div class="fm-overlay fm-menu fm-help-menu" data-panel="help" hidden>'
+    '<div class="fm-menu-item"><i class="fa-solid fa-book"></i> Documentation</div>'
+    '<div class="fm-menu-item"><i class="fa-solid fa-keyboard"></i> Keyboard shortcuts</div>'
+    '<div class="fm-menu-item"><i class="fa-solid fa-headset"></i> Contact support</div>'
+    '<div class="fm-menu-item"><i class="fa-solid fa-bullhorn"></i> What\'s new</div></div>'
+    # ---- Account dropdown ----
+    '<div class="fm-overlay fm-menu fm-account-menu" data-panel="account" hidden>'
+    '<div class="fm-acct-head"><span class="fm-avatar">AD</span><div><b>Admin User</b><span>admin@fleetmind.io</span></div></div>'
+    '<div class="fm-menu-item"><i class="fa-solid fa-key"></i> Change password <i class="fa-solid fa-chevron-right fm-mi-r"></i></div>'
+    '<div class="fm-menu-item"><i class="fa-solid fa-globe"></i> Language <span class="fm-mi-val">English (EN)</span></div>'
+    '<div class="fm-menu-toggle"><div><i class="fa-solid fa-flask"></i> Mock Data <span class="fm-mi-off">OFF</span></div><span class="fm-toggle"></span></div>'
+    '<div class="fm-menu-item fm-mi-danger"><i class="fa-solid fa-right-from-bracket"></i> Log out</div>'
+    '<div class="fm-menu-foot">FleetMind Platform · v2.4.1</div></div>'
 )
 
 _VIEWS = (
@@ -551,6 +648,7 @@ content = r"""
                     __VIEWS__
                 </main>
             </div>
+            __OVERLAYS__
         </div>
       </div>
     </div>
@@ -566,7 +664,9 @@ content = r"""
         .fm-live { margin-left:auto; color:#cdb6ff; font-size:0.7rem; font-weight:600; display:inline-flex; align-items:center; gap:6px; }
         .fm-live-dot { width:7px; height:7px; border-radius:50%; background:#9b6bff; box-shadow:0 0 0 3px rgba(155,107,255,0.25); }
 
-        .fm-sim { background:#f8f9fc; color:#0f1624; font-family:'DM Sans','Inter',sans-serif; }
+        .fm-sim { background:#f8f9fc; color:#0f1624; font-family:'DM Sans','Inter',sans-serif; position:relative; overflow:hidden; }
+        .fm-topicon { cursor:pointer; position:relative; display:inline-flex; align-items:center; justify-content:center; }
+        .fm-icon-dot { position:absolute; top:-2px; right:-2px; width:7px; height:7px; border-radius:50%; background:#dc2626; border:1.5px solid #edeef3; }
         .fm-sim *, .fm-tip * { box-sizing:border-box; }
         .fm-topbar { display:flex; align-items:center; gap:22px; height:54px; padding:0 18px; background:#edeef3; border-bottom:1px solid #e2e3ea; }
         .fm-brand { font-weight:800; font-size:1.05rem; color:#2c1d52; display:inline-flex; align-items:center; gap:8px; }
@@ -740,6 +840,71 @@ content = r"""
             .fm-rail { width:62px; } .fm-nav, .fm-group-head { font-size:0; gap:0; justify-content:center; } .fm-nav i, .fm-group-head i:first-child { font-size:1rem; } .fm-caret, .fm-subnav { display:none; }
             .fm-vehlist { width:170px; } .fm-settings-wrap { flex-direction:column; } .fm-settings-aside { width:100%; } .fm-subtabs { flex-direction:row; flex-wrap:wrap; }
         }
+
+        /* settings sub-tab panels + new controls */
+        .fm-subtab i { margin-right:8px; color:#8089a0; font-size:0.82rem; }
+        .fm-subtab.active i { color:#7c5cff; }
+        .fm-secttl { font-size:0.95rem; font-weight:700; color:#0f1624; border-left:3px solid #7c5cff; padding-left:10px; margin-bottom:6px; }
+        .fm-subtle2 { color:#8089a0; font-size:0.8rem; margin:0 0 14px; }
+        .fm-sublbl { font-size:0.78rem; font-weight:700; color:#3f4658; margin-bottom:4px; }
+        .fm-panel + .fm-panel { margin-top:14px; }
+        .fm-trow { display:flex; align-items:center; justify-content:space-between; padding:11px 0; border-bottom:1px solid #f1f2f6; }
+        .fm-trow:last-child { border-bottom:none; }
+        .fm-trow b { color:#0f1624; font-size:0.85rem; font-weight:600; display:block; } .fm-trow span { color:#8089a0; font-size:0.74rem; }
+        .fm-radios { display:flex; flex-direction:column; gap:8px; }
+        .fm-radio { display:flex; align-items:center; gap:9px; font-size:0.84rem; color:#3f4658; cursor:pointer; }
+        .fm-radio span { width:16px; height:16px; border-radius:50%; border:2px solid #cbd2dd; display:inline-block; flex-shrink:0; }
+        .fm-radio.on span { border-color:#7c5cff; box-shadow:inset 0 0 0 3px #7c5cff; }
+        .fm-swatches { display:flex; gap:8px; margin:12px 0; } .fm-swatch { width:22px; height:22px; border-radius:6px; cursor:pointer; }
+        .fm-color-row { display:flex; align-items:center; gap:10px; }
+        .fm-color-chip { width:30px; height:30px; border-radius:7px; border:1px solid #e2e3ea; }
+        .fm-reset { color:#7c5cff; font-size:0.78rem; font-weight:600; cursor:pointer; margin-left:auto; }
+        .fm-color-preview { margin-top:14px; display:flex; align-items:center; gap:12px; }
+        .fm-dropzone { border:1.5px dashed #d7dce8; border-radius:9px; padding:18px; text-align:center; color:#a3a9b8; font-size:0.78rem; cursor:pointer; }
+        .fm-dropzone i { display:block; margin-bottom:6px; }
+
+        /* overlays (panels + menus) */
+        .fm-overlay { position:absolute; z-index:60; }
+        .fm-agent, .fm-notifs { top:54px; right:0; bottom:0; width:360px; background:#fff; border-left:1px solid #e2e3ea; box-shadow:-12px 0 40px rgba(0,0,0,0.10); display:flex; flex-direction:column; }
+        .fm-ov-head { display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-bottom:1px solid #eef0f4; }
+        .fm-agent .fm-ov-head { background:#1b1726; color:#fff; }
+        .fm-ov-title { font-weight:700; font-size:0.98rem; display:flex; align-items:center; gap:8px; }
+        .fm-agent .fm-ov-title i { color:#9b6bff; }
+        .fm-ov-on { font-size:0.66rem; font-weight:600; color:#34d399; display:inline-flex; align-items:center; gap:5px; }
+        .fm-ov-on::before { content:''; width:6px; height:6px; border-radius:50%; background:#34d399; display:inline-block; }
+        .fm-ov-x { cursor:pointer; opacity:0.7; } .fm-ov-x:hover { opacity:1; }
+        .fm-ov-count { background:#7c5cff; color:#fff; font-size:0.66rem; font-weight:700; padding:1px 8px; border-radius:10px; }
+        .fm-ag-ctx { display:flex; align-items:center; gap:8px; padding:10px 16px; font-size:0.72rem; color:#8089a0; border-bottom:1px solid #eef0f4; flex-wrap:wrap; }
+        .fm-ctx { border:1px solid #e2e3ea; border-radius:20px; padding:4px 11px; color:#6b7280; font-weight:600; cursor:pointer; }
+        .fm-ctx.active { border-color:#7c5cff; color:#7c5cff; background:#f5f1ff; }
+        .fm-ag-body { flex:1; overflow:auto; padding:16px; }
+        .fm-ag-greet b { font-size:1.05rem; color:#0f1624; } .fm-ag-greet p { font-size:0.82rem; color:#6b7280; margin:8px 0 16px; }
+        .fm-ag-sug { display:flex; gap:11px; padding:11px; border:1px solid #eef0f4; border-radius:10px; margin-bottom:9px; cursor:pointer; }
+        .fm-ag-sug:hover { border-color:#c9bdf6; background:#faf8ff; }
+        .fm-ag-sug i { margin-top:2px; } .fm-ag-sug b { font-size:0.84rem; color:#0f1624; display:block; } .fm-ag-sug span { font-size:0.74rem; color:#8089a0; }
+        .fm-ag-input { display:flex; align-items:center; gap:8px; padding:12px 14px; border-top:1px solid #eef0f4; }
+        .fm-ag-field { flex:1; border:1px solid #e2e3ea; border-radius:20px; padding:9px 14px; font-size:0.8rem; color:#a3a9b8; }
+        .fm-ag-send { width:34px; height:34px; border-radius:50%; background:#ece9f6; color:#a78bfa; display:flex; align-items:center; justify-content:center; }
+        .fm-nt-tabs { display:flex; align-items:center; gap:14px; padding:11px 16px; font-size:0.78rem; color:#8089a0; border-bottom:1px solid #eef0f4; }
+        .fm-nt-tabs .active { color:#7c5cff; font-weight:700; } .fm-nt-mark { margin-left:auto; color:#7c5cff; cursor:pointer; font-weight:600; }
+        .fm-nt-list { flex:1; overflow:auto; }
+        .fm-nt { display:flex; gap:11px; padding:13px 16px; border-bottom:1px solid #f4f5f8; }
+        .fm-nt-ic { width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.8rem; }
+        .fm-nt b { font-size:0.83rem; color:#0f1624; display:flex; align-items:center; gap:7px; }
+        .fm-nt-dot { width:7px; height:7px; border-radius:50%; background:#7c5cff; }
+        .fm-nt p { font-size:0.76rem; color:#6b7280; margin:3px 0 4px; } .fm-nt small { font-size:0.68rem; color:#a3a9b8; }
+        .fm-nt-foot { padding:12px 16px; text-align:center; font-size:0.78rem; color:#7c5cff; font-weight:600; border-top:1px solid #eef0f4; cursor:pointer; }
+        .fm-menu { top:50px; right:14px; width:248px; background:#fff; border:1px solid #e9eaf0; border-radius:12px; box-shadow:0 20px 50px rgba(0,0,0,0.18); padding:8px; }
+        .fm-menu-item { display:flex; align-items:center; gap:11px; padding:10px 12px; border-radius:8px; font-size:0.84rem; color:#3f4658; cursor:pointer; }
+        .fm-menu-item:hover { background:#f3f1fd; } .fm-menu-item i:first-child { width:16px; text-align:center; color:#8089a0; }
+        .fm-mi-r { margin-left:auto; font-size:0.7rem; color:#c9cdd8; } .fm-mi-val { margin-left:auto; font-size:0.74rem; color:#a3a9b8; } .fm-mi-off { font-size:0.66rem; color:#a3a9b8; }
+        .fm-mi-danger { color:#dc2626; } .fm-mi-danger i { color:#dc2626 !important; } .fm-mi-danger:hover { background:#fdeaea; }
+        .fm-acct-head { display:flex; align-items:center; gap:11px; padding:10px 12px 14px; border-bottom:1px solid #eef0f4; margin-bottom:6px; }
+        .fm-acct-head b { font-size:0.88rem; color:#0f1624; display:block; } .fm-acct-head span { font-size:0.72rem; color:#8089a0; }
+        .fm-menu-toggle { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; font-size:0.84rem; color:#3f4658; }
+        .fm-menu-toggle i { width:16px; text-align:center; color:#8089a0; margin-right:7px; }
+        .fm-menu-foot { padding:10px 12px 4px; font-size:0.68rem; color:#a3a9b8; text-align:center; border-top:1px solid #eef0f4; margin-top:6px; }
+        @media (max-width: 920px) { .fm-agent, .fm-notifs { width:100%; } }
     </style>
 
     <script>
@@ -832,9 +997,40 @@ content = r"""
             el.addEventListener('mouseleave', function () { tip.classList.remove('show'); });
         });
 
+        // settings sub-tab panels (Company / Branding / Units / Preferences)
+        root.querySelectorAll('.fm-subtab[data-stab]').forEach(function (st) {
+            st.addEventListener('click', function () {
+                var key = st.getAttribute('data-stab');
+                var wrap = st.closest('.fm-settings-wrap'); if (!wrap) return;
+                wrap.querySelectorAll('.fm-subtab').forEach(function (x) { x.classList.toggle('active', x === st); });
+                wrap.querySelectorAll('.fm-stab-panel').forEach(function (p) { p.hidden = (p.getAttribute('data-stab') !== key); });
+            });
+        });
+
+        // top-bar overlays: AI agent, notifications, help, account
+        var overlays = root.querySelectorAll('.fm-overlay');
+        function closeOverlays() { overlays.forEach(function (o) { o.hidden = true; }); }
+        root.querySelectorAll('.fm-topicon[data-panel]').forEach(function (ic) {
+            ic.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var ov = root.querySelector('.fm-overlay[data-panel="' + ic.getAttribute('data-panel') + '"]');
+                if (!ov) return;
+                var willOpen = ov.hidden; closeOverlays(); ov.hidden = !willOpen;
+            });
+        });
+        root.querySelectorAll('.fm-overlay [data-close]').forEach(function (x) {
+            x.addEventListener('click', function (e) { e.stopPropagation(); var o = x.closest('.fm-overlay'); if (o) o.hidden = true; });
+        });
+        root.querySelectorAll('.fm-ag-ctx').forEach(function (g) {
+            g.addEventListener('click', function (e) { var t = e.target.closest('.fm-ctx'); if (!t) return; g.querySelectorAll('.fm-ctx').forEach(function (x) { x.classList.remove('active'); }); t.classList.add('active'); });
+        });
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.fm-overlay') && !e.target.closest('.fm-topicon')) closeOverlays();
+        });
+
         showRail('vision');
     })();
     </script>
 
 </div>
-""".replace("__TOPBAR__", _TOPBAR).replace("__RAILS__", _rail_vision() + _rail_subscription() + _rail_settings()).replace("__VIEWS__", _VIEWS)
+""".replace("__TOPBAR__", _TOPBAR).replace("__OVERLAYS__", _OVERLAYS).replace("__RAILS__", _rail_vision() + _rail_subscription() + _rail_settings()).replace("__VIEWS__", _VIEWS)
