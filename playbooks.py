@@ -4,7 +4,7 @@ content = r"""
 <div id="playbooks" class="content-section hidden">
 
     <div class="card fade-up">
-        <h2><i class="fa-solid fa-book-open" style="color: var(--primary-green); margin-right: 10px;"></i>Best practices &amp; playbooks</h2>
+        <h2><i class="fa-solid fa-book-open" style="color: var(--gold); margin-right: 10px;"></i>Best practices &amp; playbooks</h2>
         <p>The repeatable workflows that turn a camera deployment into a measurable safety programme. Each playbook is field-tested by Streamax customers running tens of thousands of vehicles.</p>
     </div>
 
@@ -40,7 +40,7 @@ content = r"""
     <h3 class="section-header fade-up">Driver coaching cadence</h3>
     <div class="grid-2 fade-up">
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-clock" style="color: var(--primary-green);"></i> Recommended rhythm</h4>
+            <h4><i class="fa-solid fa-clock" style="color: var(--gold);"></i> Recommended rhythm</h4>
             <ul class="checklist">
                 <li><strong>Daily</strong> — Safety officer reviews high-severity events (15 min)</li>
                 <li><strong>Weekly</strong> — 1-on-1 coaching with top 3 risk drivers (15 min each)</li>
@@ -49,7 +49,7 @@ content = r"""
             </ul>
         </div>
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-comments" style="color: var(--secondary-blue);"></i> Coaching conversation script</h4>
+            <h4><i class="fa-solid fa-comments" style="color: var(--purple);"></i> Coaching conversation script</h4>
             <ol style="padding-left: 20px; color: var(--text-grey); font-size: 0.9rem;">
                 <li>Open with the data, not the verdict. <em>"Walk me through what was happening here..."</em></li>
                 <li>Show the Evidence Card. Let the driver see the signals.</li>
@@ -104,27 +104,27 @@ content = r"""
     <h3 class="section-header fade-up">Industry-specific playbooks</h3>
     <div class="grid-3 fade-up">
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-truck" style="color: var(--primary-green);"></i> Trucking</h4>
+            <h4><i class="fa-solid fa-truck" style="color: var(--gold);"></i> Trucking</h4>
             <p style="font-size: 0.85rem;">Lead with fatigue detection + R151/R155/R158 blind-spot compliance. Pair with Z5 for trailer security on high-value cargo runs.</p>
         </div>
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-school-flag" style="color: var(--secondary-blue);"></i> School bus</h4>
+            <h4><i class="fa-solid fa-school-flag" style="color: var(--purple);"></i> School bus</h4>
             <p style="font-size: 0.85rem;">Interior coverage, stop-arm camera, stop-arm violation detection, exterior PSS / DVS compliance, child-left-behind detection.</p>
         </div>
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-bus-simple" style="color: var(--primary-green);"></i> Transit bus</h4>
+            <h4><i class="fa-solid fa-bus-simple" style="color: var(--gold);"></i> Transit bus</h4>
             <p style="font-size: 0.85rem;">Multi-zone interior recording for fare disputes + assault claims, AVM 360° for tight urban turns, driver wellness monitoring.</p>
         </div>
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-mountain" style="color: var(--secondary-blue);"></i> Mining</h4>
+            <h4><i class="fa-solid fa-mountain" style="color: var(--purple);"></i> Mining</h4>
             <p style="font-size: 0.85rem;">M10 hardened MDVR, bucket-tooth-loss AI ($500K–$2M per crusher incident), DMS tuned for PPE, V2X 200m over-the-horizon detection.</p>
         </div>
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-taxi" style="color: var(--primary-green);"></i> Taxi / ride-hail</h4>
+            <h4><i class="fa-solid fa-taxi" style="color: var(--gold);"></i> Taxi / ride-hail</h4>
             <p style="font-size: 0.85rem;">Driver-passenger dual cam, panic button + covert audio for distress, route deviation alerts, exonerating dispute resolution.</p>
         </div>
         <div class="glass-panel">
-            <h4><i class="fa-solid fa-truck-pickup" style="color: var(--secondary-blue);"></i> Last-mile delivery</h4>
+            <h4><i class="fa-solid fa-truck-pickup" style="color: var(--purple);"></i> Last-mile delivery</h4>
             <p style="font-size: 0.85rem;">Cargo verification, door-open events, Sentinel for fuel/tool theft, delivery proof + signature capture, dwell-time optimisation.</p>
         </div>
     </div>

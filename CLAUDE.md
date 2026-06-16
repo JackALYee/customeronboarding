@@ -52,9 +52,15 @@ content = r"""
 
 If you need a real Streamlit widget inside a customer-facing section, either (a) render it above/below the `components.html` block and accept that it'll appear outside the styled container, or (b) keep it as a pure HTML placeholder and wire it to a backend later (this is what the proforma-invoice uploader at the top of [products.py](products.py) does).
 
-**Section HTML expects these CSS classes/variables** (all defined in `app.py`'s `<style>`): `--primary-green` `#2AF598`, `--secondary-blue` `#009EFD`, `--bg-deep` `#050810`, `.card`, `.glass-panel`, `.section-header`, `.grid-2 / .grid-3 / .grid-4`, `.stmx-table`, `.badge-green / .badge-blue / .badge-amber`, `.checklist`, `.pipeline-container / .pipeline-step / .pipeline-icon`, `.cta-btn` (+ `.secondary`), `.fade-up`, `.gradient-text`, `.video-card`. Re-use them; don't redefine.
+**Palette is golden + purple glassmorphism** on a plum-dark base: `--gold` `#F4C95D`, `--purple` `#A06BFF`, gradient `gold → purple`, `--bg-deep` `#0c0a14`. (It was green/blue originally — recolored app-wide; don't reintroduce `#2AF598`/`#009EFD`.)
 
-The staff dashboard is the exception — it renders as a normal Streamlit page (not inside `components.html`) and has its own CSS injected in [staff.py](staff.py).
+**Section HTML expects these CSS classes/variables** (all defined in `app.py`'s `<style>`): `--gold`, `--purple`, `--bg-deep`, `.card`, `.glass-panel`, `.section-header`, `.grid-2 / .grid-3 / .grid-4`, `.stmx-table`, `.badge-green / .badge-blue / .badge-amber`, `.checklist`, `.pipeline-container / .pipeline-step / .pipeline-icon`, `.cta-btn` (+ `.secondary`), `.fade-up`, `.gradient-text`, `.video-card`. Re-use them; don't redefine.
+
+The staff dashboard is the exception — it renders as a normal Streamlit page (not inside `components.html`), with a fixed glass top bar, sticky tabs, and a `<details>` user dropdown (Language + Sign out); its CSS is injected in [staff.py](staff.py). A `<style>` injected via `st.markdown` must be ONE contiguous block — a blank line inside it ends the HTML passthrough and the rest leaks to the page as text.
+
+**Session persistence + language** ([auth_cookie.py](auth_cookie.py)): a signed cookie (via `extra-streamlit-components`) carries auth across reloads so a `?lang=` switch or refresh doesn't log you out; a sticky `LOGOUT_FLAG` defeats the cookie-restore-race on sign-out. The customer portal translates in-iframe (its own Google-Translate modal); the staff page translates the parent doc via a 0-height `components.html` bridge, and defaults to English with NO engine loaded (and clears the shared `googtrans` cookie) so a customer-side language choice can't bleed in.
+
+**The full-height-iframe CSS is customer-portal-only** — it's injected right before the portal's `components.html` and scoped to `[data-testid="stIFrame"]`, NOT in the global block. A global `.stApp iframe { height: 100vh }` would also blow up the hidden cookie-manager iframe on the login/staff pages.
 
 ## Authentication & DB ([db.py](db.py) + [login.py](login.py))
 
