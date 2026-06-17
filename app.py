@@ -228,7 +228,7 @@ html_head = r"""<!DOCTYPE html>
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-            padding: 6px 24px;
+            padding: 18px 24px 6px;
         }
         .nav-inner {
             max-width: 1320px;
