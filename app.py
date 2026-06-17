@@ -163,7 +163,7 @@ html_head = r"""<!DOCTYPE html>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -179,9 +179,14 @@ html_head = r"""<!DOCTYPE html>
             --glass-border: 1px solid rgba(255, 255, 255, 0.08);
             --card-radius: 16px;
             --font-main: 'Inter', sans-serif;
+            --font-display: 'Sora', 'Inter', sans-serif;
             --glow-shadow: 0 0 20px rgba(244, 201, 93, 0.15);
             --gradient-text: linear-gradient(135deg, var(--gold) 0%, var(--purple) 100%);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Shadows tinted toward the plum background, never pure black */
+            --shadow-soft: 0 10px 30px rgba(14, 9, 28, 0.45);
+            --shadow-lift: 0 18px 44px rgba(14, 9, 28, 0.55);
+            --edge-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.07);
         }
 
         * { box-sizing: border-box; }
@@ -199,9 +204,9 @@ html_head = r"""<!DOCTYPE html>
         .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; position: relative; }
 
         /* --- Header --- */
-        header { text-align: center; padding: 60px 0 30px; animation: fadeInDown 1s ease-out; }
-        .header-subtitle { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); margin-bottom: 10px; }
-        .header-meta { margin-top: 10px; font-size: 0.85rem; color: var(--text-grey); opacity: 0.8; }
+        header { text-align: center; padding: 64px 0 34px; animation: fadeInDown 1s ease-out; }
+        .header-subtitle { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.22em; color: var(--gold); margin-bottom: 14px; }
+        .header-meta { margin-top: 10px; font-size: 0.9rem; color: var(--text-grey); opacity: 0.85; }
         .gradient-text { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
         /* Mascot beside title */
@@ -371,24 +376,37 @@ html_head = r"""<!DOCTYPE html>
 
         /* --- Glass cards --- */
         .card {
-            background: var(--glass-bg); border: var(--glass-border); border-radius: var(--card-radius);
-            padding: 30px; margin-bottom: 24px; backdrop-filter: blur(12px); transition: var(--transition);
+            background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02));
+            border: var(--glass-border); border-radius: var(--card-radius);
+            padding: 30px; margin-bottom: 24px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            transition: var(--transition); box-shadow: var(--shadow-soft), var(--edge-highlight);
             position: relative; overflow: hidden;
         }
-        .card:hover { border-color: rgba(244,201,93,0.25); box-shadow: 0 10px 30px rgba(0,0,0,0.3); transform: translateY(-3px); }
+        .card:hover { border-color: rgba(244,201,93,0.28); box-shadow: var(--shadow-lift), var(--edge-highlight); transform: translateY(-3px); }
 
-        .glass-panel { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 24px; transition: var(--transition); }
-        .glass-panel:hover { border-color: rgba(244,201,93,0.2); }
+        .glass-panel {
+            background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.018));
+            border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 24px;
+            transition: var(--transition); box-shadow: var(--edge-highlight);
+        }
+        .glass-panel:hover { border-color: rgba(244,201,93,0.22); box-shadow: var(--shadow-soft), var(--edge-highlight); transform: translateY(-2px); }
 
-        h1, h2, h3, h4 { color: var(--text-white); margin-top: 0; }
-        h2 { font-size: 1.8rem; margin-bottom: 16px; font-weight: 700; }
+        /* Glassmorphism fallback — solid fills when the OS asks for less transparency */
+        @media (prefers-reduced-transparency: reduce) {
+            .card, .glass-panel { background: #171226; backdrop-filter: none; -webkit-backdrop-filter: none; }
+            .nav-tabs { background: #0b0814; backdrop-filter: none; -webkit-backdrop-filter: none; }
+        }
+
+        h1, h2, h3, h4 { color: var(--text-white); margin-top: 0; font-family: var(--font-display); letter-spacing: -0.015em; }
+        h1 { letter-spacing: -0.03em; }
+        h2 { font-size: 1.85rem; margin-bottom: 16px; font-weight: 700; letter-spacing: -0.02em; }
         h3 { font-size: 1.3rem; margin-bottom: 12px; font-weight: 600; }
         h4 { font-size: 1.05rem; margin-bottom: 8px; font-weight: 600; }
         p { color: var(--text-grey); }
         a { color: var(--purple); text-decoration: none; }
         a:hover { color: var(--gold); }
 
-        .section-header { margin-top: 36px; margin-bottom: 20px; border-left: 4px solid var(--gold); padding-left: 16px; font-size: 1.45rem; color: var(--text-white); }
+        .section-header { font-family: var(--font-display); margin-top: 44px; margin-bottom: 22px; border-left: 3px solid var(--gold); padding-left: 16px; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text-white); }
 
         /* --- Sections --- */
         .content-section { animation: fadeIn 0.5s ease-out; }
@@ -400,16 +418,26 @@ html_head = r"""<!DOCTYPE html>
         .fade-up { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
+        /* Honor the OS reduced-motion preference: kill loops + entrance motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important; animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important; scroll-behavior: auto !important;
+            }
+            .fade-up { opacity: 1 !important; transform: none !important; }
+            .card:hover, .glass-panel:hover { transform: none !important; }
+        }
+
         /* --- CTA button --- */
         .cta-btn {
             display: inline-flex; align-items: center; gap: 10px;
             background: linear-gradient(135deg, #F4C95D 0%, #A06BFF 100%);
             color: #0c0a14 !important; font-weight: 700; font-size: 0.95rem;
-            padding: 12px 28px; border-radius: 30px; text-decoration: none;
+            padding: 13px 30px; border-radius: 30px; text-decoration: none; letter-spacing: -0.01em;
             transition: all 0.3s ease; border: none; cursor: pointer;
-            box-shadow: 0 8px 20px rgba(244,201,93,0.18);
+            box-shadow: 0 10px 24px rgba(160,107,255,0.22);
         }
-        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(244,201,93,0.28); color: #0c0a14 !important; }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(160,107,255,0.34); color: #0c0a14 !important; }
         .cta-btn.secondary {
             background: transparent; color: var(--gold) !important;
             border: 1px solid rgba(244,201,93,0.4); box-shadow: none;
