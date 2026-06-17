@@ -228,7 +228,7 @@ html_head = r"""<!DOCTYPE html>
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-            padding: 0 24px;
+            padding: 6px 24px;
         }
         .nav-inner {
             max-width: 1320px;
@@ -728,7 +728,7 @@ st.markdown(
        leaves an empty strip above the sticky nav. */
     [data-testid="stHeader"], header[data-testid="stHeader"] { display: none !important; height: 0 !important; }
     [data-testid="stAppViewContainer"] > .main, [data-testid="stMain"] { padding: 0 !important; }
-    [data-testid="stMainBlockContainer"], .stMainBlockContainer, .block-container { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
+    [data-testid="stMainBlockContainer"], .stMainBlockContainer, .block-container { padding: 0.6rem 0 0 0 !important; margin: 0 !important; max-width: 100% !important; }
     [data-testid="stVerticalBlock"] { gap: 0 !important; }
     [data-testid="stElementContainer"] { margin: 0 !important; }
     [data-testid="stIFrame"] { height: 100vh !important; line-height: 0; margin: 0 !important; }
