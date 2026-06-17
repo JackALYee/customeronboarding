@@ -723,7 +723,15 @@ st.markdown(
     """
     <style>
     .stApp { overflow: hidden; }
-    [data-testid="stIFrame"] { height: 100vh !important; line-height: 0; }
+    /* Kill all of Streamlit's default top/side spacing so the portal iframe
+       sits flush at y=0 — otherwise stMainBlockContainer's ~6rem top padding
+       leaves an empty strip above the sticky nav. */
+    [data-testid="stHeader"], header[data-testid="stHeader"] { display: none !important; height: 0 !important; }
+    [data-testid="stAppViewContainer"] > .main, [data-testid="stMain"] { padding: 0 !important; }
+    [data-testid="stMainBlockContainer"], .stMainBlockContainer, .block-container { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
+    [data-testid="stVerticalBlock"] { gap: 0 !important; }
+    [data-testid="stElementContainer"] { margin: 0 !important; }
+    [data-testid="stIFrame"] { height: 100vh !important; line-height: 0; margin: 0 !important; }
     [data-testid="stIFrame"] iframe, .stApp iframe[title="st.iframe"] { height: 100vh !important; width: 100% !important; border: none !important; }
     </style>
     """,

@@ -11,3 +11,4 @@ env.txt
 *.sqlite
 *.sqlite3
 .streamlit/secrets.toml
+welcome_classic.py
