@@ -653,6 +653,76 @@ content = r"""
       </div>
     </div>
 
+    <h3 class="section-header fade-up" style="margin-top: 36px;"><i class="fa-solid fa-toolbox" style="color: var(--gold); margin-right: 10px;"></i>Platform functions — guided how-tos</h3>
+    <div class="card fade-up">
+        <p>Step-by-step activation guides for key platform functions, each with a short video walkthrough. Tap a function to expand it.</p>
+    </div>
+
+    <div class="fade-up">
+        <div class="pfn-feat">
+            <div class="pfn-head"><i class="fa-solid fa-network-wired pfn-icon"></i><span class="pfn-name">CAN Bus License Activation</span><span class="pfn-badge">OBD / CAN</span><i class="fa-solid fa-chevron-down pfn-cv"></i></div>
+            <div class="pfn-body">
+                <p class="pfn-desc">Activate the CAN Bus / OBD data license to unlock engine and vehicle operating parameters (RPM, fuel use, fault codes and more) on your platform. Full walkthrough coming soon.</p>
+                <div class="pfn-grid">
+                    <div><div class="pfn-lbl"><i class="fa-solid fa-play"></i> Walkthrough video</div>
+                        <div class="pfn-video"><div class="pfn-video-ph"><i class="fa-solid fa-circle-play"></i><span class="pfn-video-t">CAN Bus License Activation</span><span class="pfn-video-s">Video coming soon</span></div></div></div>
+                    <div><div class="pfn-lbl"><i class="fa-solid fa-list-check"></i> Step-by-step guide</div>
+                        <div class="pfn-ph"><i class="fa-solid fa-pen-ruler"></i>Step-by-step activation guide coming soon.</div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pfn-feat">
+            <div class="pfn-head"><i class="fa-solid fa-sim-card pfn-icon"></i><span class="pfn-name">eSIM Activation</span><span class="pfn-badge">Connectivity</span><i class="fa-solid fa-chevron-down pfn-cv"></i></div>
+            <div class="pfn-body">
+                <p class="pfn-desc">Activate embedded-SIM (eSIM) cellular connectivity for your devices. Full walkthrough coming soon.</p>
+                <div class="pfn-grid">
+                    <div><div class="pfn-lbl"><i class="fa-solid fa-play"></i> Walkthrough video</div>
+                        <div class="pfn-video"><div class="pfn-video-ph"><i class="fa-solid fa-circle-play"></i><span class="pfn-video-t">eSIM Activation</span><span class="pfn-video-s">Video coming soon</span></div></div></div>
+                    <div><div class="pfn-lbl"><i class="fa-solid fa-list-check"></i> Step-by-step guide</div>
+                        <div class="pfn-ph"><i class="fa-solid fa-pen-ruler"></i>Step-by-step activation guide coming soon.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .pfn-feat { background: var(--glass-bg); border: var(--glass-border); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+        .pfn-head { display: flex; align-items: center; gap: 12px; padding: 15px 18px; cursor: pointer; transition: var(--transition); }
+        .pfn-head:hover { background: rgba(255,255,255,0.03); }
+        .pfn-icon { color: var(--gold); width: 20px; text-align: center; font-size: 1rem; }
+        .pfn-name { font-weight: 700; color: var(--text-white); font-size: 1rem; }
+        .pfn-badge { font-size: 0.62rem; font-weight: 700; padding: 2px 8px; border-radius: 5px; letter-spacing: 0.5px; color: var(--purple); background: rgba(160,107,255,0.14); border: 1px solid rgba(160,107,255,0.3); }
+        .pfn-cv { margin-left: auto; color: var(--text-grey); font-size: 0.8rem; transition: transform 0.25s ease; }
+        .pfn-feat.open .pfn-cv { transform: rotate(180deg); }
+        .pfn-body { display: none; padding: 0 18px 18px; }
+        .pfn-feat.open .pfn-body { display: block; }
+        .pfn-desc { color: #cbd5e1; font-size: 0.92rem; line-height: 1.6; margin: 0 0 14px; }
+        .pfn-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 20px; align-items: start; }
+        @media (max-width: 900px) { .pfn-grid { grid-template-columns: 1fr; } }
+        .pfn-lbl { font-size: 0.76rem; font-weight: 700; color: var(--text-grey); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 10px; }
+        .pfn-lbl i { color: var(--gold); margin-right: 6px; }
+        .pfn-video { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; border-radius: 12px; overflow: hidden; }
+        .pfn-video-ph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+            background: radial-gradient(circle at 50% 40%, rgba(160,107,255,0.12), rgba(0,0,0,0.85) 70%); color: #fff; text-align: center; padding: 14px; }
+        .pfn-video-ph .fa-circle-play { font-size: 2.2rem; color: var(--gold); }
+        .pfn-video-t { font-weight: 600; font-size: 0.86rem; }
+        .pfn-video-s { font-size: 0.72rem; color: #94a3b8; }
+        .pfn-ph { border: 1px dashed rgba(255,255,255,0.18); border-radius: 12px; padding: 18px; color: var(--text-grey); font-size: 0.86rem; min-height: 80px; display: flex; align-items: center; }
+        .pfn-ph i { color: var(--purple); margin-right: 7px; }
+    </style>
+
+    <script>
+    (function () {
+        var root = document.getElementById('platform');
+        if (!root || root.dataset.pfnInit) return;
+        root.dataset.pfnInit = '1';
+        root.querySelectorAll('.pfn-head').forEach(function (h) {
+            h.addEventListener('click', function () { h.closest('.pfn-feat').classList.toggle('open'); });
+        });
+    })();
+    </script>
+
     <div id="fm-tip" class="fm-tip"></div>
 
     <style>
