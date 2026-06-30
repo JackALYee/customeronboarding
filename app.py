@@ -693,6 +693,14 @@ html_tail = r"""
                 if (window.StreamaxMorphStory && window.StreamaxMorphStory.reset) {
                     window.StreamaxMorphStory.reset();
                 }
+                // Returning to Welcome: hard-reload the morph iframe. A fresh load
+                // measures the now-visible viewport and starts at the truck, which
+                // avoids the stale WebGL size/aspect that otherwise squishes the
+                // truck after finishing the animation and coming back.
+                if (tabId === 'welcome') {
+                    var _mf = document.getElementById('stmx-morph-frame');
+                    if (_mf) { _mf.src = _mf.src; }
+                }
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 setTimeout(function () {
                     if (window.ScrollTrigger) window.ScrollTrigger.refresh(true);

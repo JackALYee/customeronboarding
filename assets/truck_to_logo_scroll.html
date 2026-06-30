@@ -615,19 +615,22 @@ const _cp=new THREE.Vector3();
 // without this the drawing buffer stays at its hidden (0) size and gets
 // CSS-upscaled → blurry. A ResizeObserver (below) flags needsFit on the
 // 0→full transition; the next frame restores full resolution.
-let needsFit=true;
+let needsFit=true, lastFitW=0, lastFitH=0;
 function fitRenderer(){
   if(innerWidth>0 && innerHeight>0){
     renderer.setPixelRatio(Math.min(devicePixelRatio,2));
     renderer.setSize(innerWidth,innerHeight);
     camera.aspect=innerWidth/innerHeight;
     camera.updateProjectionMatrix();
-    needsFit=false;
+    lastFitW=innerWidth; lastFitH=innerHeight; needsFit=false;
   }
 }
 function animate(t){
   requestAnimationFrame(animate);
-  if(needsFit) fitRenderer();
+  // Re-fit whenever the viewport size/aspect changed since the last fit (covers
+  // display:none -> block after finishing + returning to Welcome, where a stale
+  // camera.aspect otherwise squishes the truck into a thin vertical streak).
+  if(needsFit || innerWidth!==lastFitW || innerHeight!==lastFitH) fitRenderer();
   const dt=Math.min(0.05,(t-lastT)/1000||0); lastT=t;
   curP += (targetP-curP)*0.09;
   const aP=smooth(clamp01(curP/0.38));       // top → horizontal side view
