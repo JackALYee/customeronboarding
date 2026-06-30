@@ -688,6 +688,11 @@ html_tail = r"""
                     el.classList.remove('visible');
                     setTimeout(() => el.classList.add('visible'), 50);
                 });
+                // Reset the Welcome scroll-story to the truck-forward start on any
+                // tab change, so returning to Welcome always begins fresh.
+                if (window.StreamaxMorphStory && window.StreamaxMorphStory.reset) {
+                    window.StreamaxMorphStory.reset();
+                }
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 setTimeout(function () {
                     if (window.ScrollTrigger) window.ScrollTrigger.refresh(true);

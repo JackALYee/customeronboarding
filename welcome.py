@@ -22,6 +22,18 @@ content = r"""
                 <h2>best AI solutions provider for road safety</h2>
             </div>
             <div class="stmx-morph-progress" aria-hidden="true"><i></i></div>
+
+            <div class="stmx-scroll-hint" id="stmx-scroll-hint" aria-hidden="true">
+                <div class="stmx-scroll-hint-inner">
+                    <span>scroll down slowly</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+            </div>
+
+            <button type="button" class="stmx-skip-btn" id="stmx-skip-btn"
+                onclick="if(window.StreamaxMorphStory&&window.StreamaxMorphStory.skip)window.StreamaxMorphStory.skip()">
+                Skip intro <i class="fa-solid fa-forward-step"></i>
+            </button>
         </div>
     </section>
 
@@ -666,6 +678,42 @@ content = r"""
                 transform: none !important;
             }
         }
+
+        /* Scroll hint — slow-flashing arrow + label, fades out once scrolling starts */
+        .stmx-scroll-hint {
+            position: absolute; right: clamp(18px, 4.5vw, 64px); top: 50%;
+            transform: translateY(-50%); display: flex; justify-content: flex-end;
+            z-index: 8; pointer-events: none; transition: opacity 0.5s ease;
+        }
+        .stmx-scroll-hint.is-gone { opacity: 0; }
+        .stmx-scroll-hint-inner {
+            display: flex; flex-direction: column; align-items: center; gap: 12px;
+            color: rgba(255,255,255,0.85); font-family: var(--font-ui);
+            font-size: 0.92rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.85);
+            animation: stmxHintFlash 2.2s ease-in-out infinite;
+        }
+        .stmx-scroll-hint-inner i { font-size: 1.5rem; color: var(--gold); animation: stmxHintBob 1.5s ease-in-out infinite; }
+        @keyframes stmxHintFlash { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        @keyframes stmxHintBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+
+        /* Skip button — bottom-left, jumps past the scroll story to the hero */
+        .stmx-skip-btn {
+            position: absolute; left: clamp(16px, 3vw, 36px); bottom: clamp(16px, 4vh, 40px);
+            z-index: 9; pointer-events: auto; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.72);
+            border: 1px solid rgba(255,255,255,0.16); border-radius: 30px;
+            padding: 9px 18px; font-family: var(--font-ui); font-size: 0.76rem;
+            font-weight: 600; letter-spacing: 0.04em;
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+        .stmx-skip-btn:hover { color: #fff; border-color: var(--gold); background: rgba(244,201,93,0.12); }
+        .stmx-skip-btn i { font-size: 0.7rem; }
+        @media (prefers-reduced-motion: reduce) {
+            .stmx-scroll-hint-inner, .stmx-scroll-hint-inner i { animation: none; }
+        }
     </style>
 
     <script>
@@ -743,6 +791,8 @@ content = r"""
                     if (nav) nav.classList.toggle('stmx-nav-returned-after-morph', released);
                     var hero = document.getElementById('stmx-onboarding-start');
                     if (hero) hero.style.pointerEvents = heroReveal > 0.96 ? 'auto' : 'none';
+                    var hint = document.getElementById('stmx-scroll-hint');
+                    if (hint) hint.classList.toggle('is-gone', currentProgress > 0.006);
                     frame.style.transform = 'scale(' + (1.01 + currentProgress * 0.045).toFixed(4) + ')';
 
                     postMorphProgress(sceneProgress);
@@ -782,8 +832,40 @@ content = r"""
                 window.setTimeout(handleScrollProgress, 250);
                 window.setTimeout(function () { setProgress(currentProgress); }, 1200);
 
+                function postMorphReset() {
+                    try {
+                        if (frame.contentWindow) {
+                            frame.contentWindow.postMessage({ type: 'streamaxMorphReset' }, '*');
+                        }
+                    } catch (error) {
+                        // Decorative iframe only.
+                    }
+                }
+
+                // Snap the story back to the truck-forward start with no backward
+                // animation, so returning to Welcome always begins fresh.
+                function resetStory() {
+                    currentProgress = 0;
+                    try { window.scrollTo(0, 0); } catch (e) {}
+                    setProgress(0);
+                    postMorphReset();
+                }
+
+                // Jump past the scroll story straight to the onboarding hero.
+                function skipStory() {
+                    setProgress(1);
+                    var hero = document.getElementById('stmx-onboarding-start');
+                    if (hero) {
+                        try { hero.scrollIntoView({ behavior: 'auto', block: 'start' }); }
+                        catch (e) { hero.scrollIntoView(); }
+                    }
+                    handleScrollProgress();
+                }
+
                 window.StreamaxMorphStory = {
-                    refresh: handleScrollProgress
+                    refresh: handleScrollProgress,
+                    reset: resetStory,
+                    skip: skipStory
                 };
                 window.StreamaxTruckStory = window.StreamaxMorphStory;
             });

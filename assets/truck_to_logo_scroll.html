@@ -571,6 +571,7 @@ function readScroll(){
 }
 addEventListener('message', (event)=>{
   const data=event.data||{};
+  if(data.type==='streamaxMorphReset'){ externalProgress=true; targetP=0; curP=0; needsFit=true; return; }
   if(data.type!=='streamaxMorphProgress') return;
   externalProgress=true;
   targetP=clamp01(Number(data.progress)||0);
