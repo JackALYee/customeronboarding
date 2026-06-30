@@ -681,15 +681,15 @@ content = r"""
 
         /* Scroll hint — slow-flashing arrow + label, fades out once scrolling starts */
         .stmx-scroll-hint {
-            position: absolute; right: clamp(18px, 4.5vw, 64px); top: 50%;
-            transform: translateY(-50%); display: flex; justify-content: flex-end;
+            position: absolute; left: 75%; top: 50%;
+            transform: translate(-50%, -50%); display: flex; justify-content: center;
             z-index: 8; pointer-events: none; transition: opacity 0.5s ease;
         }
         .stmx-scroll-hint.is-gone { opacity: 0; }
         .stmx-scroll-hint-inner {
             display: flex; flex-direction: column; align-items: center; gap: 12px;
-            color: rgba(255,255,255,0.85); font-family: var(--font-ui);
-            font-size: 0.92rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+            color: rgba(255,255,255,0.85); font-family: var(--font-display);
+            font-size: 1.05rem; font-weight: 400; letter-spacing: 0.06em;
             text-shadow: 0 4px 20px rgba(0,0,0,0.85);
             animation: stmxHintFlash 2.2s ease-in-out infinite;
         }
@@ -699,7 +699,7 @@ content = r"""
 
         /* Skip button — bottom-left, jumps past the scroll story to the hero */
         .stmx-skip-btn {
-            position: absolute; left: clamp(16px, 3vw, 36px); bottom: clamp(16px, 4vh, 40px);
+            position: absolute; left: clamp(16px, 3vw, 36px); bottom: clamp(56px, 9vh, 84px);
             z-index: 9; pointer-events: auto; cursor: pointer;
             display: inline-flex; align-items: center; gap: 8px;
             background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.72);
