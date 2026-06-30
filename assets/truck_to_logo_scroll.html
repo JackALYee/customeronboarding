@@ -608,24 +608,25 @@ function caption(p){
 
 /* ---------- render loop ---------- */
 const _cp=new THREE.Vector3();
+// Re-fit the renderer to the viewport whenever the canvas may have changed
+// size. Critically this covers the Welcome tab being hidden (display:none)
+// and shown again: the `resize` event does NOT fire for display changes, so
+// without this the drawing buffer stays at its hidden (0) size and gets
+// CSS-upscaled → blurry. A ResizeObserver (below) flags needsFit on the
+// 0→full transition; the next frame restores full resolution.
+let needsFit=true;
+function fitRenderer(){
+  if(innerWidth>0 && innerHeight>0){
+    renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+    renderer.setSize(innerWidth,innerHeight);
+    camera.aspect=innerWidth/innerHeight;
+    camera.updateProjectionMatrix();
+    needsFit=false;
+  }
+}
 function animate(t){
   requestAnimationFrame(animate);
-  // Keep the WebGL backing store matched to the on-screen size. After the
-  // Welcome tab is hidden (display:none) and shown again, the canvas can be
-  // left with a stale/zero drawing buffer that gets CSS-upscaled → blurry.
-  // This re-syncs resolution the moment the canvas has real dimensions again.
-  {
-    const cv=renderer.domElement;
-    if(cv.clientWidth>0 && cv.clientHeight>0){
-      const pr=Math.min(devicePixelRatio,2);
-      if(cv.width!==Math.floor(cv.clientWidth*pr) || cv.height!==Math.floor(cv.clientHeight*pr)){
-        renderer.setPixelRatio(pr);
-        renderer.setSize(cv.clientWidth, cv.clientHeight, false);
-        camera.aspect=cv.clientWidth/cv.clientHeight;
-        camera.updateProjectionMatrix();
-      }
-    }
-  }
+  if(needsFit) fitRenderer();
   const dt=Math.min(0.05,(t-lastT)/1000||0); lastT=t;
   curP += (targetP-curP)*0.09;
   const aP=smooth(clamp01(curP/0.38));       // top → horizontal side view
@@ -656,7 +657,10 @@ function animate(t){
 }
 animate();
 
-addEventListener('resize', ()=>{ if(innerWidth>0&&innerHeight>0){ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); } readScroll(); });
+addEventListener('resize', ()=>{ needsFit=true; readScroll(); });
+document.addEventListener('visibilitychange', ()=>{ needsFit=true; });
+try{ new ResizeObserver(()=>{ needsFit=true; }).observe(document.documentElement); }catch(e){}
+try{ renderer.domElement.addEventListener('webglcontextrestored', ()=>{ needsFit=true; }, false); }catch(e){}
 </script>
 </body>
 </html>
