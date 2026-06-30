@@ -19,7 +19,7 @@ import db
 import auth_cookie
 from login import render_login
 from staff import render as render_staff
-from assets import MASCOT_DATA_URI
+from assets import MASCOT_DATA_URI, STREAMAX_LOGO_DATA_URI, TRUCK_TO_LOGO_DATA_URI
 
 SUPPORTED_LANGS = ("en", "es", "pt", "fr")
 
@@ -152,6 +152,7 @@ _contacts_rows = "".join(
     if c.get("role") or c.get("contact")
 )
 welcome_content = welcome_content.replace("__KEY_CONTACTS__", _contacts_rows)
+welcome_content = welcome_content.replace("__TRUCK_TO_LOGO_SRC__", TRUCK_TO_LOGO_DATA_URI)
 
 html_head = r"""<!DOCTYPE html>
 <html lang="en">
@@ -163,29 +164,34 @@ html_head = r"""<!DOCTYPE html>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
     <style>
         :root {
-            --bg-deep: #0c0a14;
-            --bg-gradient: radial-gradient(circle at 50% -20%, #1c1330, #0c0a14);
-            --gold: #F4C95D;
-            --purple: #A06BFF;
+            --bg-deep: #070707;
+            --bg-gradient: radial-gradient(circle at 68% -20%, rgba(244,201,93,0.16), transparent 34%),
+                radial-gradient(circle at 8% 18%, rgba(160,107,255,0.12), transparent 28%),
+                linear-gradient(180deg, #11100e 0%, #070707 34%, #0d0b10 100%);
+            --gold: #E7BD62;
+            --purple: #9272F2;
             --text-white: #FFFFFF;
-            --text-grey: #A89FB8;
+            --text-grey: #A8A39A;
             --glass-bg: rgba(255, 255, 255, 0.03);
             --glass-border: 1px solid rgba(255, 255, 255, 0.08);
-            --card-radius: 16px;
-            --font-main: 'Inter', sans-serif;
-            --font-display: 'Sora', 'Inter', sans-serif;
+            --card-radius: 8px;
+            --font-main: 'Manrope', sans-serif;
+            --font-display: Baskerville, 'Baskerville Old Face', 'Libre Baskerville', Georgia, serif;
             --glow-shadow: 0 0 20px rgba(244, 201, 93, 0.15);
             --gradient-text: linear-gradient(135deg, var(--gold) 0%, var(--purple) 100%);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             /* Shadows tinted toward the plum background, never pure black */
-            --shadow-soft: 0 10px 30px rgba(14, 9, 28, 0.45);
-            --shadow-lift: 0 18px 44px rgba(14, 9, 28, 0.55);
+            --shadow-soft: 0 14px 40px rgba(0, 0, 0, 0.34);
+            --shadow-lift: 0 24px 70px rgba(0, 0, 0, 0.46);
             --edge-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.07);
         }
 
@@ -199,9 +205,24 @@ html_head = r"""<!DOCTYPE html>
             font-family: var(--font-main);
             line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.22;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 42px 42px;
+            mask-image: radial-gradient(circle at 50% 20%, black, transparent 72%);
         }
 
-        .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; position: relative; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 28px 84px; position: relative; z-index: 1; }
 
         /* --- Header --- */
         header { text-align: center; padding: 64px 0 34px; animation: fadeInDown 1s ease-out; }
@@ -229,22 +250,52 @@ html_head = r"""<!DOCTYPE html>
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(5, 8, 16, 0.82);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-            padding: 18px 24px 6px;
+            background: rgba(7, 7, 7, 0.84);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+            padding: 10px 24px;
         }
         .nav-inner {
-            max-width: 1320px;
+            max-width: 1480px;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
+            gap: 20px;
             flex-wrap: nowrap;
         }
-        .nav-links { display: flex; align-items: center; flex-wrap: wrap; }
+        .nav-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-white);
+            font-family: var(--font-main);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .nav-logo {
+            width: 154px;
+            height: 28px;
+            display: block;
+            background: linear-gradient(90deg, var(--gold) 0%, #f2dfaa 42%, var(--purple) 100%);
+            -webkit-mask: url("__STREAMAX_LOGO_SRC__") left center / contain no-repeat;
+            mask: url("__STREAMAX_LOGO_SRC__") left center / contain no-repeat;
+            filter: drop-shadow(0 8px 24px rgba(231,189,98,0.18));
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex: 1;
+            min-width: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .nav-links::-webkit-scrollbar { display: none; }
 
         /* --- User menu (consolidated into the nav) --- */
         .nav-user { position: relative; flex-shrink: 0; }
@@ -352,21 +403,23 @@ html_head = r"""<!DOCTYPE html>
             background: transparent;
             border: none;
             color: var(--text-grey);
-            padding: 18px 18px;
+            padding: 13px 13px;
             font-family: var(--font-main);
-            font-weight: 500;
-            font-size: 0.92rem;
-            letter-spacing: 0.2px;
+            font-weight: 700;
+            font-size: 0.74rem;
+            letter-spacing: 0.02em;
             cursor: pointer;
             position: relative;
             transition: color 0.25s ease;
+            white-space: nowrap;
+            text-transform: uppercase;
         }
         .nav-btn::after {
             content: '';
             position: absolute;
-            left: 18px; right: 18px; bottom: 0;
-            height: 2px; border-radius: 2px;
-            background: linear-gradient(90deg, var(--gold), var(--purple));
+            left: 13px; right: 13px; bottom: 4px;
+            height: 2px; border-radius: 999px;
+            background: var(--gold);
             transform: scaleX(0);
             transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -376,20 +429,20 @@ html_head = r"""<!DOCTYPE html>
 
         /* --- Glass cards --- */
         .card {
-            background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02));
+            background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.02));
             border: var(--glass-border); border-radius: var(--card-radius);
             padding: 30px; margin-bottom: 24px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
             transition: var(--transition); box-shadow: var(--shadow-soft), var(--edge-highlight);
             position: relative; overflow: hidden;
         }
-        .card:hover { border-color: rgba(244,201,93,0.28); box-shadow: var(--shadow-lift), var(--edge-highlight); transform: translateY(-3px); }
+        .card:hover { border-color: rgba(231,189,98,0.30); box-shadow: var(--shadow-lift), var(--edge-highlight); transform: translateY(-2px); }
 
         .glass-panel {
-            background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.018));
-            border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 24px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018));
+            border: 1px solid rgba(255,255,255,0.075); border-radius: 8px; padding: 24px;
             transition: var(--transition); box-shadow: var(--edge-highlight);
         }
-        .glass-panel:hover { border-color: rgba(244,201,93,0.22); box-shadow: var(--shadow-soft), var(--edge-highlight); transform: translateY(-2px); }
+        .glass-panel:hover { border-color: rgba(231,189,98,0.24); box-shadow: var(--shadow-soft), var(--edge-highlight); transform: translateY(-2px); }
 
         /* Glassmorphism fallback — solid fills when the OS asks for less transparency */
         @media (prefers-reduced-transparency: reduce) {
@@ -397,16 +450,24 @@ html_head = r"""<!DOCTYPE html>
             .nav-tabs { background: #0b0814; backdrop-filter: none; -webkit-backdrop-filter: none; }
         }
 
-        h1, h2, h3, h4 { color: var(--text-white); margin-top: 0; font-family: var(--font-display); letter-spacing: -0.015em; }
-        h1 { letter-spacing: -0.03em; }
-        h2 { font-size: 1.85rem; margin-bottom: 16px; font-weight: 700; letter-spacing: -0.02em; }
+        h1, h2, h3, h4 { color: var(--text-white); margin-top: 0; font-family: var(--font-display); letter-spacing: 0; text-wrap: balance; }
+        h1 { letter-spacing: 0; }
+        h2 { font-size: 1.85rem; margin-bottom: 16px; font-weight: 700; letter-spacing: 0; }
         h3 { font-size: 1.3rem; margin-bottom: 12px; font-weight: 600; }
         h4 { font-size: 1.05rem; margin-bottom: 8px; font-weight: 600; }
         p { color: var(--text-grey); }
         a { color: var(--purple); text-decoration: none; }
         a:hover { color: var(--gold); }
 
-        .section-header { font-family: var(--font-display); margin-top: 44px; margin-bottom: 22px; border-left: 3px solid var(--gold); padding-left: 16px; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text-white); }
+        .section-header { font-family: var(--font-display); margin-top: 56px; margin-bottom: 22px; border-left: 0; padding-left: 0; font-size: 1.5rem; font-weight: 700; letter-spacing: 0; color: var(--text-white); }
+        .section-header::before {
+            content: '';
+            display: block;
+            width: 46px;
+            height: 2px;
+            margin-bottom: 14px;
+            background: var(--gold);
+        }
 
         /* --- Sections --- */
         .content-section { animation: fadeIn 0.5s ease-out; }
@@ -465,10 +526,22 @@ html_head = r"""<!DOCTYPE html>
             .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
             header { padding: 40px 0 20px; }
             .nav-tabs { padding: 0 10px; }
-            .nav-inner { justify-content: center; }
-            .nav-btn { padding: 13px 10px; font-size: 0.78rem; }
+            .nav-inner { justify-content: center; gap: 10px; }
+            .nav-brand span:last-child { display: none; }
+            .nav-btn { padding: 13px 10px; font-size: 0.72rem; }
             .nav-btn::after { left: 10px; right: 10px; }
             .user-trigger .user-name { max-width: 110px; font-size: 0.78rem; }
+        }
+        @media (max-width: 600px) {
+            .nav-tabs { padding: 8px; }
+            .nav-inner { gap: 8px; }
+            .nav-logo { width: 86px; height: 18px; }
+            .nav-btn { padding: 10px 9px; font-size: 0.68rem; }
+            .nav-btn::after { left: 9px; right: 9px; bottom: 2px; }
+            .user-trigger { padding: 4px; gap: 0; }
+            .user-trigger .user-name,
+            .user-trigger .user-chevron { display: none; }
+            .user-avatar { width: 30px; height: 30px; }
         }
 
         /* --- Tables --- */
@@ -504,6 +577,9 @@ html_head = r"""<!DOCTYPE html>
     <!-- STICKY NAV (very top) — tabs + consolidated user menu -->
     <nav class="nav-tabs">
         <div class="nav-inner">
+            <div class="nav-brand" translate="no">
+                <span class="nav-logo" role="img" aria-label="Streamax"></span>
+            </div>
             <div class="nav-links">
                 <button class="nav-btn active" data-tab="welcome" onclick="switchTab('welcome', this)">Welcome</button>
                 <button class="nav-btn" data-tab="products" onclick="switchTab('products', this)">My Products</button>
@@ -586,23 +662,6 @@ html_head = r"""<!DOCTYPE html>
     <!-- Hidden Google Translate engine — driven by the modal above -->
     <div id="google_translate_element"></div>
 
-    <!-- HEADER / HERO -->
-    <header>
-        <div class="container">
-            <div class="header-subtitle fade-up">Streamax Customer Onboarding</div>
-            <div class="header-title-row fade-up">
-                <img src="__MASCOT_SRC__"
-                     alt="Streamax Mascot" class="header-mascot"
-                     onerror="this.style.display='none';">
-                <h1 style="font-size: 2.8rem; line-height: 1.15;">
-                    Welcome to the <span class="gradient-text">Streamax</span> family
-                </h1>
-            </div>
-            <div class="header-meta fade-up">Your guided journey — from unboxing to fleet-wide AI safety</div>
-            <div class="header-meta fade-up" style="font-size: 0.75rem; opacity: 0.6;">v1.0 • For fleets &amp; TSP partners • support@streamax.com</div>
-        </div>
-    </header>
-
     <div class="container">
 """
 
@@ -624,6 +683,12 @@ html_tail = r"""
                     setTimeout(() => el.classList.add('visible'), 50);
                 });
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                setTimeout(function () {
+                    if (window.ScrollTrigger) window.ScrollTrigger.refresh(true);
+                    if (window.StreamaxTruckStory && window.StreamaxTruckStory.refresh) {
+                        window.StreamaxTruckStory.refresh();
+                    }
+                }, 180);
             }
         }
 
@@ -726,6 +791,7 @@ html_tail = r"""
 html_head_filled = (
     html_head
     .replace("__MASCOT_SRC__", MASCOT_DATA_URI)
+    .replace("__STREAMAX_LOGO_SRC__", STREAMAX_LOGO_DATA_URI)
     .replace("__IDENTITY__", identity_display)
     .replace("__AUDIENCE__", audience_label)
 )

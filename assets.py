@@ -20,3 +20,6 @@ def _data_uri(filename: str, mime: str) -> str:
 
 
 MASCOT_DATA_URI = _data_uri("mascot.png", "image/png")
+STREAMAX_LOGO_DATA_URI = _data_uri("streamax-logo.png", "image/png")
+TRUCK_MODEL_DATA_URI = _data_uri("us_truck_3d.html", "text/html")
+TRUCK_TO_LOGO_DATA_URI = _data_uri("truck_to_logo_scroll.html", "text/html")
