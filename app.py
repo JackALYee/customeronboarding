@@ -164,7 +164,7 @@ html_head = r"""<!DOCTYPE html>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -184,8 +184,12 @@ html_head = r"""<!DOCTYPE html>
             --glass-bg: rgba(255, 255, 255, 0.03);
             --glass-border: 1px solid rgba(255, 255, 255, 0.08);
             --card-radius: 8px;
-            --font-main: 'Manrope', sans-serif;
-            --font-display: Baskerville, 'Baskerville Old Face', 'Libre Baskerville', Georgia, serif;
+            /* One brand family everywhere — Libre Baskerville (web) first so all
+               platforms render the same face; native Baskerville for Apple, then
+               serif fallbacks. --font-main and --font-display are intentionally
+               identical for full font conformity. */
+            --font-main: 'Libre Baskerville', Baskerville, 'Baskerville Old Face', Georgia, 'Times New Roman', serif;
+            --font-display: 'Libre Baskerville', Baskerville, 'Baskerville Old Face', Georgia, 'Times New Roman', serif;
             --glow-shadow: 0 0 20px rgba(244, 201, 93, 0.15);
             --gradient-text: linear-gradient(135deg, var(--gold) 0%, var(--purple) 100%);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
