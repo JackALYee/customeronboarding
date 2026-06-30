@@ -164,7 +164,7 @@ html_head = r"""<!DOCTYPE html>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -190,6 +190,8 @@ html_head = r"""<!DOCTYPE html>
                identical for full font conformity. */
             --font-main: 'Libre Baskerville', Baskerville, 'Baskerville Old Face', Georgia, 'Times New Roman', serif;
             --font-display: 'Libre Baskerville', Baskerville, 'Baskerville Old Face', Georgia, 'Times New Roman', serif;
+            /* Sans family kept ONLY for the header bar (nav tabs + user menu) */
+            --font-ui: 'Manrope', sans-serif;
             --glow-shadow: 0 0 20px rgba(244, 201, 93, 0.15);
             --gradient-text: linear-gradient(135deg, var(--gold) 0%, var(--purple) 100%);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -274,7 +276,7 @@ html_head = r"""<!DOCTYPE html>
             align-items: center;
             gap: 10px;
             color: var(--text-white);
-            font-family: var(--font-main);
+            font-family: var(--font-ui);
             font-size: 0.9rem;
             font-weight: 700;
             letter-spacing: 0.02em;
@@ -308,7 +310,7 @@ html_head = r"""<!DOCTYPE html>
             background: rgba(255,255,255,0.04);
             border: 1px solid rgba(255,255,255,0.10);
             border-radius: 30px; padding: 6px 12px 6px 6px;
-            cursor: pointer; font-family: var(--font-main);
+            cursor: pointer; font-family: var(--font-ui);
             transition: var(--transition);
         }
         .user-trigger:hover { border-color: rgba(244,201,93,0.4); background: rgba(255,255,255,0.07); }
@@ -341,7 +343,7 @@ html_head = r"""<!DOCTYPE html>
             width: 100%; display: flex; align-items: center; gap: 12px;
             background: transparent; border: none; border-radius: 9px;
             padding: 11px 14px; cursor: pointer; text-align: left;
-            color: var(--text-grey); font-family: var(--font-main); font-size: 0.88rem; font-weight: 500;
+            color: var(--text-grey); font-family: var(--font-ui); font-size: 0.88rem; font-weight: 500;
             text-decoration: none; transition: var(--transition);
         }
         .ud-item i { width: 16px; text-align: center; font-size: 0.95rem; }
@@ -408,7 +410,7 @@ html_head = r"""<!DOCTYPE html>
             border: none;
             color: var(--text-grey);
             padding: 13px 13px;
-            font-family: var(--font-main);
+            font-family: var(--font-ui);
             font-weight: 700;
             font-size: 0.74rem;
             letter-spacing: 0.02em;
