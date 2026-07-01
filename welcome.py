@@ -346,26 +346,29 @@ content = r"""
         .stmx-onboarding-hero {
             display: grid;
             grid-template-columns: minmax(280px, 0.95fr) minmax(320px, 1.05fr);
-            gap: clamp(26px, 5vw, 72px);
+            gap: clamp(24px, 4vw, 64px);
             align-items: center;
-            padding: clamp(72px, 10vw, 128px) 0 clamp(36px, 6vw, 72px);
+            /* Fit the whole hero into a single viewport (minus the fixed nav),
+               and scale with screen HEIGHT so it stays fit on any display. */
+            min-height: calc(100dvh - 64px);
+            box-sizing: border-box;
+            padding: clamp(20px, 4vh, 56px) 0;
             opacity: var(--hero-reveal-opacity);
             transform: translate3d(0, var(--hero-reveal-y), 0);
             transition: opacity 0.16s linear, transform 0.16s linear;
             will-change: opacity, transform;
         }
         .stmx-onboarding-copy h1 {
-            font-size: clamp(3.4rem, 7.4vw, 8rem);
-            line-height: 0.88;
-            max-width: 920px;
-            margin: 0 0 26px;
+            font-size: clamp(2.2rem, min(6.8vw, 8.4vh), 5.6rem);
+            line-height: 0.92;
+            margin: 0 0 clamp(14px, 2.4vh, 26px);
         }
         .stmx-onboarding-copy p {
-            max-width: 670px;
+            max-width: 640px;
             color: rgba(255,255,255,0.72);
-            font-size: clamp(1.02rem, 1.45vw, 1.28rem);
-            line-height: 1.74;
-            margin: 0 0 30px;
+            font-size: clamp(0.95rem, min(1.3vw, 2vh), 1.18rem);
+            line-height: 1.6;
+            margin: 0 0 clamp(16px, 2.6vh, 30px);
         }
         .stmx-hero-actions {
             display: flex;
@@ -373,7 +376,7 @@ content = r"""
             gap: 12px;
         }
         .stmx-command-panel {
-            min-height: 500px;
+            min-height: 0;
             border-radius: 8px;
             border: 1px solid rgba(255,255,255,0.09);
             background:
@@ -388,7 +391,7 @@ content = r"""
             align-items: flex-start;
             justify-content: space-between;
             gap: 18px;
-            margin-bottom: 26px;
+            margin-bottom: clamp(14px, 2.6vh, 26px);
         }
         .stmx-command-head span {
             color: var(--gold);
@@ -415,12 +418,12 @@ content = r"""
             border: 1px solid rgba(255,255,255,0.08);
         }
         .stmx-command-grid button {
-            min-height: 190px;
+            min-height: clamp(104px, 15vh, 180px);
             border: 0;
             background: rgba(8,8,8,0.86);
             color: var(--text-white);
             text-align: left;
-            padding: 24px;
+            padding: clamp(15px, 2.4vh, 24px);
             cursor: pointer;
             font-family: var(--font-main);
             transition: background 0.22s ease, transform 0.22s ease;
@@ -438,7 +441,7 @@ content = r"""
             color: var(--gold);
             border: 1px solid rgba(231,189,98,0.28);
             border-radius: 50%;
-            margin-bottom: 26px;
+            margin-bottom: clamp(10px, 2vh, 26px);
         }
         .stmx-command-grid strong {
             display: block;
@@ -608,6 +611,7 @@ content = r"""
             }
             .stmx-onboarding-hero {
                 grid-template-columns: 1fr;
+                min-height: auto;
                 padding-top: 72px;
             }
             .stmx-command-panel {
