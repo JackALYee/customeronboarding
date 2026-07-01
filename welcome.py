@@ -853,13 +853,19 @@ content = r"""
 
                 // Jump past the scroll story straight to the onboarding hero.
                 function skipStory() {
-                    setProgress(1);
                     var hero = document.getElementById('stmx-onboarding-start');
-                    if (hero) {
-                        try { hero.scrollIntoView({ behavior: 'auto', block: 'start' }); }
-                        catch (e) { hero.scrollIntoView(); }
-                    }
-                    handleScrollProgress();
+                    if (!hero) return;
+                    // Apply the completed/released state first (this adds the fixed-nav
+                    // offset + reflows), THEN measure on the next frame so the hero
+                    // lands flush under the nav instead of clipped above the viewport.
+                    setProgress(1);
+                    window.requestAnimationFrame(function () {
+                        var navEl = document.querySelector('.nav-tabs');
+                        var navH = navEl ? navEl.getBoundingClientRect().height : 0;
+                        var y = hero.getBoundingClientRect().top + window.pageYOffset - navH;
+                        window.scrollTo(0, Math.max(0, y));
+                        handleScrollProgress();
+                    });
                 }
 
                 window.StreamaxMorphStory = {
