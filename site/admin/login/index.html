@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Staff sign in - Streamax Onboarding Admin</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/stx.css">
+</head>
+<body>
+    <main class="auth-simple">
+        <div class="auth-card">
+            <div class="brand-row">
+                <span class="brand-mark" role="img" aria-label="Streamax"></span>
+                <span class="tag">Onboarding admin</span>
+            </div>
+            <h1 style="font-size:1.5rem">Staff sign in</h1>
+            <p class="lede" style="color:var(--ink-3);margin-bottom:22px">Manage client accounts, key contacts and sign-in activity.</p>
+
+            <div class="alert alert-error" id="login-error" role="alert" hidden>
+                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                <span data-msg></span>
+            </div>
+
+            <form data-login data-endpoint="/api/admin/login" data-home="/admin/" novalidate>
+                <div class="field" style="margin-top:16px">
+                    <label for="username">Username</label>
+                    <input class="input" id="username" name="username" data-field="username" type="text"
+                           autocomplete="username" autocapitalize="none" spellcheck="false" required>
+                </div>
+                <div class="field">
+                    <label for="password">Password</label>
+                    <div class="input-group">
+                        <input class="input" id="password" name="password" data-field="password" type="password"
+                               autocomplete="current-password" required>
+                        <button class="input-action" type="button" data-toggle-password="password"
+                                aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" type="submit"><span>Sign in</span></button>
+            </form>
+            <p class="auth-help">Staff accounts are issued by the portal owner with <code>tools/set_admin.py</code>.</p>
+        </div>
+    </main>
+    <script src="/assets/js/login.js"></script>
+</body>
+</html>

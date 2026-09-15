@@ -1,0 +1,16 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  X-Frame-Options: SAMEORIGIN
+
+# Gated pages: never stored by a shared cache (the middleware sets this too).
+/customer/*
+  Cache-Control: private, no-store
+/admin/*
+  Cache-Control: private, no-store
+
+# The 800 KB particle morph is referenced with a ?v=<content-hash>, so it can
+# be cached for a year; a changed file gets a new URL on the next build.
+/assets/morph/*
+  Cache-Control: public, max-age=31536000, immutable

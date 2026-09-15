@@ -1,0 +1,117 @@
+/* Onboarding admin - layout on top of stx.css (same tokens as the portal). */
+
+.adm-top {
+  position: sticky; top: 0; z-index: var(--z-nav);
+  background: rgba(255, 255, 255, 0.92); backdrop-filter: saturate(160%) blur(10px);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.adm-top-inner {
+  max-width: 1320px; margin: 0 auto; padding: 0 24px; min-height: 64px;
+  display: flex; align-items: center; gap: 24px;
+}
+.adm-brand { margin: 0; text-decoration: none; }
+.adm-tabs { display: flex; align-items: stretch; gap: 4px; align-self: stretch; }
+.adm-tab {
+  display: inline-flex; align-items: center; gap: 8px; padding: 0 14px; min-height: 44px;
+  border: 0; background: transparent; font: 600 0.9375rem/1 var(--font); color: var(--ink-4);
+  cursor: pointer; position: relative;
+}
+.adm-tab::after {
+  content: ''; position: absolute; left: 10px; right: 10px; bottom: 0; height: 3px; border-radius: 3px 3px 0 0;
+  background: var(--blue); transform: scaleX(0); transition: transform var(--t-med) var(--ease-out);
+}
+.adm-tab:hover { color: var(--ink); }
+.adm-tab[aria-selected="true"] { color: var(--blue); }
+.adm-tab[aria-selected="true"]::after { transform: scaleX(1); }
+.adm-top-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.adm-user {
+  display: inline-flex; align-items: center; gap: 8px; font-size: 0.875rem; font-weight: 600; color: var(--ink-2);
+  padding: 6px 10px; border-radius: 999px; background: var(--muted);
+}
+.adm-user i { color: var(--blue); }
+
+.adm-main { max-width: 1320px; margin: 0 auto; padding: 28px 24px 64px; }
+.adm-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 28px; }
+.kpi { padding: 18px 20px; }
+.kpi-label { font-size: 0.8125rem; font-weight: 600; color: var(--ink-4); }
+.kpi-hint { font-weight: 500; color: #94A3B8; }
+.kpi-value { margin-top: 6px; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+.kpi-value .unit { font-size: 0.875rem; font-weight: 600; color: var(--ink-4); margin: 0 6px 0 2px; }
+
+.adm-toolbar { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 16px; flex-wrap: wrap; }
+.adm-h1 { font-size: 1.5rem; margin: 0 0 4px; }
+.adm-sub { margin: 0; font-size: 0.9375rem; max-width: 70ch; }
+.adm-toolbar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.search { position: relative; width: 280px; max-width: 100%; }
+.search i { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--ink-4); font-size: 0.875rem; }
+.search .input { padding-left: 38px; }
+.adm-footnote { font-size: 0.8125rem; margin-top: 12px; }
+
+.table td .sub { display: block; font-size: 0.8125rem; color: var(--ink-4); }
+.table td.actions { text-align: right; white-space: nowrap; }
+.skeleton-row {
+  height: 14px; border-radius: 6px; margin: 10px 0;
+  background: linear-gradient(90deg, var(--muted) 0%, #E9EEF4 50%, var(--muted) 100%);
+  background-size: 200% 100%; animation: adm-shimmer 1.2s ease-in-out infinite;
+}
+@keyframes adm-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+.empty { text-align: center; padding: 48px 20px; }
+.empty > i { font-size: 2rem; color: var(--blue); margin-bottom: 10px; }
+.empty h2 { font-size: 1.125rem; }
+
+/* dialog details */
+.pw-row { display: flex; gap: 8px; align-items: stretch; }
+.done-banner { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--ok); }
+.done-banner i { font-size: 1.25rem; }
+.creds { display: grid; grid-template-columns: max-content 1fr; gap: 8px 16px; margin: 0 0 14px; padding: 14px 16px;
+  border-radius: var(--r-sm); background: var(--canvas); border: 1px solid var(--line); font-size: 0.9375rem; }
+.creds dt { color: var(--ink-4); font-weight: 600; }
+.creds dd { margin: 0; color: var(--ink); word-break: break-all; }
+.mono { font-family: var(--mono); }
+
+/* drawer */
+.drawer-head {
+  position: sticky; top: 0; z-index: 1; background: var(--surface);
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+  padding: 20px 24px 16px; border-bottom: 1px solid var(--line);
+}
+.drawer-title { font-size: 1.25rem; margin: 0 0 4px; overflow-wrap: anywhere; }
+.drawer-sub { font-size: 0.875rem; color: var(--ink-4); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.drawer-body { padding: 8px 24px 40px; }
+.dsec { padding: 20px 0; border-bottom: 1px solid var(--line); }
+.dsec:last-child { border-bottom: 0; }
+.dsec h3 { font-size: 1rem; margin-bottom: 12px; }
+.dsec-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.dsec-head h3 { margin-bottom: 8px; }
+.dsec-danger h3 { color: var(--danger-700); }
+.row-gap { display: flex; gap: 10px; flex-wrap: wrap; }
+.facts { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0 0 16px; font-size: 0.9rem; }
+.facts dt { color: var(--ink-4); }
+.facts dd { margin: 0; color: var(--ink-2); }
+
+.contacts-rows { display: grid; gap: 8px; margin: 12px 0 8px; }
+.contact-row { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr) 40px; gap: 8px; align-items: center; }
+.contact-row .icon-btn:hover { color: var(--danger); background: var(--danger-50); }
+.preview-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 8px; }
+.contact-preview { padding: 16px 18px; }
+.contact-preview h4 { margin: 0 0 8px; font-size: 1rem; }
+.contact-preview h4 i { color: var(--blue); margin-right: 6px; }
+.contact-preview .table td { padding: 8px 0; border-bottom: 1px solid var(--line); }
+.contact-preview .table td:first-child { width: 42%; font-weight: 600; color: var(--ink); padding-right: 12px; }
+
+@media (max-width: 1080px) {
+  .adm-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .adm-top-inner { flex-wrap: wrap; gap: 8px 14px; padding: 10px 16px; }
+  .adm-tabs { order: 3; width: 100%; }
+  .adm-top-actions .btn-ghost span, .adm-user span { display: none; }
+  .adm-main { padding: 20px 16px 48px; }
+  .search { width: 100%; }
+  .adm-toolbar-actions { width: 100%; }
+  .adm-toolbar-actions .btn-primary { flex: 1; }
+  .contact-row { grid-template-columns: 1fr 40px; }
+  .contact-row .c-contact { grid-column: 1 / 2; }
+}

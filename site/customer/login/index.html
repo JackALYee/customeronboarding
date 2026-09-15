@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Sign in - Streamax Customer Onboarding</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/stx.css">
+</head>
+<body>
+    <a class="skip-link" href="#signin">Skip to sign in</a>
+    <div class="auth">
+        <aside class="auth-brand" aria-label="About the portal">
+            <span class="auth-logo" role="img" aria-label="Streamax"></span>
+            <div>
+                <img class="auth-mascot" src="/assets/img/mascot.png" alt="" width="148" height="148">
+                <h2>From first install to fleet-wide safety.</h2>
+                <p>Your guided onboarding workspace for Streamax video telematics: hardware, installation, platform, AI safety and team training in one place.</p>
+                <ul class="auth-points">
+                    <li><i class="fa-solid fa-box-open" aria-hidden="true"></i><span>Your products, spec sheets and manuals</span></li>
+                    <li><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i><span>Step-by-step installation guides and checklists</span></li>
+                    <li><i class="fa-solid fa-shield-halved" aria-hidden="true"></i><span>AI safety features, explained and tunable</span></li>
+                </ul>
+            </div>
+            <p class="auth-foot">&copy; Streamax Technology. Customer onboarding portal.</p>
+        </aside>
+
+        <main class="auth-main" id="signin">
+            <div class="auth-card">
+                <span class="eyebrow">Customer onboarding</span>
+                <h1>Welcome to Streamax</h1>
+                <p class="lede">Sign in with the email and password your Streamax Customer Success Manager sent you.</p>
+
+                <div class="alert alert-error" id="login-error" role="alert" hidden>
+                    <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+                    <span data-msg></span>
+                </div>
+
+                <form data-login data-endpoint="/api/customer/login" data-home="/customer/" novalidate>
+                    <div class="field" style="margin-top:16px">
+                        <label for="email">Email</label>
+                        <input class="input" id="email" name="email" data-field="email" type="email"
+                               autocomplete="username" inputmode="email" placeholder="you@yourcompany.com" required>
+                    </div>
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <div class="input-group">
+                            <input class="input" id="password" name="password" data-field="password" type="password"
+                                   autocomplete="current-password" required>
+                            <button class="input-action" type="button" data-toggle-password="password"
+                                    aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit">
+                        <span>Sign in</span><i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+                </form>
+
+                <p class="auth-help">
+                    <i class="fa-solid fa-circle-question" aria-hidden="true" style="color:var(--blue);margin-right:6px"></i>
+                    Don't have an account, or forgot your password? Contact your Streamax Customer Success Manager to be onboarded.
+                </p>
+            </div>
+        </main>
+    </div>
+    <script src="/assets/js/login.js"></script>
+</body>
+</html>

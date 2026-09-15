@@ -1,0 +1,10 @@
+{
+  "account_id": "b377955e9eb4b1916473ebafa6ec2859",
+  "project": "streamax-onboarding",
+  "zone": "streamax-trucking.com",
+  "zone_id": "955c3863a05ba4c046cd9c6001f73746",
+  "domain": "www.streamax-trucking.com",
+  "kv_production_id": "68a3a091d90141c4808ee2e6d412875f",
+  "kv_preview_id": "097063aa5cb94f24bee00b34df84a190",
+  "kv_binding": "KV"
+}

@@ -1,0 +1,4 @@
+# Evaluated before static files. Only /customer and /admin are served by this site.
+# The bare domain points at Streamax's corporate site for now (302 = temporary,
+# so browsers don't pin it - replace this line when the root gets its own page).
+/  https://www.streamax.com  302

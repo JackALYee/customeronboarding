@@ -1,0 +1,26 @@
+# Never published. rsync exclude patterns (deploy.sh uses --exclude-from), applied
+# to ./site (the only folder that is published).
+# no leading slash = any depth; a leading slash = the site root only.
+
+# secrets and tooling
+.cloudflare_token
+*.token
+.env*
+.dev.vars
+deploy.sh
+.cloudflareignore
+.gitignore
+.git/
+.wrangler/
+.claude/
+node_modules/
+__pycache__/
+
+# internal docs and source (HANDOFF.md, CLAUDE.md, drafts, python)
+*.md
+*.py
+
+# OS and editor junk
+.DS_Store
+Thumbs.db
+*.swp

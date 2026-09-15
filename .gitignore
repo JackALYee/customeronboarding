@@ -6,9 +6,12 @@ __pycache__/
 venv/
 env/
 .env
+.env.*
+.dev.vars
 env.txt
 *.db
 *.sqlite
 *.sqlite3
-.streamlit/secrets.toml
+.wrangler/
+node_modules/
 welcome_classic.py

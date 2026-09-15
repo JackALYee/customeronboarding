@@ -4,122 +4,183 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A customer-facing Streamlit app that onboards new Streamax fleet customers and TSP channel partners. Deploys directly to Streamlit Cloud from this repo (no build step). The whole portal is a single page rendered as one HTML document via `streamlit.components.v1.html`, with section navigation handled in browser JS — Streamlit only does the auth gate and role routing.
+The Streamax **Customer Onboarding Portal** — a customer-facing site that onboards new fleet
+customers and TSP channel partners, plus a staff admin to manage client accounts. It is a
+**static site on Cloudflare Pages + Pages Functions + Workers KV**. There is no Streamlit, no
+server process and no framework (re-platformed off Streamlit on 2026-09-16; that code lives only
+in git history).
 
-## Run / verify
+- Customer portal: https://www.streamax-trucking.com/customer — 8 pages, server-side gated
+- Staff admin: https://www.streamax-trucking.com/admin
+- Deploy facts (IDs, domains, token scope, first-admin setup): **[HANDOFF.md](HANDOFF.md)**
+- General Cloudflare procedure: [cloudflare_deploy_method.md](cloudflare_deploy_method.md)
+
+## Layout
+
+```
+content/            section sources: each module exports `content` (one section's HTML +
+                    its own <style>/<script>). welcome.py products.py installation.py
+                    platform_tutorials.py ai_features.py training_academy.py playbooks.py support.py
+tools/build_site.py generates site/customer/*/index.html + site/customer/search-index.json
+tools/set_admin.py  owner-run: create/reset/delete admin logins (hashes locally, writes KV)
+tools/preview_server.py  local visual preview (no auth, demo data) on :8790
+site/               EVERYTHING PUBLISHED. Hand-written: login pages, admin, 404, _headers,
+                    _redirects, robots.txt, assets/ (css, js, img, morph). Generated: customer pages.
+functions/          Pages Functions (never served as files)
+  _lib/auth.js      PBKDF2 hashing, HMAC session cookies, session_epoch revocation
+  _lib/store.js     KV data layer (customers, admins, login events, rate limits)
+  _lib/http.js      json/redirect helpers, apex->www canonicalisation
+  customer/_middleware.js, admin/_middleware.js   server-side page gates
+  api/_middleware.js      same-site JSON-only writes
+  api/customer/{login,logout,me}.js
+  api/admin/{login,logout,me,events}.js, api/admin/customers/{index,[email]}.js
+deploy.sh           build -> stage ./site minus .cloudflareignore -> guard -> wrangler deploy
+```
+
+## Commands
 
 ```bash
-pip install -r requirements.txt   # streamlit + extra-streamlit-components
-streamlit run app.py
-
-# Compile-check after any edit (all modules)
-python3 -m py_compile app.py login.py db.py staff.py auth_cookie.py assets.py \
-  welcome.py products.py installation.py training_academy.py ai_features.py \
-  platform_tutorials.py playbooks.py support.py documentations.py
-
-# Relaunch pattern — ALWAYS free the port first (see pitfalls: stale instances stick around)
-lsof -ti :8501 | xargs kill -9 2>/dev/null; pkill -9 -f "streamlit run app.py"; sleep 2
-streamlit run app.py --server.port 8501 --browser.gatherUsageStats false &
-sleep 7 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8501/
+python3 tools/build_site.py                  # regenerate customer pages (deploy.sh does this too)
+python3 tools/preview_server.py              # look at it: http://localhost:8790/customer/
+bash deploy.sh --dry-run                     # list exactly what would be public
+bash deploy.sh --preview "msg"               # deploy to preview (own KV) - test here first
+bash deploy.sh "msg"                         # production - only when the owner says so
+python3 tools/set_admin.py                   # owner creates/resets an admin (prompts)
+wrangler pages functions build --outdir=/tmp/fn   # compile-check functions without deploying
+for f in site/assets/js/*.js; do node --check "$f"; done   # syntax-check browser JS
 ```
 
-No test suite. Validate logic changes with an in-process smoke script that monkey-patches `streamlit` before importing a module (`sys.modules['streamlit'] = MagicMock()`), then asserts on the produced `content` string / db behavior — every code-change commit in the history was preceded by one.
+(`node --check a.js b.js` only checks the first file — the rest become script arguments.)
 
-The Python that has Streamlit installed is `/Library/Frameworks/Python.framework/Versions/3.11/bin/python3` — plain `python3` lacks it (fine for `py_compile`, not for importing app modules).
+No test suite. Verify a change on the **preview** deployment with real sign-ins: create a random
+probe admin non-interactively (`STX_ADMIN_USER`/`STX_ADMIN_PASSWORD` env + `set_admin.py
+--preview`), drive the API with curl cookie jars, then delete the probes. Never type a password
+into a browser tool — the local preview server needs none.
 
-## Test accounts (built-in, hardcoded in [login.py](login.py))
+## How the customer portal is built
 
-- `test` / `testme` → logs in as the seeded test client (`test@onboarding.local`, audience: fleet)
-- `test_staff` / `testme` → opens the staff dashboard
-- Any real client → email + password assigned by staff via the create-account form
+- `tools/build_site.py` imports each `content/*.py`, and for every section: strips the legacy
+  `hidden` class, rewrites `href="javascript:void(0)" onclick="switchTab('x')"` to real links,
+  promotes the first `<h2>` to the page's single `<h1 class="page-title">` (+ eyebrow), fills the
+  Welcome placeholders, auto-adds `id`s to h1–h4 and item titles (`.product-name`,
+  `.inst-prod-name`, `.aif-feat-name`, `.pfn-name`, `.video-title`) and emits the search index.
+  It aborts on any leftover `__PLACEHOLDER__` or `javascript:void`.
+- The shared shell (nav, search dialog, language dialog, prev/next pager, footer) is in
+  `build_site.py`. Section list + URLs + nav labels + eyebrows + icons: the `SECTIONS` table there.
+- Assets are cache-busted with `?v=<content-hash>`. The morph is referenced **extensionless**
+  (`/assets/morph/truck-to-logo?v=`) because Pages 308-redirects `*.html` and would drop `?v`.
+- `site/assets/js/portal.js`: `switchTab()` shim → real URLs; fills `[data-slot=identity|audience|contacts]`
+  from `/api/customer/me`; search (Ctrl/⌘K, `/`); mobile menu; deep links auto-open accordions
+  (`.aif-feat`, `.pfn-feat`, `.inst-prod`, `details`); Google Translate language dialog.
+- **Welcome** (`content/welcome.py`): a 1620vh dark band with the scroll-driven particle morph
+  (iframe `site/assets/morph/truck-to-logo.html`, driven by `postMessage`; skip button; scroll
+  hint), then the light hero `#stmx-onboarding-start`, stats, 30-day path, the 7-section "Explore"
+  grid, Day-1 checks + Key Contacts. The morph script's hooks are `.nav-tabs`,
+  `#stmx-brand-morph`, `#stmx-morph-frame`, `#stmx-onboarding-start`, `#stmx-scroll-hint` — keep them.
+- The FleetMind simulator (in `platform_tutorials.py`, between `<!-- simulator -->` markers) is a
+  faithful clone of a separate product with its **own** palette (`#7c5cff` etc.) — don't restyle it
+  to Streamax colours; the markers also keep it out of search.
 
-The two `test*` usernames are recognised before the email-lookup path. Don't break that ordering.
+### Adding a section
+1. `content/mysection.py` exporting `content = r"""<div id="mysection" class="content-section">…"""`,
+   opening with an intro `<div class="card fade-up"><h2><i class="fa-solid fa-…"></i>Title</h2><p>…</p></div>`
+   (that h2 becomes the page h1).
+2. Add a row to `SECTIONS` in `tools/build_site.py`; add the id → URL to `ROUTES` in `portal.js`.
+3. Rebuild, preview, deploy to preview, deploy.
 
-## Architecture — the load-bearing pattern
+## Design system (ui-ux-pro-max: Minimalism & Swiss, light)
 
-**[app.py](app.py) is a thin shell.** It:
-1. Renders Streamlit page config + a minimal CSS override (just so the Streamlit chrome around the `components.html` iframe stays dark).
-2. Gates on `st.session_state['authenticated']`. Unauthenticated → `login.render_login()` and stop.
-3. Routes by `user_role`: `staff` → `staff.render()` (a normal Streamlit page); `customer` → assembles the single-page portal and renders it via one `components.html(full_html, height=1000, scrolling=True)` call. The `height` is a fallback — customer-portal-only CSS forces the iframe to `100vh` so it becomes the scroll container (see the iframe note below).
+- **Official Streamax colours only**: blue `#0070C0` (5.15:1 on white — text + buttons OK),
+  green `#A0C000` (2.1:1 — **decorative only, never text**; text-safe green is `--green-700 #4D6B00`).
+  Neutrals are slate. One font: **Plus Jakarta Sans**. Tokens + components: `site/assets/css/stx.css`.
+- `site/assets/css/portal.css` maps the legacy dark-theme names the content still uses inline
+  (`--gold`→blue, `--purple`→green-700, `--text-white`→ink, `--text-grey`→ink-3, `--glass-*`→surface/line).
+  Prefer the real tokens in new content; don't reintroduce light-on-dark greys (`#cbd5e1`) or
+  gold/purple literals.
+- Use the **real logo image** (`/assets/img/streamax-logo.png`) on light backgrounds; a white mask
+  of it only on dark/blue panels. Never recolour it otherwise.
+- The admin + sign-in pages share `stx.css`; the admin adds `admin.css`.
+- Reveal animations are opt-in (`html.js-reveal`, set by an inline head script) with a 3 s CSS
+  failsafe, so content is never stuck invisible if JS fails. Respect `prefers-reduced-motion`.
+- Checked: one-line nav at 1290–1920 px (menu below 1280), no horizontal scroll at 375 px on all
+  pages, 2-line hero headline, icon-only buttons have accessible names.
 
-**The 8 customer-facing sections are HTML modules.** Nav order (in `app.py`): **Welcome · My Products · Installation · Platform Tutorials · AI Features · Training Academy · Playbooks · Support**. Each module (`welcome.py`, `products.py`, `installation.py`, `platform_tutorials.py`, `ai_features.py`, `training_academy.py`, `playbooks.py`, `support.py`) exports a module-level string `content` shaped like:
+## Auth & data (details + rationale in HANDOFF.md)
 
-```python
-content = r"""
-<div id="welcome" class="content-section">   <!-- or "content-section hidden" for non-default -->
-   ...inline HTML using the shared CSS classes from app.py...
-</div>
-"""
-```
-
-`app.py` concatenates `html_head + welcome_content + products_content + ... + html_tail`. The `<head>` block in `app.py` defines all shared CSS variables, glass-panel/card/CTA styles, and the `switchTab(tabId, this)` JS that hides/shows sections by toggling the `hidden` class. **Section switching is JS-only — there is no Streamlit rerun between tabs.** This is why every section ships its data inline and you can't use Streamlit widgets inside a section's HTML.
-
-**Sections CAN include their own `<style>` and `<script>`** — everything is inside one `components.html` iframe, which executes scripts and has no `st.markdown` blank-line constraint. Several sections are full interactive sub-apps built this way (Python builds the HTML from a data table, then a scoped `<script>` wires up the interactivity, guarded by `root.dataset.*Init`):
-- **[platform_tutorials.py](platform_tutorials.py)** — a clone of the FleetMind platform (the customer's white-label Streamax CMS): three top-bar rails (Vision / Subscription / Settings), accordion sidebar submenus, ~22 views, top-bar overlays (AI agent / notifications / help / account), and hover-tooltip explanations. Built from `GROUPS` + per-view builder functions; light-themed `.fm-*` styles scoped so the portal's dark theme doesn't leak.
-- **[installation.py](installation.py)** — per-product accordions (grouped like products.py), each with a video placeholder + step-through guide (tick steps, progress bar) + checklist. Data in `GROUPS` + `GUIDES`; real guides where grounded in spec sheets, `placeholder` key where not (B2/B3/R-Watch/Sentinel).
-- **[ai_features.py](ai_features.py)** — per-detection accordions (`_ADAS` + `_DMS` tables): each detection has a description, a sample-clip placeholder, and a parameter-config table. AEB config is a placeholder (safety-critical, not user-tunable).
-
-If you need a real Streamlit *widget* inside a customer-facing section, either (a) render it above/below the `components.html` block (it'll sit outside the styled container), or (b) keep it as a pure HTML placeholder and wire it to a backend later (e.g. the proforma-invoice uploader atop [products.py](products.py)).
-
-[documentations.py](documentations.py) exists on disk but is **orphaned** — it was added then removed from the nav/assembly; it's not imported. Re-wire it in `app.py` if you want it back.
-
-**Palette is golden + purple glassmorphism** on a plum-dark base: `--gold` `#F4C95D`, `--purple` `#A06BFF`, gradient `gold → purple`, `--bg-deep` `#0c0a14`. (It was green/blue originally — recolored app-wide; don't reintroduce `#2AF598`/`#009EFD`.)
-
-**Section HTML expects these CSS classes/variables** (all defined in `app.py`'s `<style>`): `--gold`, `--purple`, `--bg-deep`, `.card`, `.glass-panel`, `.section-header`, `.grid-2 / .grid-3 / .grid-4`, `.stmx-table`, `.badge-green / .badge-blue / .badge-amber`, `.checklist`, `.pipeline-container / .pipeline-step / .pipeline-icon`, `.cta-btn` (+ `.secondary`), `.fade-up`, `.gradient-text`, `.video-card`. Re-use them; don't redefine.
-
-The staff dashboard is the exception — it renders as a normal Streamlit page (not inside `components.html`), with a fixed glass top bar, sticky tabs, and a `<details>` user dropdown (Language + Sign out); its CSS is injected in [staff.py](staff.py). A `<style>` injected via `st.markdown` must be ONE contiguous block — a blank line inside it ends the HTML passthrough and the rest leaks to the page as text.
-
-**Session persistence + language** ([auth_cookie.py](auth_cookie.py)): a signed cookie (via `extra-streamlit-components`) carries auth across reloads so a `?lang=` switch or refresh doesn't log you out; a sticky `LOGOUT_FLAG` defeats the cookie-restore-race on sign-out. The customer portal translates in-iframe (its own Google-Translate modal); the staff page translates the parent doc via a 0-height `components.html` bridge, and defaults to English with NO engine loaded (and clears the shared `googtrans` cookie) so a customer-side language choice can't bleed in.
-
-**The full-height-iframe CSS is customer-portal-only** — it's injected right before the portal's `components.html` and scoped to `[data-testid="stIFrame"]`, NOT in the global block. A global `.stApp iframe { height: 100vh }` would also blow up the hidden cookie-manager iframe on the login/staff pages.
-
-## Authentication & DB ([db.py](db.py) + [login.py](login.py))
-
-- SQLite at `onboarding.db` (gitignored). Two tables: `customers`, `login_events`.
-- `init_db()` runs every import of `login.py`; it includes idempotent migrations that `ALTER TABLE` to add columns introduced after the schema first shipped (`password_hash`, `created_at`, `created_by`). Preserve those — older deploys still have older sqlite files.
-- `seed_test_accounts()` also runs on every `login.py` import. It inserts the test client row + sets its password hash if missing. Don't move this into a one-shot script.
-- Passwords use `pbkdf2_sha256$120000$<salt_hex>$<hash_hex>` via stdlib `hashlib.pbkdf2_hmac` + `hmac.compare_digest`. No bcrypt/argon2 dependency on purpose (keeps `requirements.txt` to one line: Streamlit). Don't swap algorithms without reading existing hashes first.
-- `staff` is currently a hardcoded `test_staff`/`testme` credential check. There is no `staff` table — when real staff auth is needed, add one rather than expanding the hardcoded check.
+KV keys: `customer:<email>` (JSON; list-metadata = admin table row), `admin:<username>`,
+`event:<inv-ts>:<rand>` (login log, 180-day TTL, metadata-only), `rl:<scope>:<ip>`,
+`config:session_key`. Sessions are HMAC cookies; every gated request re-reads the account so
+disable / delete / password reset (`session_epoch`) evict immediately. No built-in test accounts.
 
 ## Content boundaries — the explicit rules
 
-The portal is **customer-facing**. The auto-memory's `streamax-knowledge` skill contains both external-safe and internal content. When authoring or editing any customer-facing section, the following are out:
+The portal is **customer-facing**. The `streamax-knowledge` skill (sibling repo
+`../Sales Toolkit/auto email/.claude/skills/streamax-knowledge/`) contains both external-safe and
+internal content. When authoring or editing any customer-facing section, the following are out:
 
-- **Pricing of any kind.** No dashcam costs ($90/$200/etc.), no platform tier $/vehicle/mo ($1/$3/$6), no TCO comparisons, no TSP margin economics. If commercial detail is relevant, say "talk to your CSM."
-- **Internal vendor names.** Never name Webbing, Inventure, CANGO, or any other Streamax supplier. Earlier commits have already stripped these — don't reintroduce them.
-- **Planning / pre-release products.** If a product isn't in `salestoolkit/terminology_db.py` (`TERMINOLOGY_DB`), it doesn't go in [products.py](products.py). At time of writing this excludes DS100, C6 Lite 3.0, AD Plus 3.0, C46A AHD, CM31/CMS, ADA family, AI-AVM/360.
-- **Competitive-displacement language.** "Samsara/Motive sell direct, they're a threat to TSPs" framing is internal sales pitch and was deliberately softened in [platform_tutorials.py](platform_tutorials.py). Keep it partner-positive.
+- **Pricing of any kind.** No dashcam costs, no platform tier $/vehicle/mo, no TCO comparisons, no
+  TSP margin economics. If commercial detail is relevant, say "talk to your CSM."
+- **Internal vendor names.** Never name Webbing, Inventure, CANGO, or any other Streamax supplier.
+  Earlier commits stripped these and `deploy.sh` refuses to ship them — don't reintroduce them.
+- **Planning / pre-release products.** If a product isn't in `salestoolkit/terminology_db.py`
+  (`TERMINOLOGY_DB`), it doesn't go in `content/products.py`. At time of writing this excludes
+  DS100, C6 Lite 3.0, AD Plus 3.0, C46A AHD, CM31/CMS, ADA family, AI-AVM/360.
+- **Competitive-displacement language.** "Samsara/Motive sell direct, they're a threat to TSPs"
+  framing is internal sales pitch and was deliberately softened in `content/platform_tutorials.py`.
+  Keep it partner-positive.
+- The FleetMind dev host (`fleetmind-dev`) and its demo credentials never appear in content (guarded).
 
-Public, white-paper-grade facts ARE in scope: Berg Insight #1, 5M+ vehicles, 100+ countries, regulatory standards (London DVS, EU GSR2, UN R46), industry-statistic costs like the mining "$500K–$2M per crusher incident" line, SafeGPT capability descriptions.
+Public, white-paper-grade facts ARE in scope: Berg Insight #1 (**video telematics hardware
+provider**, 6 consecutive years — say it that precisely), 5M+ vehicles, 100+ countries, 500+
+channel partners, regulatory standards (London DVS, EU GSR2, UN R46), industry-statistic costs like
+the mining "$500K–$2M per crusher incident" line, SafeGPT capability descriptions. Source for company
+numbers: the skill's `reference/company-snapshot.md` — quote it, don't paraphrase it upward.
 
 ## Where product data comes from
 
-[products.py](products.py) holds a **static snapshot** of 26 products + 48 Drive download URLs, copied from the sibling repo at `../Sales Toolkit/salestoolkit/terminology_db.py` (the `TERMINOLOGY_DB` list). The shape is `PRODUCTS_BY_GROUP` — a list of groups, each with `items` containing `name`, `desc`, and a list of `(label, url)` `files`.
+`content/products.py` holds a **static snapshot** of 26 products + 48 Drive download URLs, copied
+from `../Sales Toolkit/salestoolkit/terminology_db.py` (`TERMINOLOGY_DB`). The shape is
+`PRODUCTS_BY_GROUP` — groups, each with `items` of `name`, `desc` and `(label, url)` `files`.
 
-The snapshot does NOT auto-update. If Streamaxpedia adds a product, changes a Drive link, or moves a model from planning to shipping, somebody has to update `PRODUCTS_BY_GROUP`. The product registry shape is deliberately friendly to future invoice-parsing — the upload placeholder at the top of the section is meant to eventually post a parsed product list and re-render the same registry filtered to the matched items.
+The snapshot does NOT auto-update: when Streamaxpedia adds a product, changes a Drive link or
+moves a model from planning to shipping, update `PRODUCTS_BY_GROUP`. Because the build now runs
+locally, a build-time import from the sibling repo inside `tools/build_site.py` is feasible (only
+the built HTML is uploaded) — that's the path if a live sync is ever requested. The upload
+placeholder at the top of My Products is meant to eventually take a parsed invoice and show the
+same registry filtered to the matched items (would need a Pages Function).
 
-If a refactor to import directly from `salestoolkit/terminology_db.py` at runtime is requested, both repos would need to co-deploy (Streamlit Cloud cannot follow `../`), so a build-time sync script is the more realistic path.
+The Drive links are real PDFs: `curl -sL "<uc?export=download&id=…>" -o /tmp/x.pdf`, then Read
+with the `pages` param. That's how the AD Plus 2.0 install flow (the basis for the dashcam guides)
+was grounded.
 
-## Adding a new section
+## Pitfalls
 
-1. Create `mysection.py` exporting `content = r"""<div id="mysection" class="content-section hidden">...</div>"""` (use `hidden` on every section except `welcome`, the default).
-2. Import it in `app.py` next to the other section imports (try/except + fallback HTML so a missing section degrades gracefully; match that style).
-3. Add `<button class="nav-btn" data-tab="mysection" onclick="switchTab('mysection', this)">` to the `.nav-links` block. The `data-tab` is load-bearing — `switchTab` highlights the active button by `data-tab` when no element is passed (so CTAs elsewhere can call `switchTab('mysection')` without a fragile nav-index). Don't select nav buttons by index.
-4. Append `+ mysection_content` to the `full_html = ...` assembly.
-5. The iframe is forced to `100vh` (it scrolls internally), so you don't need to grow `height` for tall sections — but keep `scrolling=True`.
+- **`deploy.sh` only publishes `./site`.** New public files go there; source stays out.
+- **wrangler never reads `.cloudflareignore`.** `deploy.sh` enforces it by staging with rsync —
+  don't "simplify" it to `wrangler pages deploy site`. `--dry-run` shows what really ships.
+- **Generated pages are overwritten** on every build — edit `content/*.py` or `build_site.py`, never
+  `site/customer/*/index.html`.
+- **KV is eventually consistent (~60 s)** — a new client may not sign in from far away for a minute;
+  `list()` lags too. Don't "fix" by retrying in a loop.
+- **A CSS `display` rule overrides the `hidden` attribute** — add `.x[hidden]{display:none!important}`.
+- **The in-app Browser pane blocks subresources on external domains** and backgrounded tabs freeze
+  transitions, so screenshots of production can look unstyled/faded. Verify production with curl;
+  verify visuals on `tools/preview_server.py`.
+- **After a deploy the edge can lag a few seconds** (one-off 522s were seen) — retry before concluding.
+- **Workers' Web Crypto caps PBKDF2 at 100,000 iterations** — keep hashes at or below it.
+- **Old deployments keep running their old Functions against the production KV** at their hash URLs
+  (`<id>.streamax-onboarding.pages.dev`). An auth fix isn't complete until the production deployments
+  that predate it are deleted (owner's OK; see HANDOFF.md known limits).
+- **The nav holds exactly 8 sections on one line down to 1290 px** (measured). A 9th item needs the
+  breakpoints in `portal.css` (1360 icon-only search, 1280 menu) re-measured, not guessed.
+- **Video placeholders stay dark** (`#0B1220` + blue glow) on the light theme on purpose — they
+  read as video frames. Same for the Welcome morph band and the FleetMind simulator.
+- **The mascot and logo are plain files** in `site/assets/img/` now (the Streamlit-era base64
+  data-URI workaround is gone) — reference them root-absolute (`/assets/img/…`).
 
-## Common pitfalls
+## Sibling repos
 
-- **Don't use `st.something` inside a section module.** It looks like it'd work, but the section's `content` is a string concatenated into one HTML doc rendered inside an iframe. No Streamlit context.
-- **The `?logout=1` query param** is the only way to log out — both pills use a JS snippet that rewrites `window.parent.location` so the parent Streamlit page (not the iframe) navigates. Don't simplify that without testing it inside an iframe.
-- **Sign-out clears `audience` too.** Anything saved per-session under `st.session_state` needs to be in the `_clear_pending` / logout key list, or it'll leak between users on the same tab.
-- **Don't reintroduce `emailer.py` or the `login_codes` table** unless email-based auth is explicitly being added back. The schema migration would handle a re-add; the bigger trap is half-restoring it and leaving dead code in `login.py`.
-- **Stale Streamlit instances hold port 8501.** A backgrounded `streamlit run app.py` survives across turns; a new launch then prints "Port 8501 is already in use" and exits, while `curl localhost:8501` still returns 200 from the *old* code — so you think your change shipped when it didn't. Always `lsof -ti :8501 | xargs kill -9; pkill -9 -f "streamlit run app.py"; sleep 2` before relaunching, and confirm the port is free.
-- **A CSS `display` rule overrides the `hidden` attribute.** The FleetMind overlay panels broke because `.fm-notifs { display:flex }` kept them visible even with `hidden` set. When you toggle via `hidden`, add `.thing[hidden] { display:none !important; }`.
-- **Reading a spec sheet:** the Drive links in `products.py` are real PDFs. `curl -sL "<uc?export=download&id=...>" -o /tmp/x.pdf`, then Read with the `pages` param. That's how the AD Plus 2.0 install flow (the basis for the dashcam guides) was grounded.
-- **The mascot is a base64 data URI**, not a Drive hot-link — Drive blocks `<img>` embedding. `assets.py` reads `assets/mascot.png` and exposes `MASCOT_DATA_URI`; app.py / login.py fill a `__MASCOT_SRC__` placeholder. Keep `assets/mascot.png` committed.
-
-## Sibling repos (relevant context)
-
-- `../Sales Toolkit/salestoolkit/` — the internal sales toolkit. Its `terminology_db.py` is this portal's product-data upstream; its `app.py` / section-module pattern is the design language this portal mirrors.
-- `../Sales Toolkit/auto email/` — the Streamax cold-email agent. Shares the same `streamax-knowledge` skill in its `.claude/skills/` directory (where to look up product specs, SafeGPT mechanics, value-propositions when authoring sections).
+- `../Sales Toolkit/salestoolkit/` — internal sales toolkit; `terminology_db.py` is the product-data upstream.
+- `../Sales Toolkit/auto email/` — Streamax cold-email agent; holds the shared `streamax-knowledge` skill.
+- `../SMB_Website/` — FleetSpring site; the reference implementation of the Cloudflare method.
+- `../3D Files/` — source 3D models (`semi.glb` was baked into the morph's particle buffer offline).

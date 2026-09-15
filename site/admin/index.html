@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Onboarding Admin - Streamax</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/stx.css">
+    <link rel="stylesheet" href="/assets/css/admin.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="adm-top">
+        <div class="adm-top-inner">
+            <a class="brand-row adm-brand" href="/admin/" aria-label="Onboarding admin home">
+                <span class="brand-mark" role="img" aria-label="Streamax"></span>
+                <span class="tag">Onboarding admin</span>
+            </a>
+            <nav class="adm-tabs" role="tablist" aria-label="Admin sections">
+                <button class="adm-tab" role="tab" id="tab-clients" aria-controls="panel-clients" aria-selected="true" data-tab="clients">
+                    <i class="fa-solid fa-building" aria-hidden="true"></i><span>Clients</span>
+                </button>
+                <button class="adm-tab" role="tab" id="tab-activity" aria-controls="panel-activity" aria-selected="false" data-tab="activity" tabindex="-1">
+                    <i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><span>Activity</span>
+                </button>
+            </nav>
+            <div class="adm-top-actions">
+                <a class="btn btn-ghost btn-sm" href="/customer/login/" target="_blank" rel="noopener">
+                    <span>Customer portal</span><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                </a>
+                <span class="adm-user" title="Signed in"><i class="fa-solid fa-user-shield" aria-hidden="true"></i><span id="adm-username">...</span></span>
+                <button class="btn btn-secondary btn-sm" type="button" id="btn-signout">
+                    <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span>Sign out</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="adm-main" id="main">
+        <section class="adm-kpis" aria-label="Overview">
+            <div class="kpi card"><div class="kpi-label">Client accounts</div><div class="kpi-value tabular" id="kpi-total">-</div></div>
+            <div class="kpi card"><div class="kpi-label">Fleet / TSP</div><div class="kpi-value tabular" id="kpi-split">-</div></div>
+            <div class="kpi card"><div class="kpi-label">Activated <span class="kpi-hint">(signed in at least once)</span></div><div class="kpi-value tabular" id="kpi-active">-</div></div>
+            <div class="kpi card"><div class="kpi-label">Sign-ins recorded</div><div class="kpi-value tabular" id="kpi-logins">-</div></div>
+        </section>
+
+        <!-- CLIENTS -->
+        <section class="adm-panel" id="panel-clients" role="tabpanel" aria-labelledby="tab-clients">
+            <div class="adm-toolbar">
+                <div>
+                    <h1 class="adm-h1">Clients <span class="muted tabular" id="clients-count"></span></h1>
+                    <p class="muted adm-sub">Create an account, then share the password with the client out-of-band. Open <strong>Manage</strong> to set their key contacts, reset a password or turn access off.</p>
+                </div>
+                <div class="adm-toolbar-actions">
+                    <label class="visually-hidden" for="client-search">Search clients</label>
+                    <div class="search">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                        <input class="input" id="client-search" type="search" placeholder="Search company or email" autocomplete="off">
+                    </div>
+                    <button class="btn btn-primary" type="button" id="btn-new-client">
+                        <i class="fa-solid fa-plus" aria-hidden="true"></i><span>New client</span>
+                    </button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="table-wrap">
+                    <table class="table" id="clients-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Company</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Audience</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Created</th>
+                                <th scope="col">Last sign-in</th>
+                                <th scope="col"><span class="visually-hidden">Actions</span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="clients-body">
+                            <tr><td colspan="7"><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="empty" id="clients-empty" hidden>
+                    <i class="fa-solid fa-building-circle-check" aria-hidden="true"></i>
+                    <h2>No client accounts yet</h2>
+                    <p class="muted">Create the first one. The client signs in at <strong>/customer</strong> with the email and password you set.</p>
+                    <button class="btn btn-primary" type="button" data-open-new><i class="fa-solid fa-plus" aria-hidden="true"></i><span>New client</span></button>
+                </div>
+                <div class="empty" id="clients-nomatch" hidden>
+                    <p class="muted">No clients match your search.</p>
+                </div>
+            </div>
+            <p class="muted adm-footnote"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> New or changed accounts can take up to a minute to appear in this list for other staff (edge storage sync).</p>
+        </section>
+
+        <!-- ACTIVITY -->
+        <section class="adm-panel" id="panel-activity" role="tabpanel" aria-labelledby="tab-activity" hidden>
+            <div class="adm-toolbar">
+                <div>
+                    <h1 class="adm-h1">Sign-in activity <span class="muted tabular" id="events-count"></span></h1>
+                    <p class="muted adm-sub">The latest 50 successful sign-ins by clients and staff. Records are kept for 180 days.</p>
+                </div>
+                <div class="adm-toolbar-actions">
+                    <button class="btn btn-secondary" type="button" id="btn-refresh-events"><i class="fa-solid fa-rotate" aria-hidden="true"></i><span>Refresh</span></button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="table-wrap">
+                    <table class="table">
+                        <thead><tr><th scope="col">Role</th><th scope="col">Identity</th><th scope="col">Method</th><th scope="col">When</th></tr></thead>
+                        <tbody id="events-body"><tr><td colspan="4"><div class="skeleton-row"></div><div class="skeleton-row"></div></td></tr></tbody>
+                    </table>
+                </div>
+                <div class="empty" id="events-empty" hidden><p class="muted">No sign-ins recorded yet.</p></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- NEW CLIENT DIALOG -->
+    <div class="scrim" id="dlg-new" hidden>
+        <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dlg-new-title">
+            <div class="dialog-head">
+                <div>
+                    <h2 id="dlg-new-title" style="font-size:1.25rem;margin:0">New client</h2>
+                    <p class="muted" style="margin:4px 0 0;font-size:0.9rem">They sign in at /customer with these details.</p>
+                </div>
+                <button class="icon-btn" type="button" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="form-new" novalidate>
+                <div class="dialog-body">
+                    <div class="alert alert-error" id="new-error" role="alert" hidden><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span data-msg></span></div>
+                    <div class="field" style="margin-top:12px">
+                        <label for="new-company">Company name<span class="req" aria-hidden="true">*</span></label>
+                        <input class="input" id="new-company" name="company" type="text" autocomplete="organization" placeholder="e.g. Acme Logistics" required>
+                    </div>
+                    <div class="field">
+                        <label for="new-email">Client email<span class="req" aria-hidden="true">*</span></label>
+                        <input class="input" id="new-email" name="email" type="email" inputmode="email" autocomplete="off" placeholder="contact@theircompany.com" required>
+                        <span class="hint">This is their sign-in name.</span>
+                    </div>
+                    <div class="field">
+                        <label for="new-audience">Audience type</label>
+                        <select class="select input" id="new-audience" name="audience">
+                            <option value="fleet">Fleet Operator</option>
+                            <option value="tsp">TSP / Channel Partner</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="new-password">Initial password<span class="req" aria-hidden="true">*</span></label>
+                        <div class="pw-row">
+                            <div class="input-group" style="flex:1">
+                                <input class="input" id="new-password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+                                <button class="input-action" type="button" data-toggle-password="new-password" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
+                            </div>
+                            <button class="btn btn-secondary" type="button" data-generate="new-password"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i><span>Generate</span></button>
+                        </div>
+                        <span class="hint">At least 8 characters. Share it with the client securely.</span>
+                    </div>
+                </div>
+                <div class="dialog-foot">
+                    <button class="btn btn-secondary" type="button" data-close>Cancel</button>
+                    <button class="btn btn-primary" type="submit" id="btn-create"><span>Create account</span></button>
+                </div>
+            </form>
+            <div id="new-done" hidden>
+                <div class="dialog-body">
+                    <div class="done-banner"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>Account created</span></div>
+                    <p style="margin:14px 0 10px">Send these sign-in details to the client:</p>
+                    <dl class="creds">
+                        <dt>Portal</dt><dd><span id="done-url"></span></dd>
+                        <dt>Email</dt><dd><span id="done-email"></span></dd>
+                        <dt>Password</dt><dd><span id="done-password" class="mono"></span></dd>
+                    </dl>
+                    <button class="btn btn-secondary btn-sm" type="button" id="btn-copy-creds"><i class="fa-regular fa-copy" aria-hidden="true"></i><span>Copy all</span></button>
+                </div>
+                <div class="dialog-foot">
+                    <button class="btn btn-secondary" type="button" id="btn-done-manage">Set key contacts</button>
+                    <button class="btn btn-primary" type="button" data-close>Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MANAGE CLIENT DRAWER -->
+    <div class="scrim drawer-scrim" id="drawer" hidden>
+        <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+            <div class="drawer-head">
+                <div style="min-width:0">
+                    <h2 id="drawer-title" class="drawer-title"></h2>
+                    <div class="drawer-sub"><span id="drawer-email"></span> <span id="drawer-status"></span></div>
+                </div>
+                <button class="icon-btn" type="button" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="drawer-body">
+                <section class="dsec" aria-labelledby="sec-profile">
+                    <h3 id="sec-profile">Profile</h3>
+                    <form id="form-profile" novalidate>
+                        <div class="field">
+                            <label for="p-company">Company name</label>
+                            <input class="input" id="p-company" type="text" required>
+                        </div>
+                        <div class="field">
+                            <label for="p-audience">Audience type</label>
+                            <select class="select input" id="p-audience">
+                                <option value="fleet">Fleet Operator</option>
+                                <option value="tsp">TSP / Channel Partner</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary btn-sm" type="submit">Save profile</button>
+                    </form>
+                </section>
+
+                <section class="dsec" aria-labelledby="sec-access">
+                    <h3 id="sec-access">Access</h3>
+                    <dl class="facts">
+                        <dt>Created</dt><dd id="f-created"></dd>
+                        <dt>First sign-in</dt><dd id="f-first"></dd>
+                        <dt>Last sign-in</dt><dd id="f-last"></dd>
+                    </dl>
+                    <form id="form-password" novalidate>
+                        <div class="field">
+                            <label for="p-password">Set a new password</label>
+                            <div class="pw-row">
+                                <div class="input-group" style="flex:1">
+                                    <input class="input" id="p-password" type="password" autocomplete="new-password" minlength="8">
+                                    <button class="input-action" type="button" data-toggle-password="p-password" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
+                                </div>
+                                <button class="btn btn-secondary" type="button" data-generate="p-password"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i><span>Generate</span></button>
+                            </div>
+                            <span class="hint">At least 8 characters. Resetting signs them out everywhere; share the new password securely.</span>
+                        </div>
+                        <div class="row-gap">
+                            <button class="btn btn-primary btn-sm" type="submit">Reset password</button>
+                            <button class="btn btn-secondary btn-sm" type="button" id="btn-toggle-access"></button>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="dsec" aria-labelledby="sec-contacts">
+                    <div class="dsec-head">
+                        <h3 id="sec-contacts">Key contacts</h3>
+                        <span class="badge badge-grey" id="contacts-default-badge" hidden>Using defaults</span>
+                    </div>
+                    <p class="muted" style="font-size:0.9rem">Shown on this client's Welcome page. Each client can have different people.</p>
+                    <div id="contacts-rows" class="contacts-rows"></div>
+                    <div class="row-gap" style="margin:4px 0 16px">
+                        <button class="btn btn-ghost btn-sm" type="button" id="btn-add-contact"><i class="fa-solid fa-plus" aria-hidden="true"></i><span>Add contact</span></button>
+                    </div>
+                    <div class="preview-label">Preview: what the client sees</div>
+                    <div class="contact-preview card">
+                        <h4><i class="fa-solid fa-headset" aria-hidden="true"></i> Key contacts</h4>
+                        <table class="table"><tbody id="contacts-preview"></tbody></table>
+                    </div>
+                    <div class="row-gap" style="margin-top:14px">
+                        <button class="btn btn-primary btn-sm" type="button" id="btn-save-contacts">Save contacts</button>
+                        <button class="btn btn-secondary btn-sm" type="button" id="btn-reset-contacts">Reset to defaults</button>
+                    </div>
+                </section>
+
+                <section class="dsec dsec-danger" aria-labelledby="sec-danger">
+                    <h3 id="sec-danger">Delete client</h3>
+                    <p class="muted" style="font-size:0.9rem">Removes the account and signs them out immediately. This can't be undone.</p>
+                    <button class="btn btn-danger btn-sm" type="button" id="btn-delete"><i class="fa-solid fa-trash" aria-hidden="true"></i><span>Delete client</span></button>
+                </section>
+            </div>
+        </aside>
+    </div>
+
+    <!-- CONFIRM DELETE -->
+    <div class="scrim" id="dlg-delete" hidden>
+        <div class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dlg-del-title" aria-describedby="dlg-del-desc">
+            <div class="dialog-head">
+                <h2 id="dlg-del-title" style="font-size:1.2rem;margin:0">Delete this client?</h2>
+                <button class="icon-btn" type="button" data-close aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="form-delete" novalidate>
+                <div class="dialog-body">
+                    <p id="dlg-del-desc">This permanently removes <strong id="del-email"></strong> and signs them out. Type the email to confirm.</p>
+                    <div class="field">
+                        <label for="del-confirm" class="visually-hidden">Type the client email to confirm</label>
+                        <input class="input" id="del-confirm" type="text" autocomplete="off" spellcheck="false">
+                    </div>
+                </div>
+                <div class="dialog-foot">
+                    <button class="btn btn-secondary" type="button" data-close>Cancel</button>
+                    <button class="btn btn-danger" type="submit" id="btn-confirm-delete" disabled>Delete permanently</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast-region" id="toasts" aria-live="polite" aria-atomic="false"></div>
+    <script src="/assets/js/admin.js"></script>
+</body>
+</html>

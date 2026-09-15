@@ -1,0 +1,3 @@
+# Private customer portal - nothing here is meant for search engines.
+User-agent: *
+Disallow: /
