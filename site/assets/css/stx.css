@@ -64,6 +64,9 @@
 
 /* ---- base ---------------------------------------------------------------- */
 *, *::before, *::after { box-sizing: border-box; }
+/* A component's own `display` beats the hidden attribute - everything here toggles
+   visibility with el.hidden, so make the attribute win. */
+[hidden] { display: none !important; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
