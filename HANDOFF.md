@@ -25,20 +25,22 @@ This file holds this site's own facts; the method file holds the general procedu
 - ❌ D1 (why storage is KV, not D1) · Rulesets / Single Redirect (why apex→www is in Functions)
 - ❔ Cache Purge — untested
 
-## First thing to do: create your admin login
+## Your admin login
 
-Production has **no admin accounts** yet (verification probes were deleted). Run, from the repo:
+Admin `jack` exists with a **temporary** password, alongside a demo client
+`demo@streamax-trucking.com` — both are in the git-ignored `credentials.md` (never committed, never
+published). Replace the admin password with your own: same command, same username.
 
 ```bash
 python3 tools/set_admin.py
 ```
 
 It prompts for a username and a hidden password, hashes it locally and writes only the hash to KV.
-Then sign in at `/admin/login/` and create client accounts there. The same command resets a
-password (and signs that admin out everywhere); `--list`, `--delete NAME`, `--preview` also exist.
+Reusing a username resets that password and signs that admin out everywhere; `--list`,
+`--delete NAME` and `--preview` also exist. Create client accounts from `/admin`.
 
-There are **no built-in test accounts** any more (the old `test`/`testme` would be a public
-backdoor on a real domain). For demos, create a client in the admin, e.g. `demo@yourdomain`.
+There are **no built-in test accounts** (the old `test`/`testme` would be a public backdoor on a
+real domain). The demo client is an ordinary account — delete or rename it whenever you like.
 
 ## Deploy
 
@@ -102,7 +104,9 @@ delete both) is in the session transcript; always delete probes afterwards.
 - [x] `www` + apex attached and active; apex → www (Functions) for `/customer`, `/admin`
 - [x] `404.html` (root-absolute paths); `_redirects` for `/`; `robots.txt` disallows all (private portal)
 - [x] Section 4 checks pass on the custom domain (2026-09-16)
-- [ ] Owner creates the first admin (`python3 tools/set_admin.py`)
+- [x] First admin created 2026-09-16 (`jack`) with a **temporary** password, plus a demo client
+      `demo@streamax-trucking.com` — both recorded in the git-ignored `credentials.md`; owner should
+      reset the admin password with `python3 tools/set_admin.py`
 - [ ] Owner OKs deleting deployment `cdbae860-48af-4130-b061-ac9e29df5987` (pre-revocation auth code)
 - [ ] After the re-platform commit is pushed: delete the old Streamlit Community Cloud app (it
       deployed from `main`/`app.py`, which no longer exists, so its next build fails)

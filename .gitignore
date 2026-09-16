@@ -15,3 +15,7 @@ env.txt
 .wrangler/
 node_modules/
 welcome_classic.py
+
+# local-only credential notes (never commit)
+credentials.md
+credentials*.md
