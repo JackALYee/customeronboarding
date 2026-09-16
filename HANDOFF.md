@@ -90,10 +90,10 @@ delete both) is in the session transcript; always delete probes afterwards.
   falls back to system fonts and English. The morph's three.js races cdnjs vs npmmirror and falls
   back to a static logo if both fail.
 - **Old deployments stay live at their hash URLs (method §7) and keep running their own Functions
-  against the production KV.** Content-wise none holds anything sensitive, but `cdbae860` (Phase 1,
-  2026-09-16) predates `session_epoch`: verified by probe, a cookie issued before a password reset
-  still works there (www → 401, `cdbae860` → 200). Delete it before relying on resets (checklist).
-  Rule for the future: after any auth fix, delete the production deployments that predate it.
+  against the production KV.** The Phase 1 deployment `cdbae860` predated `session_epoch` — a probe
+  showed a cookie issued before a password reset still worked there — so it was **deleted on
+  2026-09-16** (host now 404s). Every remaining deployment post-dates the fix. Rule for the future:
+  after any auth fix, delete the production deployments that predate it.
 
 ## Checklist (method §10)
 
@@ -107,6 +107,6 @@ delete both) is in the session transcript; always delete probes afterwards.
 - [x] First admin created 2026-09-16 (`jack`) with a **temporary** password, plus a demo client
       `demo@streamax-trucking.com` — both recorded in the git-ignored `credentials.md`; owner should
       reset the admin password with `python3 tools/set_admin.py`
-- [ ] Owner OKs deleting deployment `cdbae860-48af-4130-b061-ac9e29df5987` (pre-revocation auth code)
+- [x] Deleted deployment `cdbae860` (pre-revocation auth code) on 2026-09-16, owner approved
 - [ ] After the re-platform commit is pushed: delete the old Streamlit Community Cloud app (it
       deployed from `main`/`app.py`, which no longer exists, so its next build fails)
