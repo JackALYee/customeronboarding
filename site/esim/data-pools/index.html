@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data pools — Streamax eSIM</title>
+<meta name="description" content="Dynamic and static data pools explained: how a shared fleet pool is sized, how it grows when devices are added, and how overage is charged.">
+<link rel="canonical" href="https://www.streamax-trucking.com/esim/data-pools/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Data pools — Streamax eSIM">
+<meta property="og:description" content="Dynamic and static data pools explained: how a shared fleet pool is sized, how it grows when devices are added, and how overage is charged.">
+<meta property="og:url" content="https://www.streamax-trucking.com/esim/data-pools/">
+<link rel="icon" href="/esim/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="/esim/assets/css/esim.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="hdr" id="hdr">
+ <div class="wrap hdr-in">
+  <a class="brand" href="/esim/" aria-label="Streamax eSIM — overview">
+   <img src="/esim/assets/img/streamax-logo.png" alt="Streamax" width="753" height="89">
+   <span class="brand-div"></span><span class="brand-tag">eSIM</span>
+  </a>
+  <button class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav class="nav" id="nav"><a href="/esim/">Overview</a><a href="/esim/technology/">Technology</a><a href="/esim/data-pools/" aria-current=page>Data pools</a><a href="/esim/coverage/">Coverage</a><a href="/esim/pricing/">Pricing</a><a href="/esim/platform/">FT Cloud</a>
+   <a class="btn btn-p btn-sm" href="#talk">Talk to us</a>
+  </nav>
+ </div>
+</header>
+<main id="main">
+
+<section class="hero">
+ <div class="wrap hero-sub">
+  <div class="crumb"><a href="/esim/">Streamax eSIM</a><span>/</span>Data pools</div>
+  <h1>One pool, shared by the whole fleet.</h1>
+  <p class="lead">Per-SIM allowances strand data: one camera runs out while fifty sit half-used.
+     Every Streamax data plan pools instead — the constraint is the fleet total, never the
+     individual device.</p>
+ </div>
+</section>
+
+<section class="sec">
+ <div class="wrap">
+  <div class="head mid">
+   <span class="eyebrow eyebrow-n" style="justify-content:center;display:inline-flex">Two ways to buy</span>
+   <h2>Dynamic pool or static pool.</h2>
+   <p class="lead">They behave identically day to day — devices share, nothing is capped
+      individually. They differ in one thing: whether the pool follows your device count.</p>
+  </div>
+
+  <div class="pool">
+   <div class="card">
+    <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5z"/><path d="m3 14 9 5 9-5"/></svg></div>
+    <span class="pill">Default</span>
+    <h3 style="margin:14px 0 8px">Dynamic pool</h3>
+    <p>You pick an allowance per device per month — <span class="mono">1, 2, 3, 5</span> or
+       <span class="mono">10 GB</span>. The pool is that allowance times the number of devices, and
+       it <strong>re-sizes itself</strong> every time a device joins.</p>
+    <div class="card card-flat" style="margin-top:18px;text-align:center;padding:22px">
+     <div class="mono" style="font-size:clamp(1.05rem,.9rem + .7vw,1.5rem);color:var(--ink);letter-spacing:-.02em">
+      Q = a × x
+     </div>
+     <div class="mono" style="font-size:.76rem;color:var(--ink-3);margin-top:10px;line-height:1.9">
+      a = GB per device per month<br>x = devices on the account<br>Q = the shared monthly pool
+     </div>
+    </div>
+    <ul class="checks" style="margin-top:18px">
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Add 40 vehicles at 3 GB and the pool grows by 120 GB — no order, no
+        re-quote.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>A heavy device is balanced by the quiet ones, automatically.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>One predictable number per device per month for budgeting.</span></li>
+    </ul>
+   </div>
+
+   <div class="card">
+    <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg></div>
+    <span class="pill grey">Committed volume</span>
+    <h3 style="margin:14px 0 8px">Static pool</h3>
+    <p>You buy a fixed block of data for the month — not per device, but for the account as a
+       whole. The pool is whatever you bought, and it <strong>stays there</strong> however many
+       devices you connect.</p>
+    <div class="card card-flat" style="margin-top:18px;text-align:center;padding:22px">
+     <div class="mono" style="font-size:clamp(1.05rem,.9rem + .7vw,1.5rem);color:var(--ink);letter-spacing:-.02em">
+      Q = d
+     </div>
+     <div class="mono" style="font-size:.76rem;color:var(--ink-3);margin-top:10px;line-height:1.9">
+      d = GB per month, bought up front<br>x = devices sharing it<br>Q = the shared monthly pool
+     </div>
+    </div>
+    <ul class="checks" style="margin-top:18px">
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Known volume, known invoice, regardless of fleet changes.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Cost per device falls as more devices share the same block.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Adding devices does not add data — watch the headroom.</span></li>
+    </ul>
+   </div>
+  </div>
+
+  <div class="tbl-wrap" style="margin-top:clamp(26px,3vw,40px)">
+   <table class="floor-lg">
+    <thead><tr><th style="width:24%"></th><th>Dynamic pool</th><th>Static pool</th></tr></thead>
+    <tbody><tr><td class="k">How the pool is sized</td><td>Per-device allowance <span class='mono'>a</span>, multiplied by the number of devices: <span class='mono'>Q = a × x</span></td><td>A single block you buy outright: <span class='mono'>Q = d</span> GB per month</td></tr><tr><td class="k">Per-device cap</td><td>None. Any device may exceed <span class='mono'>a</span>.</td><td>None. Any device may use as much as it needs.</td></tr><tr><td class="k">What is actually limited</td><td>The total across every device on the account in one billing cycle.</td><td>The total across every device on the account in one billing cycle.</td></tr><tr><td class="k">Adding devices mid-term</td><td>The pool grows automatically — each new device adds <span class='mono'>a</span> GB.</td><td>The pool does not move. You buy more separately if you need it.</td></tr><tr><td class="k">Cost behaviour as the fleet grows</td><td>Linear. Cost per device stays flat.</td><td>Flat. Cost per device falls as devices are added to the same block.</td></tr><tr><td class="k">Best when</td><td>The fleet is growing or the device count is uncertain, and you want one predictable number per device per month.</td><td>The device count is stable and you would rather commit to a known volume and a known invoice.</td></tr></tbody>
+   </table>
+  </div>
+ </div>
+</section>
+
+<section class="sec" style="background:var(--surface);border-block:1px solid var(--line)">
+ <div class="wrap">
+  <div class="head">
+   <span class="eyebrow eyebrow-n">Try it</span>
+   <h2>Size a pool.</h2>
+   <p class="lead">Move the sliders. The pool, the headroom and any overage update as you go.
+      Prices are list rates for the destination you choose — see <a href="/esim/pricing/">pricing</a>.</p>
+  </div>
+
+  <div class="card" id="calc">
+   <div class="seg" role="tablist" aria-label="Pool type" style="margin-bottom:22px">
+    <button role="tab" id="t-dyn" aria-selected="true" data-mode="dynamic">Dynamic pool</button>
+    <button role="tab" id="t-sta" aria-selected="false" data-mode="static">Static pool</button>
+   </div>
+
+   <div class="calcgrid">
+    <label class="field">
+     <span>Destination</span>
+     <select id="c-country"></select>
+    </label>
+
+    <div class="field">
+     <span>Devices</span>
+     <div class="rangeval"><b id="c-dev-v">120</b><span class="muted mono" style="font-size:.76rem">1 – 2000</span></div>
+     <input type="range" id="c-dev" min="1" max="2000" step="1" value="120"
+            aria-label="Number of devices">
+    </div>
+
+    <div class="field" id="f-alw">
+     <span>Allowance per device</span>
+     <div class="rangeval"><b id="c-alw-v">3 GB</b><span class="muted mono" style="font-size:.76rem">per month</span></div>
+     <input type="range" id="c-alw" min="0" max="4" step="1" value="2"
+            aria-label="Allowance per device per month">
+    </div>
+
+    <div class="field" id="f-blk" hidden>
+     <span>Pool size bought</span>
+     <div class="rangeval"><b id="c-blk-v">360 GB</b><span class="muted mono" style="font-size:.76rem">per month</span></div>
+     <input type="range" id="c-blk" min="10" max="6000" step="10" value="360"
+            aria-label="Static pool size in gigabytes per month">
+    </div>
+
+    <div class="field" style="grid-column:1/-1">
+     <span>Actual fleet usage this month</span>
+     <div class="rangeval"><b id="c-use-v">324 GB</b>
+       <span class="muted mono" style="font-size:.76rem">what the devices really consumed</span></div>
+     <input type="range" id="c-use" min="0" max="200" step="1" value="90"
+            aria-label="Actual fleet usage as a percentage of the pool">
+    </div>
+   </div>
+
+   <div class="gauge" style="margin-top:26px">
+    <div class="gauge-bar"><div class="gauge-fill" id="g-fill" style="width:90%"></div>
+     <div class="gauge-over" id="g-over" style="width:0"></div></div>
+    <div class="gauge-legend">
+     <span><i style="background:linear-gradient(90deg,var(--brand),#2a98d8)"></i>Used from pool</span>
+     <span><i style="background:var(--surface-2);border:1px solid var(--line)"></i>Headroom left</span>
+     <span><i style="background:#D9584B"></i>Overage, billed per GB</span>
+    </div>
+   </div>
+
+   <div class="kpi" style="margin-top:22px">
+    <div><b id="k-pool">360 GB</b><span>Monthly pool</span></div>
+    <div><b id="k-used">324 GB</b><span>Used</span></div>
+    <div><b id="k-left">36 GB</b><span>Headroom</span></div>
+    <div><b id="k-base">$—</b><span>Pool charge</span></div>
+    <div><b id="k-over">$0.00</b><span>Overage charge</span></div>
+    <div><b id="k-total">$—</b><span>Data total / month</span></div>
+   </div>
+   <p class="muted" id="k-per" style="margin:16px 0 0;font-size:.88rem"></p>
+
+   <div class="note grey" style="margin-top:20px">
+    <p>Data charges only — device, platform and any private-APN or fixed-IP options are quoted
+       separately. Figures use published list rates; your Customer Success Manager or Business
+       Development Manager can do better.</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="sec">
+ <div class="wrap">
+  <div class="split top">
+   <div>
+    <span class="eyebrow eyebrow-n">Worked example</span>
+    <h2>3 GB per device, and the pool follows the fleet.</h2>
+    <p class="lead">A dynamic pool at 3 GB per device per month. Nothing is re-quoted when the
+       fleet changes — the pool simply is the allowance times the device count.</p>
+    <div class="tbl-wrap" style="margin-top:20px">
+     <table>
+      <thead><tr><th>Fleet</th><th>Arithmetic</th><th class="n">Shared monthly pool</th></tr></thead>
+      <tbody><tr><td class="k">1 device</td><td class="mono" style="color:var(--ink-3)">1 × 3 GB</td><td class="n" style="color:var(--brand-700);font-weight:700">3 GB</td></tr><tr><td class="k">10 devices</td><td class="mono" style="color:var(--ink-3)">10 × 3 GB</td><td class="n" style="color:var(--brand-700);font-weight:700">30 GB</td></tr><tr><td class="k">11 devices</td><td class="mono" style="color:var(--ink-3)">+1 device = +3 GB</td><td class="n" style="color:var(--brand-700);font-weight:700">33 GB</td></tr><tr><td class="k">250 devices</td><td class="mono" style="color:var(--ink-3)">250 × 3 GB</td><td class="n" style="color:var(--brand-700);font-weight:700">750 GB</td></tr></tbody>
+     </table>
+    </div>
+    <div class="note lime" style="margin-top:18px">
+     <p>Data is shared fleet-wide. <strong>No stranded per-SIM allowances, no manual top-ups</strong>
+        — and a vehicle that uploads three collisions in a week does not have to be rescued by hand.</p>
+    </div>
+   </div>
+   <div class="grid" style="gap:14px;align-content:start">
+    <div class="card card-flat">
+     <h4 style="margin-bottom:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg> What happens over the line</h4>
+     <p style="font-size:.92rem;margin:0">Usage above the pool is not cut off — it is billed as
+        overage at the destination's published overage rate — at or just above the in-pool
+        rate, depending on the country. Alerts and caps in FT Cloud let you decide long before that matters.</p>
+    </div>
+    <div class="card card-flat">
+     <h4 style="margin-bottom:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 14 16 9"/><path d="M4.5 18a9 9 0 1 1 15 0"/></svg> Which one should you take?</h4>
+     <p style="font-size:.92rem;margin:0">Growing or uncertain fleet → <strong>dynamic</strong>;
+        the pool keeps pace on its own. Stable fleet with a known appetite →
+        <strong>static</strong>; you commit to the volume and your cost per device drops as you
+        add vehicles to it.</p>
+    </div>
+    <div class="card card-flat">
+     <h4 style="margin-bottom:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.8-6.5 10-6.5S22 12 22 12s-3.8 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg> Watch it in FT Cloud</h4>
+     <p style="font-size:.92rem;margin:0">Pool consumption, the ranking of heaviest devices and
+        hour-of-day distribution all sit in the eSIM tab, next to the video.
+        <a href="/esim/platform/">See the console →</a></p>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="cta sec" id="talk">
+ <div class="wrap">
+  <div class="split">
+   <div>
+    <span class="eyebrow eyebrow-n on-deep">Next step</span>
+    <h2>Tell us the routes, we will size the pool.</h2>
+    <p class="lead">Send the countries you operate in, the device count, and the footage each
+       vehicle uploads per day. You get back a pool size, a landed price per device per month,
+       and a coverage read for every country on the list.</p>
+    <p class="lead"><strong style="color:#fff">Published rates are list.</strong> Ask your Customer
+       Success Manager or Business Development Manager for better pricing — volume, term and
+       multi-region commitments all move the number.</p>
+   </div>
+   <div class="card card-deep">
+    <h3>What to send us</h3>
+    <ul class="checks on-deep" style="margin-top:14px">
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Countries and, if they cross borders, the routes.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Device count now and at 12 months.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Device model and whether the SIM is soldered or a plug-in.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Typical upload per vehicle per day, and what triggers a clip.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Anything non-standard: private APN, fixed IP, VPN, IMEI lock.</span></li>
+    </ul>
+    <div class="btn-row" style="margin-top:22px">
+     <a class="btn btn-p" href="mailto:csm@streamax.com?subject=Streamax%20eSIM%20enquiry">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> csm@streamax.com</a>
+     <a class="btn btn-g" href="https://www.streamax.com" target="_blank" rel="noopener">
+      streamax.com <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16 16 8M9 8h7v7"/></svg></a>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+</main>
+<footer class="ftr">
+ <div class="wrap ftr-in">
+  <div>
+   <img src="/esim/assets/img/streamax-logo.png" alt="Streamax" width="753" height="89">
+   <p style="max-width:34ch">Global cellular connectivity for commercial-vehicle video telematics —
+      shipped inside the device and managed from FT Cloud.</p>
+  </div>
+  <div><h5>The solution</h5><ul><li><a href="/esim/">Overview</a></li><li><a href="/esim/technology/">Technology</a></li><li><a href="/esim/data-pools/">Data pools</a></li></ul></div><div><h5>Plan it</h5><ul><li><a href="/esim/coverage/">Coverage</a></li><li><a href="/esim/pricing/">Pricing</a></li><li><a href="/esim/platform/">FT Cloud management</a></li></ul></div>
+ </div>
+ <div class="wrap ftr-btm">
+  <span>© 2026 Streamax Technology Co., Ltd. All rights reserved.</span>
+  <span>Coverage and pricing on this site are indicative and subject to confirmation.</span>
+ </div>
+</footer>
+<script src="/esim/assets/js/site.js" defer></script>
+<script>window.ESIM_PRICES=[{"c":"Algeria","g":2.88,"o":3.0,"b3":8.52,"b5":14.04,"b10":27.36},{"c":"Argentina","g":5.4,"o":5.64,"b3":15.96,"b5":26.28,"b10":51.36},{"c":"Australia","g":1.44,"o":1.56,"b3":4.32,"b5":7.08,"b10":13.68},{"c":"Brazil","g":2.88,"o":3.0,"b3":8.52,"b5":14.04,"b10":27.36},{"c":"Chile","g":5.4,"o":5.64,"b3":15.96,"b5":26.28,"b10":51.36},{"c":"Colombia","g":2.88,"o":3.0,"b3":8.52,"b5":14.04,"b10":27.36},{"c":"Costa Rica","g":4.44,"o":4.68,"b3":13.08,"b5":21.6,"b10":42.24},{"c":"EU","g":0.96,"o":0.96,"b3":2.88,"b5":4.68,"b10":9.12},{"c":"Ecuador","g":6.96,"o":7.32,"b3":20.52,"b5":33.84,"b10":66.12},{"c":"Egypt","g":2.28,"o":2.4,"b3":6.72,"b5":11.16,"b10":21.72},{"c":"India","g":1.92,"o":2.04,"b3":5.76,"b5":9.36,"b10":18.24},{"c":"Indonesia","g":1.08,"o":1.08,"b3":3.24,"b5":5.28,"b10":10.32},{"c":"Kenya","g":6.96,"o":7.32,"b3":20.52,"b5":33.84,"b10":66.12},{"c":"Malaysia","g":1.08,"o":1.08,"b3":3.24,"b5":5.28,"b10":10.32},{"c":"Mexico","g":2.52,"o":2.64,"b3":7.44,"b5":12.24,"b10":24.0},{"c":"Morocco","g":2.28,"o":2.4,"b3":6.72,"b5":11.16,"b10":21.72},{"c":"New Zealand","g":1.44,"o":1.56,"b3":4.32,"b5":7.08,"b10":13.68},{"c":"Nigeria","g":5.4,"o":5.64,"b3":15.96,"b5":26.28,"b10":51.36},{"c":"Philippines","g":1.44,"o":1.56,"b3":4.32,"b5":7.08,"b10":13.68},{"c":"Saudi Arabia","g":6.96,"o":7.32,"b3":20.52,"b5":33.84,"b10":66.12},{"c":"South Africa","g":2.88,"o":3.0,"b3":8.52,"b5":14.04,"b10":27.36},{"c":"Thailand","g":1.08,"o":1.08,"b3":3.24,"b5":5.28,"b10":10.32},{"c":"Tunisia","g":2.28,"o":2.4,"b3":6.72,"b5":11.16,"b10":21.72},{"c":"UK","g":0.96,"o":0.96,"b3":2.88,"b5":4.68,"b10":9.12},{"c":"United Arab Emirates","g":4.08,"o":4.32,"b3":12.0,"b5":19.8,"b10":38.76},{"c":"United States","g":2.52,"o":2.64,"b3":7.44,"b5":12.24,"b10":24.0},{"c":"Vietnam","g":1.2,"o":1.2,"b3":3.6,"b5":5.88,"b10":11.4}];</script>
+</body>
+</html>

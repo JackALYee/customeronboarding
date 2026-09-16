@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FT Cloud eSIM management — Streamax eSIM</title>
+<meta name="description" content="Manage the whole connectivity lifecycle from FT Cloud: usage analytics, per-SIM status, suspend and activate, batch activation and over-the-air carrier switching.">
+<link rel="canonical" href="https://www.streamax-trucking.com/esim/platform/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FT Cloud eSIM management — Streamax eSIM">
+<meta property="og:description" content="Manage the whole connectivity lifecycle from FT Cloud: usage analytics, per-SIM status, suspend and activate, batch activation and over-the-air carrier switching.">
+<meta property="og:url" content="https://www.streamax-trucking.com/esim/platform/">
+<link rel="icon" href="/esim/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="/esim/assets/css/esim.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="hdr" id="hdr">
+ <div class="wrap hdr-in">
+  <a class="brand" href="/esim/" aria-label="Streamax eSIM — overview">
+   <img src="/esim/assets/img/streamax-logo.png" alt="Streamax" width="753" height="89">
+   <span class="brand-div"></span><span class="brand-tag">eSIM</span>
+  </a>
+  <button class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav class="nav" id="nav"><a href="/esim/">Overview</a><a href="/esim/technology/">Technology</a><a href="/esim/data-pools/">Data pools</a><a href="/esim/coverage/">Coverage</a><a href="/esim/pricing/">Pricing</a><a href="/esim/platform/" aria-current=page>FT Cloud</a>
+   <a class="btn btn-p btn-sm" href="#talk">Talk to us</a>
+  </nav>
+ </div>
+</header>
+<main id="main">
+
+<section class="hero">
+ <div class="wrap hero-sub">
+  <div class="crumb"><a href="/esim/">Streamax eSIM</a><span>/</span>FT Cloud</div>
+  <h1>Connectivity lives next to the video.</h1>
+  <p class="lead">There is no separate telecom portal to log into. eSIM management is a tab in
+     FT Cloud, beside the evidence, the tracking and the driver data — so the person who sees the
+     camera problem is the person who can see the SIM.</p>
+ </div>
+</section>
+
+<section class="sec-t">
+ <div class="wrap">
+  <div class="head">
+   <span class="eyebrow eyebrow-n">Try it</span>
+   <h2>The console, running in the page.</h2>
+   <p class="lead">This is FT Cloud as a clickable demo — the real navigation, with an
+      <strong>eSIM module</strong> in the Cellular group. Open the sidebar, move between views,
+      flip a SIM's status. Hovering almost anything explains what it does.</p>
+  </div>
+  <div class="simwrap">
+   <iframe src="/esim/assets/sim/ft-cloud.html"
+           title="FT Cloud platform demo with eSIM management"
+           loading="lazy"></iframe>
+  </div>
+  <p class="simhint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4 3 8l4 4"/><path d="M3 8h13a4 4 0 0 1 0 8H3"/></svg> Drag the console sideways — it is a desktop layout.</p>
+  <p class="muted" style="margin-top:14px;font-size:.84rem">Demo only — sample vehicles, SIMs and
+     invoices, no backend and no live data. eSIM management is shown as it is specified; check
+     current availability in your FT Cloud tenant with your Customer Success Manager.</p>
+ </div>
+</section>
+
+<section class="sec">
+ <div class="wrap">
+  <div class="head">
+   <span class="eyebrow eyebrow-n">What it does</span>
+   <h2>Three jobs: see it, control it, deploy it.</h2>
+  </div>
+  <div class="grid g3">
+   <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.8-6.5 10-6.5S22 12 22 12s-3.8 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg></div>
+    <h3>Total visibility</h3>
+    <p>Cellular data statistics per device, so you know what each camera consumes before the
+       invoice tells you. Status at a glance — activated, suspended or deactivated — and the
+       plan each SIM is on next to what it has actually used.</p>
+    <ul class="checks" style="margin-top:14px">
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Fleet totals: data, active devices, distance, operating hours</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Excess data flagged in red the moment a pool is breached</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Consumption ranking — find the heavy devices in one look</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Hour-of-day distribution — a vehicle uploading at 03:00 when it
+        should be parked is visible immediately</span></li>
+    </ul></div>
+   <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h10M18 18h2"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="16" cy="18" r="2"/></svg></div>
+    <h3>Remote lifecycle control</h3>
+    <p>Take a vehicle off the road, end a contract, or bring a spare unit online — without a
+       technician and without phoning a carrier.</p>
+    <div class="grid" style="gap:10px;margin-top:14px"><div class="card card-flat"><h4 style="margin-bottom:7px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg> Activate</h4><p style="font-size:.92rem;margin:0">Bring a SIM online — one device or a whole inventory list.</p></div><div class="card card-flat"><h4 style="margin-bottom:7px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg> Suspend</h4><p style="font-size:.92rem;margin:0">Park connectivity while a vehicle is off the road, and resume it the day it returns.</p></div><div class="card card-flat"><h4 style="margin-bottom:7px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Deactivate</h4><p style="font-size:.92rem;margin:0">End a SIM's life on the account when a contract closes or an asset is sold.</p></div><div class="card card-flat"><h4 style="margin-bottom:7px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4 3 8l4 4"/><path d="M3 8h13a4 4 0 0 1 0 8H3"/></svg> Switch carrier</h4><p style="font-size:.92rem;margin:0">Point a device at a different operator over the air when coverage or cost says so.</p></div></div></div>
+   <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1"/></svg></div>
+    <h3>Activation at two speeds</h3>
+    <p>Time to deployment matters as much as price, so there are two paths — one for the installer
+       standing at the vehicle, one for the office deploying a container.</p>
+    <ol class="steps" style="margin-top:16px">
+     <li><h4>Scan and go — single device</h4>
+         <p>Power on the device, scan the supplied QR code, enter the activation code. It is
+            online.</p></li>
+     <li><h4>Batch — mass deployment</h4>
+         <p>In FT Cloud, open eSIM management and batch-activate the whole inventory list. A
+            thousand cameras are online before the trucks leave the yard.</p></li>
+    </ol></div>
+  </div>
+ </div>
+</section>
+
+<section class="sec" style="background:var(--surface);border-block:1px solid var(--line)">
+ <div class="wrap">
+  <div class="split top">
+   <div>
+    <span class="eyebrow eyebrow-n">Finding things</span>
+    <h2>Filters that match how a fleet actually asks questions.</h2>
+    <p class="lead">"Which SIM is in vehicle 0421?" and "show me everything suspended" are the two
+       questions that come up, so the list filters on the fields that answer them.</p>
+    <div class="grid g2" style="gap:12px;margin-top:22px">
+     <div class="card card-flat"><h4 style="margin-bottom:6px">Fleet</h4>
+      <p style="font-size:.9rem;margin:0">Scope to a depot, a region or a sub-account.</p></div>
+     <div class="card card-flat"><h4 style="margin-bottom:6px">Vehicle / device ID</h4>
+      <p style="font-size:.9rem;margin:0">Go straight from a camera fault to its SIM.</p></div>
+     <div class="card card-flat"><h4 style="margin-bottom:6px">ICCID</h4>
+      <p style="font-size:.9rem;margin:0">Match a carrier record back to an asset.</p></div>
+     <div class="card card-flat"><h4 style="margin-bottom:6px">SIM status &amp; plan</h4>
+      <p style="font-size:.9rem;margin:0">Everything suspended, or everyone on the 10 GB plan.</p></div>
+    </div>
+   </div>
+   <div class="grid" style="gap:14px;align-content:start">
+    <div class="note">
+     <p><strong>Usage sits next to the limit.</strong> The list shows consumption against the plan
+        — 6.4 GB used against a 3 GB/device allowance — so you can see which devices are pulling
+        on the pool without exporting anything.</p>
+    </div>
+    <div class="card card-deep">
+     <h3>One partner, one SLA</h3>
+     <p style="margin:12px 0 0">Hardware, connectivity and diagnostics under a single support
+        model. Our NOC watches device and SIM health together, so a "the camera is offline" ticket
+        does not turn into a three-way argument between a hardware vendor, an integrator and a
+        mobile operator.</p>
+     <ul class="checks on-deep" style="margin-top:16px">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>One number to call when something is down</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Device and SIM telemetry correlated, not guessed at</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Clear ownership — no handoffs, no blame loop</span></li>
+     </ul>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="cta sec" id="talk">
+ <div class="wrap">
+  <div class="split">
+   <div>
+    <span class="eyebrow eyebrow-n on-deep">Next step</span>
+    <h2>Tell us the routes, we will size the pool.</h2>
+    <p class="lead">Send the countries you operate in, the device count, and the footage each
+       vehicle uploads per day. You get back a pool size, a landed price per device per month,
+       and a coverage read for every country on the list.</p>
+    <p class="lead"><strong style="color:#fff">Published rates are list.</strong> Ask your Customer
+       Success Manager or Business Development Manager for better pricing — volume, term and
+       multi-region commitments all move the number.</p>
+   </div>
+   <div class="card card-deep">
+    <h3>What to send us</h3>
+    <ul class="checks on-deep" style="margin-top:14px">
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Countries and, if they cross borders, the routes.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Device count now and at 12 months.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Device model and whether the SIM is soldered or a plug-in.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Typical upload per vehicle per day, and what triggers a clip.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Anything non-standard: private APN, fixed IP, VPN, IMEI lock.</span></li>
+    </ul>
+    <div class="btn-row" style="margin-top:22px">
+     <a class="btn btn-p" href="mailto:csm@streamax.com?subject=Streamax%20eSIM%20enquiry">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> csm@streamax.com</a>
+     <a class="btn btn-g" href="https://www.streamax.com" target="_blank" rel="noopener">
+      streamax.com <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16 16 8M9 8h7v7"/></svg></a>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+</main>
+<footer class="ftr">
+ <div class="wrap ftr-in">
+  <div>
+   <img src="/esim/assets/img/streamax-logo.png" alt="Streamax" width="753" height="89">
+   <p style="max-width:34ch">Global cellular connectivity for commercial-vehicle video telematics —
+      shipped inside the device and managed from FT Cloud.</p>
+  </div>
+  <div><h5>The solution</h5><ul><li><a href="/esim/">Overview</a></li><li><a href="/esim/technology/">Technology</a></li><li><a href="/esim/data-pools/">Data pools</a></li></ul></div><div><h5>Plan it</h5><ul><li><a href="/esim/coverage/">Coverage</a></li><li><a href="/esim/pricing/">Pricing</a></li><li><a href="/esim/platform/">FT Cloud management</a></li></ul></div>
+ </div>
+ <div class="wrap ftr-btm">
+  <span>© 2026 Streamax Technology Co., Ltd. All rights reserved.</span>
+  <span>Coverage and pricing on this site are indicative and subject to confirmation.</span>
+ </div>
+</footer>
+<script src="/esim/assets/js/site.js" defer></script>
+</body>
+</html>

@@ -72,14 +72,17 @@ into a browser tool — the local preview server needs none.
 - `site/assets/js/portal.js`: `switchTab()` shim → real URLs; fills `[data-slot=identity|audience|contacts]`
   from `/api/customer/me`; search (Ctrl/⌘K, `/`); mobile menu; deep links auto-open accordions
   (`.aif-feat`, `.pfn-feat`, `.inst-prod`, `details`); Google Translate language dialog.
-- **Welcome** (`content/welcome.py`): a 1620vh dark band with the scroll-driven particle morph
+- **Welcome** (`content/welcome.py`): a 1620vh light band with the scroll-driven particle morph
   (iframe `site/assets/morph/truck-to-logo.html`, driven by `postMessage`; skip button; scroll
-  hint), then the light hero `#stmx-onboarding-start`, stats, 30-day path, the 7-section "Explore"
-  grid, Day-1 checks + Key Contacts. The morph script's hooks are `.nav-tabs`,
+  hint), then the hero `#stmx-onboarding-start`, stats, 30-day path, the 7-section "Explore"
+  grid, Day-1 checks + Key Contacts. The particles are **dark ink on white**: the canvas uses
+  `NormalBlending`, because additive blending only brightens and is invisible on a light page. The morph script's hooks are `.nav-tabs`,
   `#stmx-brand-morph`, `#stmx-morph-frame`, `#stmx-onboarding-start`, `#stmx-scroll-hint` — keep them.
 - The FleetMind simulator (in `platform_tutorials.py`, between `<!-- simulator -->` markers) is a
   faithful clone of a separate product with its **own** palette (`#7c5cff` etc.) — don't restyle it
-  to Streamax colours; the markers also keep it out of search.
+  to Streamax colours; the markers also keep it out of search. It is reusable outside this repo:
+  `python3 tools/export_simulator.py` writes a self-contained `docs/ft-cloud-simulator.html`;
+  see [docs/ft-cloud-simulator.md](docs/ft-cloud-simulator.md).
 
 ### Adding a section
 1. `content/mysection.py` exporting `content = r"""<div id="mysection" class="content-section">…"""`,

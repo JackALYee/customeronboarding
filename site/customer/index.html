@@ -105,7 +105,7 @@
     <section class="stmx-brand-morph" id="stmx-brand-morph" data-morph-init="0" aria-label="Streamax truck-to-logo animation">
         <div class="stmx-morph-pin">
             <iframe id="stmx-morph-frame" class="stmx-morph-frame"
-                src="/assets/morph/truck-to-logo?v=8ec77367aa"
+                src="/assets/morph/truck-to-logo?v=00cc494010"
                 title="Peterbilt particle truck morphing into the Streamax logo"
                 loading="eager"
                 referrerpolicy="no-referrer"></iframe>
@@ -283,22 +283,22 @@
             padding-top: 0;
         }
 
-        /* ===== dark hero band: scroll-driven truck -> logo particle morph ===== */
+        /* ===== light hero band: scroll-driven truck -> logo particle morph ===== */
         .stmx-brand-morph {
             width: calc(100vw - 8px);
             margin-left: calc(50% - 50vw + 4px);
             min-height: 1620vh;
             position: relative;
             background:
-                radial-gradient(circle at 52% 45%, rgba(0,112,192,0.20), transparent 32%),
-                radial-gradient(circle at 73% 58%, rgba(160,192,0,0.12), transparent 34%),
-                linear-gradient(180deg, #03070C 0%, #050A11 54%, #04080E 100%);
+                radial-gradient(circle at 52% 45%, rgba(0,112,192,0.10), transparent 32%),
+                radial-gradient(circle at 73% 58%, rgba(160,192,0,0.10), transparent 34%),
+                linear-gradient(180deg, #FFFFFF 0%, #F2F6FA 54%, #F8FAFC 100%);
             overflow: visible;
         }
-        /* hand-off from the dark band into the light page */
+        /* hand-off from the band into the page below */
         .stmx-brand-morph::after {
             content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 60vh;
-            background: linear-gradient(180deg, rgba(4,8,14,0) 0%, var(--canvas) 100%);
+            background: linear-gradient(180deg, rgba(248,250,252,0) 0%, var(--canvas) 100%);
             pointer-events: none;
         }
         .stmx-morph-pin {
@@ -337,8 +337,8 @@
         .stmx-morph-field {
             position: absolute; inset: 0; z-index: 0; opacity: 0.28;
             background:
-                linear-gradient(90deg, rgba(255,255,255,0.055) 1px, transparent 1px),
-                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
+                linear-gradient(90deg, rgba(15,23,42,0.07) 1px, transparent 1px),
+                linear-gradient(rgba(15,23,42,0.05) 1px, transparent 1px);
             background-size: 92px 92px;
             mask-image: radial-gradient(circle at 50% 48%, black 0%, rgba(0,0,0,0.85) 34%, transparent 76%);
             transform: perspective(900px) rotateX(64deg) translateY(25%);
@@ -348,18 +348,18 @@
         .stmx-morph-vignette {
             position: absolute; inset: 0; z-index: 2; pointer-events: none;
             background:
-                radial-gradient(circle at 50% 46%, transparent 0%, transparent 34%, rgba(0,0,0,0.44) 76%, rgba(0,0,0,0.78) 100%),
-                linear-gradient(180deg, rgba(0,0,0,0.36) 0%, transparent 22%, transparent 62%, rgba(0,0,0,0.58) 100%);
+                radial-gradient(circle at 50% 46%, transparent 0%, transparent 34%, rgba(248,250,252,0.42) 78%, rgba(248,250,252,0.80) 100%),
+                linear-gradient(180deg, rgba(255,255,255,0.40) 0%, transparent 22%, transparent 62%, rgba(248,250,252,0.62) 100%);
         }
         /* Headline copy is rendered inside the morph iframe; these stay as a no-JS fallback. */
         .stmx-morph-copy { position: absolute; display: none; z-index: 7; width: min(560px, calc(100vw - 48px)); pointer-events: none; }
-        .stmx-morph-copy span { display: block; color: var(--green); font-size: 0.76rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 16px; }
-        .stmx-morph-copy .stmx-morph-title { margin: 0; font-weight: 800; font-size: clamp(3rem, 7vw, 7.2rem); line-height: 0.95; color: #fff; }
+        .stmx-morph-copy span { display: block; color: var(--green-700); font-size: 0.76rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 16px; }
+        .stmx-morph-copy .stmx-morph-title { margin: 0; font-weight: 800; font-size: clamp(3rem, 7vw, 7.2rem); line-height: 0.95; color: var(--ink); }
         .stmx-morph-copy-primary { left: clamp(24px, 6vw, 96px); bottom: clamp(78px, 16vh, 170px); opacity: var(--guardian-opacity); }
         .stmx-morph-copy-secondary { right: clamp(24px, 6vw, 96px); top: clamp(108px, 18vh, 190px); text-align: right; opacity: var(--solution-opacity); }
         .stmx-morph-progress {
             position: absolute; z-index: 8; left: clamp(24px, 6vw, 96px); right: clamp(24px, 6vw, 96px);
-            bottom: 34px; height: 2px; background: rgba(255,255,255,0.14); overflow: hidden;
+            bottom: 34px; height: 2px; background: rgba(15,23,42,0.12); overflow: hidden;
         }
         .stmx-morph-progress i {
             display: block; width: 100%; height: 100%;
@@ -375,12 +375,12 @@
         .stmx-scroll-hint.is-gone { opacity: 0; }
         .stmx-scroll-hint-inner {
             display: flex; flex-direction: column; align-items: center; gap: 12px;
-            color: rgba(255,255,255,0.88); font-family: var(--font);
+            color: var(--ink-2); font-family: var(--font);
             font-size: 1rem; font-weight: 500; letter-spacing: 0.04em;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.85);
+            text-shadow: 0 2px 14px rgba(255,255,255,0.95);
             animation: stmxHintFlash 2.2s ease-in-out infinite;
         }
-        .stmx-scroll-hint-inner i { font-size: 1.4rem; color: var(--green); animation: stmxHintBob 1.5s ease-in-out infinite; }
+        .stmx-scroll-hint-inner i { font-size: 1.4rem; color: var(--green-700); animation: stmxHintBob 1.5s ease-in-out infinite; }
         @keyframes stmxHintFlash { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
         @keyframes stmxHintBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
 
@@ -389,13 +389,13 @@
             position: absolute; left: clamp(16px, 3vw, 36px); bottom: clamp(56px, 9vh, 84px);
             z-index: 9; pointer-events: auto; cursor: pointer; min-height: 44px;
             display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.86);
-            border: 1px solid rgba(255,255,255,0.22); border-radius: 999px;
+            background: rgba(255,255,255,0.72); color: var(--ink-2);
+            border: 1px solid var(--line-2); border-radius: 999px;
             padding: 0 18px; font: 600 0.8125rem/1 var(--font); letter-spacing: 0.02em;
             backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
         }
-        .stmx-skip-btn:hover { color: #fff; border-color: var(--green); background: rgba(160,192,0,0.16); }
+        .stmx-skip-btn:hover { color: var(--green-700); border-color: var(--green); background: var(--green-50); }
         .stmx-skip-btn:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
         .stmx-skip-btn i { font-size: 0.7rem; }
 

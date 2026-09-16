@@ -22,8 +22,9 @@ PRODUCTION_BRANCH="main"
 PREVIEW_BRANCH="preview"
 TOKEN_FILE="$HOME/.cloudflare_token"
 # Never publishable (content boundaries: internal vendor names, the FleetMind dev host).
+# gemalto/thales: the SIM silicon vendor behind the eSIM pages under /esim.
 # Case-insensitive. Never put a secret itself in this list - it would be committed.
-GUARD_WORDS=("webbing" "inventure" "cango" "fleetmind-dev")
+GUARD_WORDS=("webbing" "inventure" "cango" "fleetmind-dev" "gemalto" "thales")
 # -------------------------------------------------------------------------------------------
 
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"

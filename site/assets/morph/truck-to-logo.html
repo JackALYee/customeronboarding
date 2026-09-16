@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
   *{ box-sizing:border-box; }
-  html,body{ margin:0; padding:0; background:transparent; color:#e8edf2; font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif; overflow:hidden; }
+  html,body{ margin:0; padding:0; background:transparent; color:#0F172A; font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif; overflow:hidden; }
   #c{ position:fixed; inset:0; z-index:0; }
   #scroller{ position:relative; height:100vh; z-index:1; pointer-events:none; }
   .hud{ position:fixed; z-index:2; pointer-events:none; }
@@ -28,13 +28,13 @@
   #bar{ top:0; left:0; height:3px; background:linear-gradient(90deg,#0A84D6,#A0C000); width:0%;
     box-shadow:0 0 10px rgba(10,132,214,.5); }
   #loading{ position:fixed; inset:0; z-index:5; display:flex; align-items:center; justify-content:center;
-    color:rgba(255,255,255,.54); letter-spacing:.5px; background:transparent; }
+    color:rgba(15,23,42,.54); letter-spacing:.5px; background:transparent; }
   .morph-copy{ position:fixed; z-index:4; width:min(600px,calc(100vw - 48px)); pointer-events:none;
     opacity:0; transform:translate3d(0,26px,0); transition:opacity .12s linear, transform .12s linear;
-    text-shadow:0 18px 54px rgba(0,0,0,.78); }
-  .morph-copy span{ display:block; color:#A0C000; font-size:12px; font-weight:800; letter-spacing:.16em;
+    text-shadow:0 14px 42px rgba(255,255,255,.9); }
+  .morph-copy span{ display:block; color:#4D6B00; font-size:12px; font-weight:800; letter-spacing:.16em;
     text-transform:uppercase; margin-bottom:16px; }
-  .morph-copy h1,.morph-copy h2{ margin:0; color:rgba(255,255,255,.96);
+  .morph-copy h1,.morph-copy h2{ margin:0; color:#0F172A;
     font-family:'Plus Jakarta Sans',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif; font-weight:800; letter-spacing:-0.03em;
     line-height:.9; letter-spacing:0; text-wrap:balance; }
   .morph-copy h1{ font-size:clamp(48px,7vw,112px); }
@@ -81,7 +81,7 @@ renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 renderer.setClearColor(0x000000,0);
 const scene=new THREE.Scene();
 scene.background=null;
-scene.fog=new THREE.FogExp2(0x070a0f,0.004);   // light fog so distant particles stay crisp
+scene.fog=new THREE.FogExp2(0xF8FAFC,0.004);   // fades distant particles into the light page
 const camera=new THREE.PerspectiveCamera(42, innerWidth/innerHeight, 0.1, 400);
 
 /* ============================================================
@@ -109,9 +109,9 @@ function decodeSemi(){
   const wid=new Uint8Array(bytes.buffer,n*7,n);
   const mnv=SEMI_META.min, mxv=SEMI_META.max;
   const pos=new Float32Array(n*3), col=new Float32Array(n*3), wheel=new Float32Array(n*3);
-  /* body silver / glass blue / chrome bright — matches the showcase viewer's finish */
-  const BASE=[[0.796,0.812,0.827],[0.435,0.749,0.910],[0.910,0.925,0.937]];
-  const LIFT=[0.933,0.957,0.973];
+  /* ink body / deep brand-blue glass / dark-slate chrome — dark ink on the light page */
+  const BASE=[[0.059,0.090,0.165],[0.000,0.353,0.612],[0.200,0.255,0.333]];
+  const LIFT=[0.278,0.325,0.396];
   for(let k=0;k<n;k++){
     for(let a=0;a<3;a++){ const j=k*3+a; pos[j]=mnv[a]+(q[j]+32768)/65535*(mxv[a]-mnv[a]); }
     const c=BASE[cls[k]]||BASE[0], t=Math.random()*0.4;
@@ -135,16 +135,16 @@ function buildRoad(count){
   const period=4.0, dash=2.2, nd=Math.max(1,Math.floor(2*ROAD_L/period));
   const set=(k,x,z,jz,r,g,b)=>{ pos[k*3]=x; pos[k*3+1]=ROAD_Y+(Math.random()-0.5)*0.04; pos[k*3+2]=z+(Math.random()-0.5)*jz; col[k*3]=r; col[k*3+1]=g; col[k*3+2]=b; };
   for(let k=0;k<count;k++){ const r=Math.random();
-    if(r<0.40){          // dim asphalt surface — a subtle band, not bright noise
+    if(r<0.40){          // pale asphalt surface — a subtle band, not dark noise
       set(k, Math.random()*2*ROAD_L-ROAD_L, (Math.random()*2-1)*ROAD_W, 0,
-          0.10+Math.random()*0.03, 0.105+Math.random()*0.03, 0.11+Math.random()*0.03);
+          0.80+Math.random()*0.03, 0.815+Math.random()*0.03, 0.83+Math.random()*0.03);
     } else if(r<0.72){   // two crisp DASHED lane dividers (heavy → clear structure)
       const side=(Math.random()<0.5?LANE:-LANE);
       const di=(Math.random()*nd)|0, x=-ROAD_L+di*period+Math.random()*dash;
-      set(k, x, side, 0.09, 0.9,0.92,0.94);
+      set(k, x, side, 0.09, 0.16,0.19,0.24);
     } else {             // two crisp solid edge lines
       const z=(Math.random()<0.5?ROAD_W*0.97:-ROAD_W*0.97);
-      set(k, Math.random()*2*ROAD_L-ROAD_L, z, 0.07, 0.86,0.88,0.9);
+      set(k, Math.random()*2*ROAD_L-ROAD_L, z, 0.07, 0.24,0.28,0.34);
     }
   }
   return {pos,col};
@@ -175,14 +175,14 @@ _img.onload=()=>{
   const g=cv.getContext('2d'); g.drawImage(_img,0,0);
   const imgData=g.getImageData(0,0,cw,ch);
   const data=imgData.data;
-  // Reversed brand logo for a dark background: the blue wordmark turns white,
-  // the green accent keeps the official Streamax green (#A0C000).
+  // Official brand logo for a light background: the blue wordmark (#0070C0) and
+  // the green accent (#A0C000), forced flat so sampled particles stay crisp.
   for(let j=0;j<ch;j++) for(let i=0;i<cw;i++){ const idx=(j*cw+i)*4;
     if(data[idx+3]>0){
       const r=data[idx], gg=data[idx+1], b=data[idx+2];
       const isGreen = gg > b + 40 && r > 60;
       if(isGreen){ data[idx]=160; data[idx+1]=192; data[idx+2]=0; }
-      else { data[idx]=244; data[idx+1]=248; data[idx+2]=252; }
+      else { data[idx]=0; data[idx+1]=112; data[idx+2]=192; }
     }
   }
   g.putImageData(imgData,0,0);
@@ -221,7 +221,7 @@ function initCloud(){
   colAttr=new THREE.BufferAttribute(new Float32Array(srcCol),3);
   g.setAttribute('position', posAttr); g.setAttribute('color', colAttr);
   cloud=new THREE.Points(g, new THREE.PointsMaterial({ size:1, vertexColors:true, sizeAttenuation:false,
-    transparent:true, opacity:1.0, depthWrite:false, depthTest:true, blending:THREE.AdditiveBlending }));
+    transparent:true, opacity:1.0, depthWrite:false, depthTest:true, blending:THREE.NormalBlending }));
   scene.add(cloud);
   document.getElementById('loading').style.display='none';
   updateAll(0,0,0);

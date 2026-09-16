@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Technology — Streamax eSIM</title>
+<meta name="description" content="eUICC architecture, remote profile provisioning, and the two industrial SIM form factors Streamax fits: a soldered MFF2 chip and a ruggedised triple-cut card.">
+<link rel="canonical" href="https://www.streamax-trucking.com/esim/technology/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Technology — Streamax eSIM">
+<meta property="og:description" content="eUICC architecture, remote profile provisioning, and the two industrial SIM form factors Streamax fits: a soldered MFF2 chip and a ruggedised triple-cut card.">
+<meta property="og:url" content="https://www.streamax-trucking.com/esim/technology/">
+<link rel="icon" href="/esim/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="/esim/assets/css/esim.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="hdr" id="hdr">
+ <div class="wrap hdr-in">
+  <a class="brand" href="/esim/" aria-label="Streamax eSIM — overview">
+   <img src="/esim/assets/img/streamax-logo.png" alt="Streamax" width="753" height="89">
+   <span class="brand-div"></span><span class="brand-tag">eSIM</span>
+  </a>
+  <button class="burger" id="burger" aria-expanded="false" aria-controls="nav" aria-label="Menu">
+   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav class="nav" id="nav"><a href="/esim/">Overview</a><a href="/esim/technology/" aria-current=page>Technology</a><a href="/esim/data-pools/">Data pools</a><a href="/esim/coverage/">Coverage</a><a href="/esim/pricing/">Pricing</a><a href="/esim/platform/">FT Cloud</a>
+   <a class="btn btn-p btn-sm" href="#talk">Talk to us</a>
+  </nav>
+ </div>
+</header>
+<main id="main">
+
+<section class="hero">
+ <div class="wrap hero-sub">
+  <div class="crumb"><a href="/esim/">Streamax eSIM</a><span>/</span>Technology</div>
+  <h1>What is actually inside the device.</h1>
+  <p class="lead">An eUICC, an operating system built for a decade of write cycles, and a package
+     that survives an engine bay. This page is the technical detail behind the two form factors
+     Streamax fits.</p>
+ </div>
+</section>
+
+<section class="sec">
+ <div class="wrap">
+  <div class="split top">
+   <div>
+    <span class="eyebrow eyebrow-n">Definitions</span>
+    <h2>eSIM, eUICC, profile — three different words.</h2>
+    <p><strong>eSIM</strong> is the everyday name for a SIM built into a device. Instead of
+       inserting plastic, the device downloads an operator profile — much like installing an app.
+       Once it is there, you can activate it, switch operator or change plan remotely: no opening
+       the device, no swapping cards.</p>
+    <p><strong>eUICC</strong> — embedded Universal Integrated Circuit Card — is the architecture
+       that makes that possible. It is the standard that lets one physical module download, store
+       and switch between <em>multiple</em> operator profiles over the air.</p>
+    <p><strong>A profile</strong> is one operator's subscription: its keys, its network-access
+       application, its files and its applets. A eUICC can hold several; exactly one is active.</p>
+    <div class="note" style="margin-top:20px">
+     <p>Both Streamax form factors are eUICC-capable and need <strong>no change to the
+        terminal</strong>. Any modem compliant with the usual UICC standards (ETSI TS 102.221,
+        TS 102.223) drives them as if they were an ordinary SIM.</p>
+    </div>
+   </div>
+   <div class="card card-flat">
+    <span class="eyebrow">Operating-system variants</span>
+    <p style="margin:6px 0 18px">The same silicon ships with one of three OS builds. Which one you
+       get depends on what the deployment has to do.</p>
+    <div class="grid" style="gap:12px"><div class="card"><span class="pill">USIM</span><p style="margin:14px 0 0">Classic UICC OS for 2G / 3G / LTE. SIM and USIM network-access applications, remote UICC management over SMS.</p></div><div class="card"><span class="pill">Advanced</span><p style="margin:14px 0 0">Everything in USIM plus CDMA network compliance, IMS access through an ISIM, and remote UICC management over HTTPS.</p></div><div class="card"><span class="pill">MultiSIM</span><p style="margin:14px 0 0">Multi-subscription UICC. Holds several independent operator profiles — as though it were several UICCs — and swaps between them on command. This is the eUICC build, developed to the GSMA embedded-UICC specifications.</p></div></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="sec" style="background:var(--surface);border-block:1px solid var(--line)">
+ <div class="wrap">
+  <div class="head">
+   <span class="eyebrow eyebrow-n">Form factors</span>
+   <h2>Soldered or removable — both are industrial.</h2>
+   <p class="lead">The difference is mechanical, not functional. Pick the soldered chip for sealed,
+      high-vibration installs; pick the card when somebody needs to be able to take it out.</p>
+  </div>
+  <div class="ff">
+   <div class="ff-card">
+    <div class="ff-art"><svg viewBox="0 0 360 200" role="img" aria-label="MFF2 solder-down SIM package on a board">
+ <defs><linearGradient id="pk" x1="0" y1="0" x2="0" y2="1">
+   <stop offset="0" stop-color="#2b3c53"/><stop offset="1" stop-color="#16243a"/></linearGradient></defs>
+ <rect x="18" y="26" width="324" height="148" rx="9" fill="#0d1a2b" stroke="#22354e"/>
+ <g stroke="#1f3350" stroke-width="1.4" fill="none">
+  <path d="M18 62h52M18 100h52M18 138h52M290 62h52M290 100h52M290 138h52"/>
+  <path d="M70 62v-18h44M70 138v18h44M290 62v-18h-44M290 138v18h-44"/>
+ </g>
+ <g fill="#AACD06">
+  <rect x="120" y="58" width="22" height="9" rx="2"/><rect x="120" y="76" width="22" height="9" rx="2"/>
+  <rect x="120" y="94" width="22" height="9" rx="2"/><rect x="120" y="112" width="22" height="9" rx="2"/>
+  <rect x="218" y="58" width="22" height="9" rx="2"/><rect x="218" y="76" width="22" height="9" rx="2"/>
+  <rect x="218" y="94" width="22" height="9" rx="2"/><rect x="218" y="112" width="22" height="9" rx="2"/>
+ </g>
+ <rect x="132" y="48" width="96" height="84" rx="5" fill="url(#pk)" stroke="#3c5473"/>
+ <circle cx="143" cy="59" r="3.4" fill="#AACD06"/>
+ <g font-family="monospace" font-size="9" letter-spacing="1" text-anchor="middle">
+  <text x="180" y="84" fill="#9db4cd">eUICC</text>
+  <text x="180" y="98" fill="#6d87a6">MFF2</text>
+ </g>
+ <g stroke="#41597a" stroke-width="1" fill="none">
+  <path d="M132 148h96M132 144v8M228 144v8"/>
+  <path d="M246 48v84M242 48h8M242 132h8"/>
+ </g>
+ <g font-family="monospace" font-size="9.5" fill="#8ca4c0">
+  <text x="180" y="163" text-anchor="middle">6.00 mm</text>
+  <text x="256" y="93">5.00 mm</text>
+ </g>
+</svg></div>
+    <div class="ff-body">
+     <div><span class="ff-kind">Solder-down · chip on board</span><h3>eSIM chip — MFF2</h3></div>
+     <p>An M2M identity module in the standardised MFF2 surface-mount package, soldered straight
+        onto the device board. No slot, no spring contacts, nothing to work loose or corrode.
+        This is the default for sealed, automotive-grade builds.</p>
+     <ul class="checks">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Immune to vibration and slot fretting</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Sealed and tamper-resistant — no SIM to remove</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Qualified for solderability, vibration and mechanical shock</span></li>
+     </ul>
+     <div class="pills"><span class="pill">6 × 5 mm</span><span class="pill">−40…+105 °C</span>
+      <span class="pill">10-year life</span></div>
+    </div>
+   </div>
+   <div class="ff-card">
+    <div class="ff-art"><svg viewBox="0 0 360 200" role="img" aria-label="Triple-cut SIM card with 2FF, 3FF and 4FF punch-outs">
+ <rect x="24" y="24" width="312" height="152" rx="12" fill="#16243a" stroke="#31496a"/>
+ <g fill="none" stroke="#41597a" stroke-width="1.4" stroke-dasharray="5 4">
+  <rect x="96" y="48" width="168" height="104" rx="6"/>
+ </g>
+ <g fill="none" stroke="#5b7ea6" stroke-width="1.4" stroke-dasharray="5 4">
+  <rect x="118" y="62" width="124" height="76" rx="5"/>
+ </g>
+ <rect x="140" y="74" width="80" height="52" rx="4" fill="#233553" stroke="#7fa3c8" stroke-width="1.4"/>
+ <g fill="#AACD06" opacity=".92">
+  <rect x="148" y="80" width="28" height="9" rx="2"/><rect x="184" y="80" width="28" height="9" rx="2"/>
+  <rect x="148" y="95" width="28" height="9" rx="2"/><rect x="184" y="95" width="28" height="9" rx="2"/>
+  <rect x="148" y="110" width="28" height="9" rx="2"/><rect x="184" y="110" width="28" height="9" rx="2"/>
+ </g>
+ <g font-family="monospace" font-size="9.5">
+  <text x="40" y="44" fill="#6d87a6">card frame</text>
+  <text x="98" y="168" fill="#8ca4c0">2FF</text>
+  <text x="150" y="168" fill="#9db4cd">3FF</text>
+  <text x="196" y="168" fill="#cfe1f2">4FF</text>
+ </g>
+</svg></div>
+    <div class="ff-body">
+     <div><span class="ff-kind">Removable · triple-cut</span><h3>Industrial SIM card</h3></div>
+     <p>The same ruggedised silicon in a removable card, delivered in a triple-cut frame: punch it
+        out as 2FF (mini), 3FF (micro) or 4FF (nano) to fit whatever is in front of you. Ruggedised
+        card body and lead-frame metallisation, not a consumer card in an industrial box.</p>
+     <ul class="checks">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>One SKU fits mini, micro and nano slots</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Swap in the field or pre-provision per region</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Qualified for plug-out force, chemicals and module adhesion</span></li>
+     </ul>
+     <div class="pills"><span class="pill">2FF / 3FF / 4FF</span><span class="pill">−40…+105 °C</span>
+      <span class="pill">10-year life</span></div>
+    </div>
+   </div>
+  </div>
+
+  <div class="grid g2" style="margin-top:clamp(26px,3vw,40px)">
+   <div><h3 style="margin-bottom:14px">eSIM chip — specification</h3><div class="tbl-wrap"><table class="spec"><tbody><tr><th scope="row">Package</th><td>ETSI MFF2 SMD, 6.00 × 5.00 mm</td></tr><tr><th scope="row">Package outline</th><td>JEDEC MO-220</td></tr><tr><th scope="row">Contact pitch (e)</th><td>1.27 mm</td></tr><tr><th scope="row">Lead length (L) / width (b)</th><td>0.6 ± 0.15 mm / 0.4 ± 0.10 mm</td></tr><tr><th scope="row">Thermal pad (D2 × E2)</th><td>4.20 × 3.40 mm (±0.15)</td></tr><tr><th scope="row">Moisture sensitivity</th><td>MSL 1 or MSL 3 (J-STD-020, J-STD-033)</td></tr><tr><th scope="row">Robustness</th><td>ETSI TS 102.671 + extended JEDEC set</td></tr><tr><th scope="row">Operating temperature</th><td>−40 °C to +105 °C</td></tr><tr><th scope="row">Supply voltage</th><td>ISO class A (5 V), B (3 V), C (1.8 V)</td></tr><tr><th scope="row">Classification</th><td>RoHS · REACH · halogen-free</td></tr><tr><th scope="row">Quality process</th><td>ISO 9001</td></tr><tr><th scope="row">Expected lifespan</th><td>10 years</td></tr></tbody></table></div></div>
+   <div><h3 style="margin-bottom:14px">Industrial card — specification</h3><div class="tbl-wrap"><table class="spec"><tbody><tr><th scope="row">Formats</th><td>2FF plug-in · 3FF micro · 4FF nano (triple-cut frame)</td></tr><tr><th scope="row">Card body</th><td>Polycarbonate (2FF/3FF) · PC + ABS blend (4FF)</td></tr><tr><th scope="row">Robustness</th><td>ETSI TS 102.671 + extended JEDEC set</td></tr><tr><th scope="row">Operating temperature</th><td>−40 °C to +105 °C</td></tr><tr><th scope="row">Storage temperature</th><td>−40 °C to +125 °C</td></tr><tr><th scope="row">Supply voltage</th><td>ISO class A (5 V), B (3 V), C (1.8 V)</td></tr><tr><th scope="row">Classification</th><td>RoHS · REACH · halogen-free</td></tr><tr><th scope="row">Chemical resistance</th><td>ISO 7810</td></tr><tr><th scope="row">Expected lifespan</th><td>10 years</td></tr></tbody></table></div></div>
+  </div>
+ </div>
+</section>
+
+<section class="sec">
+ <div class="wrap">
+  <div class="split top">
+   <div>
+    <span class="eyebrow eyebrow-n">Integration</span>
+    <h2>Contact layout.</h2>
+    <p>Pin configuration follows the ETSI MFF2 specification (TS 102.671). The numbers below are
+       package pins; the C-references are the matching contacts on a conventional SIM module.</p>
+    <div class="tbl-wrap" style="margin-top:20px">
+     <table class="floor-md">
+      <thead><tr><th>Pin</th><th>Contact</th><th>Signal</th></tr></thead>
+      <tbody>
+       <tr><td class="n">1</td><td class="mono">C5</td><td class="k">VSS — ground</td></tr>
+       <tr><td class="n">3</td><td class="mono">C7</td><td class="k">I/O — data</td></tr>
+       <tr><td class="n">6</td><td class="mono">C3</td><td class="k">CLK — clock</td></tr>
+       <tr><td class="n">7</td><td class="mono">C2</td><td class="k">RST — reset</td></tr>
+       <tr><td class="n">8</td><td class="mono">C1</td><td class="k">VDD — supply</td></tr>
+       <tr><td class="n">2, 4, 5</td><td class="mono">—</td>
+           <td class="k" style="color:var(--ink-3);font-weight:500">Unused. Leave floating — do
+           not connect to any signal, not even ground.</td></tr>
+      </tbody>
+     </table>
+    </div>
+    <p class="muted" style="font-size:.86rem;margin-top:14px">Top-side marking carries a
+       traceability line, up to two 10-character customer lines — printing the ICCID is strongly
+       recommended — an operator identifier, and an index mark locating pin 1.</p>
+   </div>
+   <div class="card card-deep" style="align-self:start"><svg viewBox="0 0 420 190" role="img" aria-label="MFF2 contact layout, bottom view">
+ <rect x="110" y="20" width="200" height="150" rx="7" fill="#16243a" stroke="#31496a"/>
+ <circle cx="126" cy="36" r="4" fill="#AACD06"/>
+ <g font-family="monospace" font-size="9" fill="#7f97b4">
+   <text x="210" y="100" text-anchor="middle">BOTTOM VIEW</text>
+ </g>
+ <g>
+  <rect x="122" y="52" width="46" height="14" rx="3" fill="#AACD06"/>
+  <rect x="122" y="80" width="46" height="14" rx="3" fill="#33465f"/>
+  <rect x="122" y="108" width="46" height="14" rx="3" fill="#AACD06"/>
+  <rect x="122" y="136" width="46" height="14" rx="3" fill="#33465f"/>
+  <rect x="252" y="52" width="46" height="14" rx="3" fill="#33465f"/>
+  <rect x="252" y="80" width="46" height="14" rx="3" fill="#AACD06"/>
+  <rect x="252" y="108" width="46" height="14" rx="3" fill="#AACD06"/>
+  <rect x="252" y="136" width="46" height="14" rx="3" fill="#AACD06"/>
+ </g>
+ <g font-family="monospace" font-size="10" fill="#cfe1f2" text-anchor="end">
+  <text x="104" y="63">1 · VSS</text><text x="104" y="91">2 · n/c</text>
+  <text x="104" y="119">3 · I/O</text><text x="104" y="147">4 · n/c</text>
+ </g>
+ <g font-family="monospace" font-size="10" fill="#cfe1f2">
+  <text x="316" y="63">5 · n/c</text><text x="316" y="91">6 · CLK</text>
+  <text x="316" y="119">7 · RST</text><text x="316" y="147">8 · VDD</text>
+ </g>
+</svg>
+    <p style="margin:16px 0 0;font-size:.86rem">Pads shown in lime are the five in use. The index
+       mark in the corner locates pin 1.</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="sec" style="background:var(--surface);border-block:1px solid var(--line)">
+ <div class="wrap">
+  <div class="head">
+   <span class="eyebrow eyebrow-n">Profile lifecycle</span>
+   <h2>How a profile gets on, gets used, and gets removed.</h2>
+   <p class="lead">A multi-subscription UICC turns one module into several independent profile
+      areas. Operators can coexist on the same chip and be administered remotely by a subscription
+      management server.</p>
+  </div>
+  <div class="split top">
+   <ol class="steps"><li><h4>Independent profile areas</h4><p>Each operator profile lives in its own secure storage area, implemented as a GlobalPlatform security domain. Once a profile is loaded, its content is private to that operator — only the profile's owner can administer what is inside it.</p></li><li><h4>Loading a profile</h4><p>At least one profile is loaded and enabled at issuance, exactly like an ordinary UICC. Further profiles can be added before issuance or later over the air, over an HTTP channel; the modem has to support BIP. A profile does not have to be enabled when it is loaded.</p></li><li><h4>Enabling a profile</h4><p>Enabling makes a subscription the active one. Only one can be active at a time, and enabling a profile automatically disables the previous one. The module prepares the swap and then asks the device to reboot with a Refresh command — the change takes effect on that reboot, never mid-session.</p></li><li><h4>Terminating a subscription</h4><p>The subscription manager removes a subscription and clears its profile area. The memory is released and can be reused for a new profile.</p></li><li><h4>Administering the live profile</h4><p>While a profile is active, its operator manages it from their usual OTA platform over SMS, HTTPS or both — remote application and file management, the same as any UICC.</p></li></ol>
+   <div class="grid" style="gap:14px;align-content:start">
+    <div class="card card-flat">
+     <h4 style="margin-bottom:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.4 8.3 8 9 4.6-.7 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg> Network-access applications</h4>
+     <p style="font-size:.92rem;margin:0">A profile can carry one or more NAAs, exactly as a
+        traditional UICC does: <span class="mono">SIM</span>, <span class="mono">USIM</span>,
+        <span class="mono">CSIM</span>, <span class="mono">ISIM</span>.</p>
+    </div>
+    <div class="card card-flat">
+     <h4 style="margin-bottom:8px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5z"/><path d="m3 14 9 5 9-5"/></svg> Transversal applications</h4>
+     <p style="font-size:.92rem;margin:0">Operator applets sleep when their profile is disabled.
+        <em>Transversal</em> applets are not attached to any profile and stay active whichever one
+        is enabled — cryptographic services for the terminal, quality-of-service monitoring, secure
+        storage for device data. They live in their own security domain with GlobalPlatform remote
+        application management.</p>
+    </div>
+    <div class="note lime">
+     <p><strong>Switching operator is a reboot, not a visit.</strong> The module stages the swap
+        and requests a refresh; the device comes back on the new profile. Nothing in the vehicle
+        is touched.</p>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="sec">
+ <div class="wrap">
+  <div class="split top">
+   <div>
+    <span class="eyebrow eyebrow-n">Why it lasts</span>
+    <h2>An operating system designed around memory wear.</h2>
+    <p>Non-volatile memory has to be erased before it is rewritten, and every erase degrades the
+       cell a little. After enough cycles on the same page, it stops holding its value. Robust
+       smart-card silicon manages roughly <strong>100,000 to 500,000 cycles per page</strong> —
+       but endurance is only half silicon. The other half is what the OS does with it.</p>
+    <p>The extended-life OS in these modules was written for the automotive requirement of
+       17 years and carried across to the industrial parts with a 10-year target. It attacks
+       wear three ways:</p>
+    <ol class="steps" style="margin-top:20px">
+     <li><h4>Do not write what you do not need to</h4>
+         <p>The OS avoids redundant NVM updates altogether — the cheapest cycle is the one that
+            never happens.</p></li>
+     <li><h4>Spread the wear</h4>
+         <p>Data is reallocated around memory so cycling is distributed evenly across pages
+            instead of hammering the same few.</p></li>
+     <li><h4>Detect and retire failures</h4>
+         <p>Worn pages are detected and blacklisted before they can corrupt anything.</p></li>
+    </ol>
+   </div>
+   <div class="card card-flat" style="align-self:start">
+    <span class="eyebrow">Standards</span>
+    <h3 style="margin:6px 0 16px">What these modules comply with</h3>
+    <div class="kv">
+     <div><span class="k2">Smart-card interface</span><span class="v">ISO 7816</span></div>
+     <div><span class="k2">UICC — terminal interface</span><span class="v">ETSI TS 102.221</span></div>
+     <div><span class="k2">Card application toolkit</span><span class="v">ETSI TS 102.223</span></div>
+     <div><span class="k2">M2M UICC / MFF2</span><span class="v">ETSI TS 102.671</span></div>
+     <div><span class="k2">Cellular</span><span class="v">3GPP</span></div>
+     <div><span class="k2">Applet platform</span><span class="v">Java Card 2.x / 3.x</span></div>
+     <div><span class="k2">Security domains &amp; RAM</span><span class="v">GlobalPlatform</span></div>
+     <div><span class="k2">Embedded UICC</span><span class="v">GSMA eUICC</span></div>
+     <div><span class="k2">Package outline</span><span class="v">JEDEC MO-220</span></div>
+     <div><span class="k2">Moisture sensitivity</span><span class="v">J-STD-020 · J-STD-033</span></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="sec" style="background:var(--surface);border-block:1px solid var(--line)">
+ <div class="wrap">
+  <div class="head">
+   <span class="eyebrow eyebrow-n">Qualification</span>
+   <h2>The test set behind the ten-year claim.</h2>
+   <p class="lead">Both form factors are qualified to ETSI TS 102.671 plus an extended JEDEC set.
+      Tests that only make sense for one of the two are marked accordingly.</p>
+  </div>
+  <div class="tbl-wrap">
+   <table class="floor-md">
+    <thead><tr><th>Characteristic</th><th>Reference</th><th class="n">Chip</th><th class="n">Card</th></tr></thead>
+    <tbody><tr><td>Data retention time</td><td class="mono" style="color:var(--ink-3)">ETSI TS 102.671</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td></tr><tr><td>Minimum updates (memory cycling)</td><td class="mono" style="color:var(--ink-3)">ETSI TS 102.671</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td></tr><tr><td>Steady-state temperature, humidity, bias life</td><td class="mono" style="color:var(--ink-3)">JEDEC JESD22-A101</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td></tr><tr><td>Accelerated moisture resistance — unbiased autoclave</td><td class="mono" style="color:var(--ink-3)">JEDEC JESD22-A102</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--ink-4)">—</span></td></tr><tr><td>High-temperature storage life</td><td class="mono" style="color:var(--ink-3)">JEDEC JESD22-A103</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td></tr><tr><td>Temperature cycling</td><td class="mono" style="color:var(--ink-3)">JEDEC JESD22-A104</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td></tr><tr><td>Salt atmosphere</td><td class="mono" style="color:var(--ink-3)">JEDEC JESD22-A107</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td></tr><tr><td>High-temperature operating life</td><td class="mono" style="color:var(--ink-3)">JEDEC JESD22-A108</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td></tr><tr><td>Low-temperature operating life</td><td class="mono" style="color:var(--ink-3)">JEDEC JESD22-A108</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td></tr><tr><td>ESD — human body model</td><td class="mono" style="color:var(--ink-3)">JEDEC JESD22-A114</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td></tr><tr><td>NVM endurance</td><td class="mono" style="color:var(--ink-3)">JEDEC JESD22-A117</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td></tr><tr><td>Low-temperature storage life</td><td class="mono" style="color:var(--ink-3)">JEDEC JESD22-A119</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td></tr><tr><td>ESD — charged device model</td><td class="mono" style="color:var(--ink-3)">JEDEC JESD22-C101</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td></tr><tr><td>Solderability</td><td class="mono" style="color:var(--ink-3)">JEDEC JESD22-B102</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--ink-4)">—</span></td></tr><tr><td>Vibration</td><td class="mono" style="color:var(--ink-3)">JEDEC JESD22-B103</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--ink-4)">—</span></td></tr><tr><td>Mechanical shock</td><td class="mono" style="color:var(--ink-3)">JEDEC JESD22-B104</td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td><td class="n"><span class="mono" style="color:var(--ink-4)">—</span></td></tr><tr><td>Manual plug-out</td><td class="mono" style="color:var(--ink-3)">Supplier specification</td><td class="n"><span class="mono" style="color:var(--ink-4)">—</span></td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td></tr><tr><td>Resistance to ISO chemical products</td><td class="mono" style="color:var(--ink-3)">ISO 7810</td><td class="n"><span class="mono" style="color:var(--ink-4)">—</span></td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td></tr><tr><td>Module adhesion</td><td class="mono" style="color:var(--ink-3)">Supplier specification</td><td class="n"><span class="mono" style="color:var(--ink-4)">—</span></td><td class="n"><span class="mono" style="color:var(--brand)">●</span></td></tr></tbody>
+   </table>
+   <div class="tbl-note">
+    <p>Qualification data describes the SIM module. It does not replace the device-level
+       certification of the Streamax product it is fitted to — ask for the relevant product
+       certificate if you need it for homologation.</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="cta sec" id="talk">
+ <div class="wrap">
+  <div class="split">
+   <div>
+    <span class="eyebrow eyebrow-n on-deep">Next step</span>
+    <h2>Tell us the routes, we will size the pool.</h2>
+    <p class="lead">Send the countries you operate in, the device count, and the footage each
+       vehicle uploads per day. You get back a pool size, a landed price per device per month,
+       and a coverage read for every country on the list.</p>
+    <p class="lead"><strong style="color:#fff">Published rates are list.</strong> Ask your Customer
+       Success Manager or Business Development Manager for better pricing — volume, term and
+       multi-region commitments all move the number.</p>
+   </div>
+   <div class="card card-deep">
+    <h3>What to send us</h3>
+    <ul class="checks on-deep" style="margin-top:14px">
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Countries and, if they cross borders, the routes.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Device count now and at 12 months.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Device model and whether the SIM is soldered or a plug-in.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Typical upload per vehicle per day, and what triggers a clip.</span></li>
+     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5.5 5.5L20 7"/></svg><span>Anything non-standard: private APN, fixed IP, VPN, IMEI lock.</span></li>
+    </ul>
+    <div class="btn-row" style="margin-top:22px">
+     <a class="btn btn-p" href="mailto:csm@streamax.com?subject=Streamax%20eSIM%20enquiry">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> csm@streamax.com</a>
+     <a class="btn btn-g" href="https://www.streamax.com" target="_blank" rel="noopener">
+      streamax.com <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16 16 8M9 8h7v7"/></svg></a>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+</main>
+<footer class="ftr">
+ <div class="wrap ftr-in">
+  <div>
+   <img src="/esim/assets/img/streamax-logo.png" alt="Streamax" width="753" height="89">
+   <p style="max-width:34ch">Global cellular connectivity for commercial-vehicle video telematics —
+      shipped inside the device and managed from FT Cloud.</p>
+  </div>
+  <div><h5>The solution</h5><ul><li><a href="/esim/">Overview</a></li><li><a href="/esim/technology/">Technology</a></li><li><a href="/esim/data-pools/">Data pools</a></li></ul></div><div><h5>Plan it</h5><ul><li><a href="/esim/coverage/">Coverage</a></li><li><a href="/esim/pricing/">Pricing</a></li><li><a href="/esim/platform/">FT Cloud management</a></li></ul></div>
+ </div>
+ <div class="wrap ftr-btm">
+  <span>© 2026 Streamax Technology Co., Ltd. All rights reserved.</span>
+  <span>Coverage and pricing on this site are indicative and subject to confirmation.</span>
+ </div>
+</footer>
+<script src="/esim/assets/js/site.js" defer></script>
+</body>
+</html>
